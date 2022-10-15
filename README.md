@@ -8,6 +8,11 @@ __`hc-dashboard` is part of:__
 
 [![homie-homecontrol](https://avatars.githubusercontent.com/u/96332925?s=28&v=4)](https://github.com/homie-homecontrol) <span style="font-size:32px; font-weight: 700;">homie-homecontrol</span>  &nbsp;[link](https://github.com/homie-homecontrol)
 
+# Screenshot
+
+![dashboard screenshot](./docs/images/dashboard.png)
+
+
 # Docker image
 ```
 docker pull ghcr.io/homie-homecontrol/hc-dashboard:latest
