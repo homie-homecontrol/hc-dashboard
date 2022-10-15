@@ -1,0 +1,17 @@
+<hc-widget-layout>
+  <span hc-widget-label>{{widget.label}}</span>
+  <hc-widget-controls>
+    <button *ngIf="showStopButton$ | async" mat-icon-button aria-label="Stop shutter scroll" (click)="stop()">
+      <awac-icon name="far/fa-window-close"></awac-icon>
+    </button>
+    <button *ngIf="!widget.config?.hideButtons" mat-icon-button aria-label="Scroll shutter up" (click)="up()">
+      <awac-icon name="fas/fa-angle-double-up"></awac-icon>
+    </button>
+    <mat-slider [step]="step" [min]="min" [max]="max" [tickInterval]="tickInterval" (change)="setPosition($event.value)"
+      [value]="position$ | async"></mat-slider>
+    <button *ngIf="!widget.config?.hideButtons" mat-icon-button aria-label="Scroll shutter down" (click)="down()">
+      <awac-icon name="fas/fa-angle-double-down"></awac-icon>
+    </button>
+
+  </hc-widget-controls>
+</hc-widget-layout>

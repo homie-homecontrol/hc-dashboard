@@ -1,0 +1,16 @@
+<!-- <div [ngClass]="{'main-line-container': true, 'main-line-container-vertical': direction === 'vertical'}"> -->
+<div class="first-line-container">
+    <ng-content select="hc-widget-first-line"></ng-content>
+    <ng-content select="[hc-widget-first-line]"></ng-content>
+</div>
+<div class="main-line-container">
+    <ng-content></ng-content>
+    <div class="controls-container">
+        <ng-content select="hc-widget-controls"></ng-content>
+        <ng-content select="[hc-widget-controls]"></ng-content>
+    </div>
+</div>
+<div class="second-line-container">
+    <ng-content select="hc-widget-second-line"></ng-content>
+    <ng-content select="[hc-widget-second-line]"></ng-content>
+</div>

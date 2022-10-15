@@ -1,0 +1,33 @@
+hc-widget-layout {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.big-text {
+    line-height: 62pt;
+    font-size: 52pt;
+    font-weight: 200;
+    font-stretch: wider;
+    margin: 0px;
+    text-align: right;
+    align-self: flex-end;
+}
+
+.divider-div {
+    height: 72px;
+    width: 1px;
+    margin-left: 12px;
+    margin-right: 8px;
+    border-left: 2px solid #555;
+}
+
+.small-text {
+    line-height: initial;
+    font-size: 28pt;
+    align-self: flex-end;
+    text-align: left;
+    color: gray;
+}

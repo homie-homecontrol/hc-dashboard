@@ -1,0 +1,81 @@
+<div class="close">
+    <mat-toolbar color="primary">
+        BBQ Wizzard
+        <button mat-icon-button (click)="closeDialog(false)">
+            <awac-icon name="close"></awac-icon>
+        </button>
+    </mat-toolbar>
+</div>
+
+<mat-vertical-stepper #stepper>
+    <mat-step>
+        <ng-template matStepLabel>Messart wählen</ng-template>
+        <mat-grid-list gutterSize="12"  cols="2" rowHeight="3:1">
+            <mat-grid-tile>
+                <button class="tile-button" mat-raised-button color="primary" (click)="setMeasurementType('meat');" matStepperNext>Fleisch</button>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <button class="tile-button" mat-raised-button color="primary"(click)="setMeasurementType('bbq');" matStepperNext>Grill</button>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+    </mat-step>
+    <mat-step *ngIf="measurementType=='meat'">
+        <ng-template matStepLabel>Tierart</ng-template>
+        <mat-grid-list gutterSize="12" cols="2" rowHeight="3:1">
+            <mat-grid-tile *ngFor="let animal of coreTemps | keyvalue" >
+                <button class="tile-button" mat-raised-button color="primary" (click)="setAnimal(animal.key);" matStepperNext>{{animal.key}}</button>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-step>
+    <mat-step *ngIf="measurementType=='meat'">
+        <ng-template matStepLabel>Schnitt</ng-template>
+        <mat-grid-list gutterSize="12"  cols="2" rowHeight="3:1" *ngIf="animal!=null">
+            <mat-grid-tile *ngFor="let cut of coreTemps[animal] | keyvalue" >
+                <button class="tile-button" mat-raised-button color="primary" (click)="setCut(cut.key);" matStepperNext>{{cut.key}}</button>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-step>
+    <mat-step *ngIf="measurementType=='meat'">
+        <ng-template matStepLabel>Garpunkt</ng-template>
+        <mat-grid-list gutterSize="12"  cols="2" rowHeight="3:1" *ngIf="animal!=null">
+            <mat-grid-tile *ngFor="let doneness of coreTemps[animal][cut] | keyvalue" >
+                <button class="tile-button" mat-raised-button color="primary" (click)="setDoneness(doneness.key);" matStepperNext>{{doneness.key}} ({{doneness.value}}°C)</button>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-step>
+    <mat-step *ngIf="measurementType=='bbq'">
+        <ng-template matStepLabel>Grillmethode</ng-template>
+        <mat-grid-list gutterSize="12"  cols="2" rowHeight="2:1">
+            <mat-grid-tile *ngFor="let tempSet of bbqTemps | keyvalue" >
+                <button class="tile-button" mat-raised-button color="primary" (click)="setBBQTemp(tempSet.key);" matStepperNext>
+                    {{tempSet.key}}<div>({{tempSet.value.min}}°C - {{tempSet.value.max}}°C)</div>
+                </button>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div *ngIf="measurementType=='meat' && !!animal && !!cut && !!doneness">
+            <p>Tier: {{animal}}</p>
+            <p>Schnitt: {{cut}}</p>
+            <p>Garpunkt: {{doneness}} ({{coreTemps[animal][cut][doneness]}}°C)</p>
+        </div>
+        <div *ngIf="measurementType=='bbq' && !!tempSet">
+            <p>Grillmethode: {{tempSet}}</p>
+            <p>Min: {{bbqTemps[tempSet].min}}°C </p>
+            <p>Max: {{bbqTemps[tempSet].max}}°C</p>
+        </div>
+    </mat-step>
+</mat-vertical-stepper>
+
+
+<div class="action-bar">
+    <button mat-raised-button (click)="closeDialog(true)">
+        <awac-icon name="fas/fa-save"></awac-icon> OK
+    </button>
+    <button mat-raised-button (click)="closeDialog(false)">
+        <awac-icon name="fas/fa-window-close"></awac-icon> Cancel
+    </button>
+</div>

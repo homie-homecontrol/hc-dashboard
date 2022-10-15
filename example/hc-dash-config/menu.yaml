@@ -1,0 +1,35 @@
+
+- id: main.dashcfg
+  title: Dash
+  description: Main house dashboard
+  material_icon: dashboard
+
+- id: hgdash.dashcfg
+  title: HG Dash
+  description: Hausgang dashboard
+  material_icon: fas/fa-home
+
+- id: devicecontrol.dashcfg
+  title: Devices
+  description: Complete Devices details control
+  material_icon: far/fa-lightbulb
+
+- id: bbq.dashcfg
+  title: BBQ
+  material_icon: fas/fa-fire
+
+- id: clima.dashcfg
+  title: Klima
+  description: Hausgang dashboard
+  material_icon: fas/fa-tint
+
+- id: heating.dashcfg
+  title: Heizung
+  description: Anzeige Heizkurven
+  material_icon: fas/fa-tint
+
+
+- id: test2.dashcfg
+  title: Test
+  description: Test
+  material_icon: info

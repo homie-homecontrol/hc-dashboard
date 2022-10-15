@@ -1,0 +1,52 @@
+<!-- <app-popout-title-bar [dialogTitle]="data.title ? data.title: 'Details'"></app-popout-title-bar> -->
+<!-- 
+<div class="close">
+    <mat-toolbar color="primary">
+        {{data.title ? data.title: 'Details'}}
+        <button mat-icon-button (click)="closeDialog()">
+            <awac-icon name="close"></awac-icon>
+        </button>
+
+    </mat-toolbar>
+</div> -->
+<!-- <div class="main-div">
+    <div class="main-container"> -->
+
+<div class="container">
+    <div class="header">
+        <mat-toolbar color="primary">
+            {{data.title ? data.title: 'Details'}}
+            <span class="fill-remaining-space"></span>
+            <button mat-icon-button (click)="closeDialog()">
+                <awac-icon name="close"></awac-icon>
+            </button>
+
+        </mat-toolbar>
+    </div>
+    <div class="content">
+
+        <hc-dashboard-page *ngIf="!!data.pageId" [pageId]="data.pageId" [dialogMode]="true"></hc-dashboard-page>
+        <hc-generic-card *ngIf="!!data.cardId" [cardId]="data.cardId" [hideLaunchButton]="true"></hc-generic-card>
+    </div>
+    <div class="footer card-bg">
+        <!-- <mat-toolbar> -->
+        <div class="center-layout">
+
+            <button mat-button (click)="closeDialog()">
+                close
+            </button>
+        </div>
+
+        <!-- </mat-toolbar> -->
+    </div>
+</div>
+<!-- </div>
+</div> -->
+<!-- <div class="bottom-bar">
+    <mat-toolbar>
+        <button mat-button (click)="closeDialog()">
+            close
+        </button>
+
+    </mat-toolbar>
+</div> -->

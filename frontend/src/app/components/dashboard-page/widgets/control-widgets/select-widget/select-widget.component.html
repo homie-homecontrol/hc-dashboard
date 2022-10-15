@@ -1,0 +1,10 @@
+<hc-widget-layout>
+  <span hc-widget-label *ngIf="!widget.config?.hideLabel">{{widget.label}}</span>
+  <hc-widget-controls *ngLet="enumLabels$ | async as label">
+    <!-- <mat-form-field  appearance="fill"> -->
+        <mat-select class="highlight-control-bg" [value]="value$ | async" (selectionChange)="setValue($event)">
+          <mat-option *ngFor="let option of enumOptions$ | async;  index as indexOfelement;" [value]="option" [selected]="(value$ | async) === option">{{label[indexOfelement]}}</mat-option>
+        </mat-select>
+<!-- </mat-form-field> -->
+  </hc-widget-controls>
+</hc-widget-layout>

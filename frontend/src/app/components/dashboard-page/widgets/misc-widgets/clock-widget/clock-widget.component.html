@@ -1,0 +1,8 @@
+<div class="clock-container">
+    <div class="time">
+        <span class="time-text">{{(clock$ | async) | date:'HH:mm'}}</span>
+      </div>
+      <div class="date">
+          <span class="date-text">{{(clock$ | async) | date:'EEE LLL dd, yyyy'}}</span>
+      </div>
+</div>

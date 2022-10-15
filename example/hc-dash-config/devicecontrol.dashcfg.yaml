@@ -1,0 +1,338 @@
+layout:
+  autoReflow: single
+  small:
+    columns:
+      - - dc_wz
+        - dc_ez
+        - dc_kue
+        - dc_christmas
+        - dc_wer
+        - dc_weitere
+        - dc_tvlift
+  
+  medium:
+    columns:
+      - - dc_wz
+        - dc_christmas
+      - - dc_ez
+        - dc_kue
+        - dc_wer
+        - dc_weitere
+        - dc_tvlift
+
+  large:
+    columns:
+      - - dc_wz
+        - dc_christmas
+      - - dc_ez
+        - dc_kue
+        - dc_wer
+      - - dc_weitere
+        - dc_tvlift
+
+cards:
+  - id: dc_wz
+    title: Wohnzimmer
+    type: default
+    icon: fas/fa-couch
+    items:
+      - type: group
+        label: Licht
+        items:
+          - type: dimmer
+            device: light-25
+            label: Loungelight
+          - type: dimmer
+            device: group-2
+            label: Stehlampe Papier
+          - type: dimmer
+            device: group-1
+            label: Stehlampe Sofa
+            
+          - type: switch
+            device: wz-switch-shelly-licht-decke
+            label: Wohnzimmer Decke
+          - type: lightscene
+            label: Szenen Wohnzimmer
+            mappings:
+              scenes: group-5/scenes/recall
+      - type: group
+        label: Rolläden
+        items:
+          - type: rollerShutter
+            device: shutter-40e8d8
+            label: Terrassentür
+            config:
+              levels:
+                openPosition: 0
+                closedPosition: 100 
+                halfopenPosition: 25
+                blindsPosition: 75
+
+          - type: rollerShutter
+            device: req1957223
+            label: Fenster
+            config:
+              levels:
+                openPosition: 0
+                closedPosition: 100 
+                halfopenPosition: 37
+                blindsPosition: 69
+      - type: group
+        label: Sonstiges
+        items:
+          # - type: switch
+          #   device: light-22
+          #   label: Ventilator
+          - type: group
+            label: Ventilator
+            items:
+              - type: dimmer
+                label: An/Aus
+                mappings:
+                  switch: wz-fan-xiaomi-3/switch/state
+                  brightness: wz-fan-xiaomi-3/fan/speed
+              - type: switch
+                label: Schwenkmodus
+                mappings:
+                  switch: wz-fan-xiaomi-3/fan/swing
+              - type: actionButtons
+                mappings:
+                  targets:
+                    - selector: wz-fan-xiaomi-3/fan/mode
+                      config:
+                        setState: "0"
+                        icon: fas/fa-leaf
+                    - selector: wz-fan-xiaomi-3/fan/mode
+                      config:
+                        setState: "1"
+                        icon: fas/fa-wind
+                        color: accent
+              - type: lightscene
+                label: Schwenkbereich ändern
+                mappings:
+                  scenes: wz-fan-xiaomi-3/fan/swing-angle
+              - type: text
+                label: Aktueller Schwenkbereich
+                mappings:
+                  text: wz-fan-xiaomi-3/fan/swing-angle
+
+
+          - type: switch
+            device: nr-olaf
+            label: Olaf (Staubsauger)
+      - type: status
+        label: Stuhlposition
+        mappings:
+          status:
+            - selector: ez-stuhl-position/orientation/state
+              config:
+                statusMap:
+                  - forValue: upright
+                    toValue: aufrecht
+                    type: label
+                    color: primary
+                  - forValue: upside-down
+                    toValue: umgedreht
+                    type: label
+                    color: warn
+  - id: dc_ez
+    title: Esszimmer
+    type: default
+    icon: fas/fa-utensils
+    items:
+      - type: group
+        label: Licht
+        items:
+          - type: dimmer
+            device: group-9
+            label: Deckenlampe
+          - type: dimmer
+            device: light-13
+            label: Licht Schrank
+          - type: lightscene
+            label: Szenen Esszimmer
+            mappings:
+              scenes: group-4/scenes/recall
+      - type: group
+        label: Dashboard
+        items: 
+          - type: switch
+            device: ez-dash
+
+  - id: dc_kue
+    title: Küche
+    type: default
+    icon: fas/fa-power-off
+    items:
+      - type: group
+        label: Licht
+        items:
+          - type: switch
+            device: leq0746152
+            label: Kueche Licht
+
+          - type: switch
+            device: meq0191627
+            label: Beleuchtung Arbeitsplatte
+
+
+  - id: dc_wer
+    title: Werkstatt
+    type: default
+    icon: fas/fa-power-off
+    items:
+      - type: group
+        label: Licht
+        items:
+          - type: switch
+            device: meq0191203
+            label: Licht Werkbank
+      - type: group
+        label: Absaugung
+        items:
+          - type: switch
+            device: meq0193394
+            label: Absaugung
+
+  - id: dc_weitere
+    title: Weitere
+    type: default
+    icon: fas/fa-power-off
+    items:
+      - type: group
+        label: Dashboard
+        items: 
+          - type: switch
+            label: Hausgang Dashboard Screen
+            mappings:
+              switch: hg-dash/display/state 
+          - type: switch
+            label: Hausgang Dashboard LED
+            mappings:
+              switch: hg-dash/led/state 
+
+      - type: group
+        label: Schlafzimmer
+        items:
+          - type: dimmer
+            device: group-7
+            label: Licht Schlafzimmer
+      - type: group
+        label: Kinderzimmer
+        items:
+          - type: dimmer
+            device: light-15
+            label: Licht Kinderzimmer
+          - type: dimmer
+            device: light-28
+            label: Licht Bett
+      - type: group
+        label: Terrasse
+        items:
+          - type: switch
+            device: seq0645603
+            label: Steckdosen Terrasse
+
+
+  - id: dc_tvlift
+    title: TV Lift
+    type: default
+    icon: fas/fa-power-off
+    items:
+      - type: status
+        label: TV-Lift Status
+        mappings:
+          status:
+            - selector: tv-lift-controller/tv-lift-control/status
+              config:
+                statusMap:
+                  - forValue: in
+                    toValue: eingefahren
+                    type: label
+                    color: primary
+                  - forValue: ['tv_in','lift_in']
+                    toValue: wird eingefahren...
+                    type: label
+                    color: warn
+                  - forValue: ['tv_out','lift_out']
+                    toValue: wird ausgefahren...
+                    type: label
+                    color: warn
+                  - forValue: out
+                    toValue: ausgefahren
+                    type: label
+                    color: accent
+                  - forValue: stop
+                    toValue: NOT-AUS
+                    type: label
+                    color: warn
+                    size: large
+                catchAll:
+                    toValue: unbekannt
+                    type: text
+                    color: none
+                    size: medium                                  
+
+      - type: actionButtons
+        label: TV-Lift Control
+        mappings:
+          targets:
+            - selector: tv-lift-controller/tv-lift-control/command
+              config:
+                setState: "in"
+                icon: file_upload
+            - selector: tv-lift-controller/tv-lift-control/command
+              config:
+                setState: "stop"
+                icon: stop
+                size: medium
+                color: accent
+            - selector: tv-lift-controller/tv-lift-control/command
+              config:
+                setState: "out"
+                icon: file_download
+
+  - id: dc_christmas
+    title: Weihnachtsbeleuchtung
+    type: conditional
+    config:
+      property: glob-settings/christmas-time/state
+      condition: "true"
+    icon: svg/0 0 512 512/M224 160l26.7-53.3L304 80l-53.3-26.7L224 0l-26.7 53.3L144 80l53.3 26.7L224 160zm215.6 295.6L349.8 352h36c25.6 0 39.5-26.3 23.2-43.5L262.8 154 224 208l-38.8-54L39 308.5C22.7 325.7 36.6 352 62.2 352h36L8.4 455.6c-19 21.9-3.8 56.4 24.7 56.4h381.7c28.6 0 43.7-34.6 24.8-56.4zM160 312c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm128 128c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24z
+    items:
+      - type: group
+        label: Alle
+        items:
+        - type: switch
+          label: Weihnachtsbeleuchtung
+          mappings:
+            switch: christmas-lights/switch/state
+      - type: group
+        label: Einzeln
+        items: 
+          - type: switch
+            label: Lichterketten Terasse
+            mappings:
+              switch: seq0645603/switch/state
+          - type: switch
+            label: Lichterkette Fensterbrett
+            mappings:
+              switch: light-10/switch/state
+          - type: switch
+            label: Stern
+            mappings:
+              switch: light-8/switch/state
+          - type: switch
+            label: Licht Fenster
+            mappings:
+              switch: light-7/switch/state
+          - type: switch
+            label: Lichterglas Küche
+            mappings:
+              switch: light-9/switch/state
+          - type: switch
+            label: Christbaum
+            mappings:
+              switch: light-2/switch/state
+

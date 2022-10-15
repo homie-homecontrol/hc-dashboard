@@ -1,0 +1,722 @@
+layout:
+  autoReflow: single
+  xlarge:
+    columns:
+      - - test7
+        - clima
+        - test7
+      - - heating-control
+        - clock
+        - test
+      - - security
+        - graphs
+        - keller
+      - - heating
+        - shutters
+        - test89
+cards:
+  - id: heating-control
+    type: default
+    items:
+      - type: group
+        label: Zentralsteuerung
+        items: []
+
+      - type: group
+        label: Wohzimmer
+        items:
+          - type: select
+            label: Wochenprogram
+            mappings:
+              value: meq0180941/hm-config/active-program
+            config:
+              overrideOptionList: ["0","1","2"]
+              optionsLabels: ["winter","sommer","urlaub"]   
+          - type: switch
+            label: Boost nach Lueften
+            mappings:
+              switch: meq0180941/hm-config/boost-after-window-open
+            config:
+              hideIcon: true
+          - type: select
+            label: Boost-Dauer
+            mappings:
+              value: meq0180941/hm-config/boost-duration        
+      - type: group
+        label: Schlafzimmer
+        items:
+          - type: select
+            label: Wochenprogram
+            mappings:
+              value: neq0937510/hm-config/active-program
+            config:
+              overrideOptionList: ["0","1","2"]
+              optionsLabels: ["winter","sommer","urlaub"]   
+          - type: switch
+            label: Boost nach Lueften
+            mappings:
+              switch: neq0937510/hm-config/boost-after-window-open
+            config:
+              hideIcon: true
+          - type: select
+            label: Boost-Dauer
+            mappings:
+              value: neq0937510/hm-config/boost-duration       
+      - type: group
+        label: Kinderzimmer
+        items:
+          - type: select
+            label: Wochenprogram
+            mappings:
+              value: meq0478846/hm-config/active-program
+            config:
+              overrideOptionList: ["0","1","2"]
+              optionsLabels: ["winter","sommer","urlaub"]   
+          - type: switch
+            label: Boost nach Lueften
+            mappings:
+              switch: meq0478846/hm-config/boost-after-window-open
+            config:
+              hideIcon: true
+          - type: select
+            label: Boost-Dauer
+            mappings:
+              value: meq0478846/hm-config/boost-duration
+      - type: group
+        label: Bad
+        items:
+          - type: select
+            label: Wochenprogram
+            mappings:
+              value: oeq0300066/hm-config/active-program
+            config:
+              overrideOptionList: ["0","1","2"]
+              optionsLabels: ["winter","sommer","urlaub"]   
+          - type: switch
+            label: Boost nach Lueften
+            mappings:
+              switch: oeq0300066/hm-config/boost-after-window-open
+            config:
+              hideIcon: true
+          - type: select
+            label: Boost-Dauer
+            mappings:
+              value: oeq0300066/hm-config/boost-duration  
+
+  - id: test7
+    title: Mediaplayers
+    type: default
+    launchOptions: 
+      wide: true
+      pageId: devices.dashcfg
+    items:
+
+          - type: mediaplayer
+            device: dev-yamaha
+            label: Receiver 2
+          - type: mediaplayer
+            device: echo-g090rf0474130dpe
+            label: Echo Wohnzimmer
+          - type: mediaplayer
+            device: echo-g2a0p30774060lpn
+            label: Echo Buero
+  - id: test
+    title: Wohnbereich
+    type: default
+    icon: svg/0 0 512 512/M431.36,80.64a248,248,0,0,0-350.72,0c-96.85,96.85-96.85,253.87,0,350.72a248,248,0,0,0,350.72,0C528.21,334.51,528.21,177.49,431.36,80.64ZM397.42,397.42A200,200,0,1,1,114.58,114.58,200,200,0,1,1,397.42,397.42ZM369,143C306.66,80.75,205.34,80.75,143,143A24,24,0,0,0,177,177,111.77,111.77,0,1,1,335,335,24,24,0,1,0,369,369,159.72,159.72,0,0,0,369,143ZM139.55,304.57a16,16,0,0,0-22.63,22.63l67.88,67.88a16,16,0,0,0,22.63-22.63Zm90.51-90.51a16,16,0,0,0-22.63,22.63l67.88,67.88a16,16,0,0,0,22.63-22.63Zm-67.88,22.63a16,16,0,0,0-22.63,22.62L252.69,372.45a16,16,0,0,0,22.62-22.63Z
+    items:
+      - type: group
+        label: Raumsteuerung
+        items:
+          - type: dimmer
+            device: wz-lights
+          - type: dimmer
+            device: group-4
+         
+          - type: switch
+            device: kue-lights
+            config:
+              icon: svg/0 0 512 512/M431.36,80.64a248,248,0,0,0-350.72,0c-96.85,96.85-96.85,253.87,0,350.72a248,248,0,0,0,350.72,0C528.21,334.51,528.21,177.49,431.36,80.64ZM397.42,397.42A200,200,0,1,1,114.58,114.58,200,200,0,1,1,397.42,397.42ZM369,143C306.66,80.75,205.34,80.75,143,143A24,24,0,0,0,177,177,111.77,111.77,0,1,1,335,335,24,24,0,1,0,369,369,159.72,159.72,0,0,0,369,143ZM139.55,304.57a16,16,0,0,0-22.63,22.63l67.88,67.88a16,16,0,0,0,22.63-22.63Zm90.51-90.51a16,16,0,0,0-22.63,22.63l67.88,67.88a16,16,0,0,0,22.63-22.63Zm-67.88,22.63a16,16,0,0,0-22.63,22.62L252.69,372.45a16,16,0,0,0,22.62-22.63Z
+
+          - type: lightscene
+            label: Szenen Wohnzimmer
+            mappings:
+              scenes: group-5/scenes/recall
+      - type: group
+        label: Esszimmer
+        items:
+          - type: dimmer
+            device: group-9
+          - type: select
+            label: Wohnzimmer window open Boost time
+            mappings:
+              value: meq0180941/hm-config/boost-duration
+          - type: select
+            label: Active Week Program
+            mappings:
+              value: meq0180941/hm-config/active-program
+            config:
+              overrideOptionList: ["0","1","2"]
+              optionsLabels: ["winter this is a looong text","sommer","urlaub"]   
+          - type: dimmer
+            device: light-13
+            label: Licht Esszimmer Schrank
+      - type: group
+        label: Wohnzimmer
+        items:
+          - type: dimmer
+            device: wz-stehlampe-papier
+          - type: dimmer
+            device: wz-stehlampe-sofa 
+          - type: dimmer
+            device: wz-lounge-light 
+          - type: pushButton
+            label: Werkstatt Licht an/aus
+            mappings:
+              target: group-4/switch/action
+            config:
+              setState: "toggle"
+              wide: true
+          - type: actionButtons
+            label: Werkstatt Licht an/aus
+            mappings:
+              targets:
+                - selector: meq0191203/switch/state
+                  config:
+                    setState: 'false'
+                    icon: file_download
+                - selector: meq0191203/switch/state
+                  config:
+                    setState: 'true'
+                    size: medium
+                    color: accent
+                    icon: stop
+                - selector: meq0191203/switch/state
+                  config:
+                    setState: 'false'
+                    icon: file_upload
+            config:
+              hideLabel: false
+          - type: status
+            label: Status Test
+            mappings:
+              status: 
+                - selector: meq0191203/switch/state
+                  config:
+                    statusMap:
+                      - forValue: true
+                        type: icon
+                        size: medium
+                        color: primary
+                        icon: fas/fa-play
+                      - forValue: false
+                        type: icon
+                        size: medium
+                        color: accent
+                        icon: fas/fa-stop
+                - selector: meq0191203/switch/state
+                  config:
+                    statusMap:
+                      - forValue: true
+                        type: label
+                        size: large
+                        toValue: ANGESCHALTET
+                        color: primary
+                      - forValue: false
+                        type: label
+                        size: large
+                        toValue: AUSGESCHALTET
+                        color: accent
+          - type: switch
+            device: meq0191203
+      - type: group
+        label: Küche
+        items:
+          - type: switch
+            device: leq0746152
+            label: Licht Decke
+          - type: switch
+            device: meq0191627
+            label: LED Arbeitsplatte
+
+  - id: clock
+    type: default
+    items:
+      - type: clock
+      - type: toggleButton
+        device: group-2
+        label: Wohnzimmer
+      - type: timer
+        label: Echo Wohnzimmer
+        config:
+          deltaSeconds: 4
+        mappings:
+            creationTime: echo-g090rf0474130dpe/timers/timer-1-creation-date
+            duration: echo-g090rf0474130dpe/timers/timer-1-duration
+            label: echo-g090rf0474130dpe/timers/timer-1-label
+            status: echo-g090rf0474130dpe/timers/timer-1-status
+              # mapping:
+              #   in:
+              #     - from: 'off'
+              #       to: false
+              #     - from: 'on'
+              #       to: true
+              #   out:
+              #     - from: false
+              #       to: 'off'
+              #     - from: true
+              #       to: 'on'
+
+      - type: timer
+        label: Echo Buero
+        config:
+          deltaSeconds: 4
+        mappings:
+            creationTime: echo-g090lf0964840r2h/timers/timer-1-creation-date
+            duration: echo-g090lf0964840r2h/timers/timer-1-duration
+            label: echo-g090lf0964840r2h/timers/timer-1-label
+            status: 
+              selector: echo-g090lf0964840r2h/timers/timer-1-status
+              # mapping:
+              #   in:
+              #     - from: 'off'
+              #       to: false
+              #     - from: 'on'
+              #       to: true
+              #   out:
+              #     - from: false
+              #       to: 'off'
+              #     - from: true
+              #       to: 'on'
+
+  - id: security
+    type: default
+    icon: home
+    title: Sicherheit
+    items:
+      - type: device-attention
+        label: Devices needing attention
+        config:
+          lowBattery:
+            queries:
+              - query:
+                  node: 
+                    type: homie-homecontrol/v1/type=maintenance
+                  property: 
+                    id: low-battery
+                valueCondition: true
+              - query:
+                  node: 
+                    type: homie-homecontrol/v1/type=maintenance
+                  property: 
+                    id: battery-level
+                valueCondition:
+                  operator: "<"
+                  value: 30
+          notReady: 
+            queries:
+              - query:
+                  device:
+                    state: 
+                      operator: "<>"
+                      value: "ready"
+            ignoreList:
+              - aaa-test-vdev-2
+              - dev-auto-ctl-1
+              - global-echo-timers-state-dev
+              - security-indoor-motion-dev
+              - shelly-wrapper-dev
+                
+          # notRechable: 
+          #   queries:
+          #     - query:
+          #         node: 
+          #           type: homie-homecontrol/v1/type=maintenance
+          #         property: 
+          #           id: reachable
+          #       valueCondition: false
+          #   ignoreList:
+          #     - aaa-test-vdev-2
+          #     - light-10
+          #     - light-11
+          #     - light-2
+          #     - light-22
+          #     - light-7
+          #     - light-8
+          #     - light-9
+          #     - nanobbqv3
+                
+
+      - type: switch
+        device: db-general-config
+        label: Hide closed contacts
+
+      - type: conditional
+        config:
+          condition: "true"
+          property: db-general-config/contacts-hide-closed/state
+        items:
+          - type: group
+            label: Offene Fenster und Türen
+            items:
+              - type: conditional
+                config:
+                  condition: "true"
+                  property: meq0753110/contact/state
+                items:
+                  - type: contact
+                    device: meq0753110
+                    label: Kinderzimmer Fenster
+              - type: conditional
+                config:
+                  condition: "true"
+                  property: meq0753061/contact/state
+                items:
+                  - type: contact
+                    device: meq0753061
+                    label: Schlafzimmer Fenster
+              - type: conditional
+                config:
+                  condition: "true"
+                  property: oeq0429971/contact/state
+                items:
+                  - type: contact
+                    device: oeq0429971
+                    label: Küche Fenster
+              - type: conditional
+                config:
+                  condition: "true"
+                  property: meq0753071/contact/state
+                items:
+                  - type: contact
+                    device: meq0753071
+                    label: Esszimmer Fenster
+              - type: conditional
+                config:
+                  condition: "true"
+                  property: oeq2132349/contact/state
+                items:
+                  - type: contact
+                    device: oeq2132349
+                    label: Terassentür
+              - type: conditional
+                config:
+                  condition: "true"
+                  property: meq0753104/contact/state
+                items:
+                  - type: contact
+                    device: meq0753104
+                    label: Wohnzimmer Fenster
+              - type: conditional
+                config:
+                  condition: "true"
+                  property: meq0753104/contact/state
+                items:
+                  - type: contact
+                    device: meq0753104
+                    label: Wohnzimmer Fenster
+              - type: conditional
+                config:
+                  condition: "true"
+                  property: oeq0429851/contact/state
+                items:
+                  - type: contact
+                    device: oeq0429851
+                    label: Bad Fenster
+              - type: conditional
+                config:
+                  condition: "true"
+                  property: oeq0431016/contact/state
+                items:
+                  - type: contact
+                    device: oeq0431016
+                    label: Gästezimmer Fenster
+              - type: conditional
+                config:
+                  condition: "true"
+                  property: req0227787/contact/state
+                items:
+                  - type: contact
+                    device: req0227787
+                    label: Gästetoilette Fenster
+              - type: conditional
+                config:
+                  condition: "true"
+                  property: oeq0706059/contact/state
+                items:
+                  - type: contact
+                    device: oeq0706059
+                    label: Werkstatt Fenster
+              - type: conditional
+                config:
+                  condition: "true"
+                  property: oeq0706161/contact/state
+                items:
+                  - type: contact
+                    device: oeq0706161
+                    label: Werkstatt Tür
+              - type: conditional
+                config:
+                  condition: "true"
+                  property: oeq0706187/contact/state
+                items:
+                  - type: contact
+                    device: oeq0706187
+                    label: Büro Fenster
+      - type: conditional
+        config:
+          condition: "false"
+          property: db-general-config/contacts-hide-closed/state
+        items:
+          - type: group
+            label: Alle Fenster und Türen
+            items:
+                - type: contact
+                  device: oeq2132384
+                  label: Wohnungstür
+                - type: contact
+                  device: meq0753110
+                  label: Kinderzimmer Fenster
+                - type: contact
+                  device: meq0753061
+                  label: Schlafzimmer Fenster
+                - type: contact
+                  device: oeq0429971
+                  label: Küche Fenster
+                - type: contact
+                  device: meq0753071
+                  label: Esszimmer Fenster
+                - type: contact
+                  device: oeq2132349
+                  label: Terassentür
+                - type: contact
+                  device: meq0753104
+                  label: Wohnzimmer Fenster
+                - type: contact
+                  device: meq0753104
+                  label: Wohnzimmer Fenster
+                - type: contact
+                  device: oeq0429851
+                  label: Bad Fenster
+                - type: contact
+                  device: oeq0431016
+                  label: Gästezimmer Fenster
+                - type: contact
+                  device: req0227787
+                  label: Gästetoilette Fenster
+                - type: contact
+                  device: oeq0706059
+                  label: Werkstatt Fenster
+                - type: contact
+                  device: oeq0706161
+                  label: Werkstatt Tür
+                - type: contact
+                  device: oeq0706187
+                  label: Büro Fenster
+  - id: clima
+    title: Temperatur & Luftfeuchtigkeit
+    type: default
+    icon: fas/fa-cloud-sun
+    launchOptions: 
+      # pageId: main.dashcfg
+      # wide: false
+      cardId: clima
+    items:
+      - type: tempHumBars
+        label: "TTTTTTEEEEEEESSSSSSSSTTTTTT"
+        # device: meq1601978
+        config:
+          hideLabel: false
+        mappings:
+          temperature: meq1601978/weather/temperature
+          humidity: meq1601978/weather/humidity
+      - type: tempHumBars
+        label: Garten
+        mappings:
+          temperature: meq1601978/weather/temperature
+          humidity: meq1601978/weather/humidity
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Garten
+            mappings:
+              primarySensor: meq1601978/weather/temperature
+            config:
+              hideReading: true
+          - type: tempHumBars
+            mappings:
+              temperature: meq1601978/weather/temperature
+              humidity: meq1601978/weather/humidity
+      - type: dualSensorBig
+        mappings:
+          bigSensorreading: meq1601978/weather/temperature
+          smallSensorreading: meq1601978/weather/humidity
+
+      - type: simpleSensor
+        label: Garten
+        mappings:
+          primarySensor: meq1601978/weather/temperature
+        config:
+          hideReading: true
+          hideLabel: true
+      - type: simpleSensor
+        label: Wohnzimmer TTEST
+        device: meq0180941
+        # mappings:
+        #   primarySensor: meq0180941/weather/temperature
+        #   secondarySensor: meq0180941/weather/humidity
+      - type: simpleSensor
+        label: Gästezimmer
+        mappings:
+          primarySensor: leq1257637/weather/temperature
+          secondarySensor: leq1257637/weather/humidity
+      - type: simpleSensor
+        label: Schlafzimmer
+        mappings:
+          primarySensor: neq0937510/weather/temperature
+          secondarySensor: neq0937510/weather/humidity
+      - type: simpleSensor
+        label: Hausgang
+        device: sensor-4
+      - type: simpleSensor
+        label: Bad
+        device: oeq0300066
+      - type: simpleSensor
+        label: Gästezimmer
+        device: leq1257637
+      - type: simpleSensor
+        label: Werkstatt
+        device: leq0868067
+      - type: simpleSensor
+        label: Keller
+        device: leq0122770
+
+
+
+  - id: shutters
+    title: Rolläden
+    type: default
+    icon: home
+    items:
+      - type: rollerShutter
+        device: wz-shutter-fenster
+        config:
+          levels:
+            openPosition: 0
+            closedPosition: 100 
+            halfopenPosition: 32
+            blindsPosition: 72
+
+      - type: rollerShutter
+        device: wz-shutter-terassentuer
+      - type: bbq
+        config:
+          device: nanobbqv3
+
+
+  - id: heating
+    title: Heizung
+    type: default
+    icon: fas/fa-temperature-low
+    launchOptions: 
+      cardId: heating-control
+      title: Heizungscenter
+    items:
+      - type: thermostat
+        device: meq0180941
+        label: Wohnzimmer
+      - type: thermostat
+        device: neq0937510
+        label: Schlafzimmer
+      - type: thermostat
+        device: meq0478846
+        label: Kinderzimmer
+      - type: thermostat
+        device: oeq0300066
+        label: Bad
+      - type: thermostat
+        device: meq0449630
+        label: Toilette
+
+  - id: graphs
+    type: default
+    title: Graph Tests
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          # rangePickerConfig:
+          #   style: 'simple'
+          #   defaultRange: 
+          #     range:
+          #       start: -8h
+          #     aggregateWindow: 1m
+          size: medium
+          refreshInterval: 10
+          graphDefs:
+            - title: Garten
+              hideLegend: true
+              hideXAxisLabels: true
+              yAxis:
+              - id: temp
+                position: left
+              - id: hum
+                position: right
+              measurements:
+              - yAxisId: temp
+                label: Temperatur
+                measurement: meq1601978/weather/temperature
+              - yAxisId: temp
+                label: Temperatur
+                measurement: meq0180941/weather/temperature
+              - yAxisId: temp
+                label: Temperatur
+                measurement: neq0937510/weather/temperature
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: meq1601978/weather/humidity
+  - id: keller
+    title: Keller
+    type: default
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          hideRangePicker: true
+          # rangePickerConfig:
+          #   style: 'extended'
+          #   defaultRange: 
+          #     label: 2week
+          #     range: 
+          #       start: -1w
+          #     aggregateWindow: 1h
+          size: smaller
+          refreshInterval: 300
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 10
+                suggestedMax: 25
+              - id: hum
+                position: right
+                suggestedMin: 52
+                suggestedMax: 62
+              hideLegend: true
+              hideXAxisLabels: true
+              hideYAxisLabels: false
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: leq0122770/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: leq0122770/weather/temperature
+
+
+  - id: hidden1
+    type: default
+    title: I am hidden normally
+    items:
+      - type: clock
+

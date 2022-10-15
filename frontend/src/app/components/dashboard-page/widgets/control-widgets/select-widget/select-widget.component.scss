@@ -1,0 +1,35 @@
+hc-widget-layout{
+    height: 48px;
+}
+
+// button :first-child{
+//     margin-left: 3px;
+//     margin-right: 0px;
+// }
+
+mat-select {
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    min-width: 128px;
+    width: 164px;
+    max-width: 200px;
+}
+
+select-small{
+    width: 130px;
+}
+select-medium{
+    width: 230px;
+}
+select-large{
+    width: 330px;
+}
+
+
+
+// button :last-child{
+//     margin-left: 0px;
+//     margin-right: 3px;
+// }

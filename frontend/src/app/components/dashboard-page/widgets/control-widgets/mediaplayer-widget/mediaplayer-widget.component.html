@@ -1,0 +1,64 @@
+<div class="widget-label">{{widget.label}}</div>
+<div class="control">
+  <div class="left">
+    <img class="coverImg" src="/proxy?url={{imageUrl$ | async }}" />
+
+  </div>
+  <div class="right">
+    <!-- <div class="widget-label">{{widget.label}}</div> -->
+    <div class="title">{{title$ | async }}</div>
+    <div class="subtitle">{{subText1$ | async }}</div>
+    <div class="subtitle">{{subText2$ | async }}</div>
+
+    <div class="subtitle" *ngIf="(duration$ | async) > 0">{{(position$ | async )* 1000 | date:'mm:ss' }} / {{(duration$ | async) * 1000 | date:'mm:ss'}}</div>
+    <div class="media-progress" *ngIf="(duration$ | async) > 0">
+      <awac-pgbar [min]="0" [max]="duration$ | async" [value]="position$ | async " bar-color="pgb-accent"></awac-pgbar>
+    </div>
+    <!-- <div>{{shuffle$ | async }}</div> -->
+    <!-- <div>{{volume$ | async }}</div> -->
+
+  </div>
+</div>
+<div class="player center-layout">
+
+
+  <ng-container *ngLet="(repeat$ | async) as repeat">
+    <button *ngIf="repeat !== 'disabled'" mat-icon-button class="repeat-button"
+      [color]="repeat === 'on' ? 'accent' : ''" (click)="toggleRepeat(repeat)">
+      <awac-icon name="fas/fa-repeat"></awac-icon>
+    </button>
+  </ng-container>
+
+  <button mat-mini-fab color="" (click)="previous()">
+    <awac-icon name="fas/fa-step-backward"></awac-icon>
+  </button>
+  <ng-container *ngLet="(playState$ | async) as playState">
+    <button mat-fab color="primary" (click)="playPause(playState)">
+      <awac-icon name="fas/fa-play" *ngIf="playState === 'paused' || playState === 'stopped' "></awac-icon>
+      <awac-icon name="fas/fa-pause" *ngIf="playState === 'playing'"></awac-icon>
+    </button>
+  </ng-container>
+  <button mat-mini-fab color="" (click)="next()">
+    <awac-icon name="fas/fa-step-forward"></awac-icon>
+  </button>
+
+  <ng-container *ngLet="(shuffle$ | async) as shuffle">
+    <button *ngIf="shuffle !== 'disabled'" mat-icon-button class="shuffle-button"
+      [color]="shuffle === 'on' ? 'accent' : ''" (click)="toggleShuffle(shuffle)">
+      <awac-icon name="fas/fa-random"></awac-icon>
+    </button>
+  </ng-container>
+
+</div>
+<div class="volume">
+  <ng-container *ngLet="(mute$ | async) as mute">
+    <button *ngIf="mute !== 'disabled'" mat-icon-button class="mute-button" [color]="mute === 'on' ? 'accent' : ''"
+      (click)="toggleMute(mute)">
+      <awac-icon *ngIf="mute === 'off'" name="fas/fa-volume-up"></awac-icon>
+      <awac-icon *ngIf="mute === 'on'" name="fas/fa-volume-xmark"></awac-icon>
+    </button>
+    <awac-icon *ngIf="mute === 'disabled'" name="fas/fa-volume-up"></awac-icon>
+  </ng-container>
+  <mat-slider [thumbLabel]="true" [step]="5" [tickInterval]="1" [min]="0" [max]="100" [value]="volume$ | async"
+    (change)="setVolume($event.value)" class="fill-remaining-space"></mat-slider>
+</div>

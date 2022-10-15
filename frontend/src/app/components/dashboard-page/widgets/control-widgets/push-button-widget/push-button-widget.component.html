@@ -1,0 +1,12 @@
+<hc-widget-layout *ngIf="!widget.config?.wide">
+  <span hc-widget-label>{{widget.label}}</span>
+  <hc-widget-controls>
+    <button mat-mini-fab color="primary"  (click)="setState()">
+      <awac-icon *ngIf="!widget.config?.hideIcon"
+        name="{{ !!widget.config?.icon ? widget.config?.icon : 'fas/fa-power-off' }}"></awac-icon>
+    </button>
+  </hc-widget-controls>
+</hc-widget-layout>
+<hc-widget-layout *ngIf="widget.config?.wide">
+  <button mat-raised-button class="toggle-button" (click)="setState()">{{widget.label}}</button>
+</hc-widget-layout>

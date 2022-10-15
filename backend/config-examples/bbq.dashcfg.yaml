@@ -1,0 +1,26 @@
+layout:
+  autoReflow: single
+  small:
+    columns:
+      - - bbq
+  medium:
+    columns:
+      - - bbq
+  large:
+    columns:
+      - - bbq
+  xlarge:
+    columns:
+      - - bbq
+cards:
+  - id: bbq
+    title: BBQ
+    icon: fas/fa-fire
+    type: conditional
+    config:
+      property: nanobbqv3/maintenance/reachable
+      condition: "true"
+    items:
+      - type: bbq
+        config:
+          device: nanobbqv3

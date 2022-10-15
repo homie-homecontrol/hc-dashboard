@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="pgbar">
+        <div [ngStyle]="{'width.%': positionTemp, 'left.%': 0}" class="progress   mat-elevation-z2" [ngClass]="{'primary-bg':temp>=min&& temp<=max, 'accent-bg': temp<min || temp> max}"  ></div>
+    </div>
+    <div class="overlayInfos">
+        <div *ngIf="_min>0" [ngStyle]="{'left.%': positionMin}" class="indicatorText min">{{_min}}{{unit}}</div>
+        <div [ngStyle]="{'left.%': positionMax}" class="indicatorText max" [ngClass]="{'max-single': _min===0}">{{_max}}{{unit}}</div>
+        <div [ngStyle]="{'left.%': positionTemp}" class="indicatorPositionText"><mat-icon>arrow_drop_down</mat-icon></div>
+        <div *ngIf="_min>0" [ngStyle]="{'left.%': positionMin}"  class="indicator"></div>
+        <div [ngStyle]="{'left.%': positionMax}"  class="indicator"></div>
+    </div>
+</div>

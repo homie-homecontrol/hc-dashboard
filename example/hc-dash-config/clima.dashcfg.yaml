@@ -1,0 +1,973 @@
+layout:
+  autoReflow: single
+  small:
+    columns:
+      - - garten
+        - keller
+        - bad
+        - schlafzimmer
+        - kinderzimmer
+        - wohnbereich
+        - gaestezimmer
+        - buero
+        - werkstatt
+
+  large:
+    columns:
+      - - garten
+        - keller
+        - buero
+      - - bad
+        - schlafzimmer
+        - gaestezimmer
+      - - kinderzimmer
+        - wohnbereich
+        - werkstatt
+  xlarge:
+    columns:
+      - - garten
+        - keller
+      - - schlafzimmer
+        - kinderzimmer
+      - - wohnbereich
+        - gaestezimmer
+      - - bad
+        - buero
+        - werkstatt
+
+cards:
+  - id: garten
+    title: Garten
+    type: default
+    launchOptions:
+      cardId: garten-big
+      wide: true
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: medium
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 1
+            ranges:
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: -10
+                suggestedMax: 35
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: meq1601978/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: meq1601978/weather/temperature
+  - id: keller
+    title: Keller
+    type: default
+    launchOptions:
+      cardId: keller-big
+      wide: true
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: medium
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 1
+            ranges:
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: leq0122770/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: leq0122770/weather/temperature
+  - id: schlafzimmer
+    title: Schlafzimmer
+    type: default
+    launchOptions:
+      cardId: schlafzimmer-big
+      wide: true
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: medium
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 1
+            ranges:
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit (Wand)
+                measurement: neq0937510/weather/humidity
+              - yAxisId: temp
+                label: Temperatur (Wand)
+                measurement: neq0937510/weather/temperature
+              - yAxisId: hum
+                label: Luftfeuchtigkeit (Ecke)
+                measurement: sensor-34/weather/humidity
+              - yAxisId: temp
+                label: Temperatur (Ecke)
+                measurement:  sensor-34/weather/temperature
+  - id: kinderzimmer
+    title: Kinderzimmer
+    type: default
+    launchOptions:
+      cardId: kinderzimmer-big
+      wide: true
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: medium
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 1
+            ranges:
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit (Wand)
+                measurement: meq0478846/weather/humidity
+              - yAxisId: temp
+                label: Temperatur (Wand)
+                measurement: meq0478846/weather/temperature
+              - yAxisId: hum
+                label: Luftfeuchtigkeit (Ecke)
+                measurement: sensor-37/weather/humidity
+              - yAxisId: temp
+                label: Temperatur (Ecke)
+                measurement:  sensor-37/weather/temperature
+  - id: wohnbereich
+    title: Wohnbereich
+    type: default
+    launchOptions:
+      cardId: wohnbereich-big
+      wide: true
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: medium
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 1
+            ranges:
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit (Wand)
+                measurement: meq0180941/weather/humidity
+              - yAxisId: temp
+                label: Temperatur (Wand)
+                measurement: meq0180941/weather/temperature
+              - yAxisId: hum
+                label: Luftfeuchtigkeit (Ecke)
+                measurement: sensor-40/weather/humidity
+              - yAxisId: temp
+                label: Temperatur (Ecke)
+                measurement: sensor-40/weather/temperature
+  - id: gaestezimmer
+    title: Gästezimmer
+    type: default
+    launchOptions:
+      cardId: gaestezimmer-big
+      wide: true
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: medium
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 1
+            ranges:
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: leq1257637/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: leq1257637/weather/temperature
+  - id: buero
+    title: Büro
+    type: default
+    launchOptions:
+      cardId: buero-big
+      wide: true
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: medium
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 1
+            ranges:
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: leq1258226/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: leq1258226/weather/temperature
+  - id: werkstatt
+    title: Werkstatt
+    type: default
+    launchOptions:
+      cardId: werkstatt-big
+      wide: true
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: medium
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 1
+            ranges:
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: leq0868067/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: leq0868067/weather/temperature
+  - id: bad
+    title: Badezimmer
+    type: default
+    launchOptions:
+      cardId: bad-big
+      wide: true
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: medium
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 1
+            ranges:
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: oeq0300066/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: oeq0300066/weather/temperature
+
+
+
+# =============================================================================================================================
+# =============================================================================================================================
+# =============================================================================================================================
+
+
+  - id: garten-big
+    title: Garten
+    type: default
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: larger
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 3
+            ranges:
+              - label: 6 months
+                range:
+                  start: -6mo
+                aggregateWindow: 4h
+                showDate: true
+              - label: 1 month
+                range:
+                  start: -1mo
+                aggregateWindow: 1h
+                showDate: true
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: -10
+                suggestedMax: 35
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: meq1601978/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: meq1601978/weather/temperature
+  - id: keller-big
+    title: Keller
+    type: default
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: larger
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 3
+            ranges:
+              - label: 6 months
+                range:
+                  start: -6mo
+                aggregateWindow: 4h
+                showDate: true
+              - label: 1 month
+                range:
+                  start: -1mo
+                aggregateWindow: 1h
+                showDate: true
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: leq0122770/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: leq0122770/weather/temperature
+  - id: schlafzimmer-big
+    title: Schlafzimmer
+    type: default
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: larger
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 3
+            ranges:
+              - label: 6 months
+                range:
+                  start: -6mo
+                aggregateWindow: 4h
+                showDate: true
+              - label: 1 month
+                range:
+                  start: -1mo
+                aggregateWindow: 1h
+                showDate: true
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit (Wand)
+                measurement: neq0937510/weather/humidity
+              - yAxisId: temp
+                label: Temperatur (Wand)
+                measurement: neq0937510/weather/temperature
+              - yAxisId: hum
+                label: Luftfeuchtigkeit (Ecke)
+                measurement: sensor-34/weather/humidity
+              - yAxisId: temp
+                label: Temperatur (Ecke)
+                measurement:  sensor-34/weather/temperature
+  - id: kinderzimmer-big
+    title: Kinderzimmer
+    type: default
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: larger
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 3
+            ranges:
+              - label: 6 months
+                range:
+                  start: -6mo
+                aggregateWindow: 4h
+                showDate: true
+              - label: 1 month
+                range:
+                  start: -1mo
+                aggregateWindow: 1h
+                showDate: true
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit (Wand)
+                measurement: meq0478846/weather/humidity
+              - yAxisId: temp
+                label: Temperatur (Wand)
+                measurement: meq0478846/weather/temperature
+              - yAxisId: hum
+                label: Luftfeuchtigkeit (Ecke)
+                measurement: sensor-37/weather/humidity
+              - yAxisId: temp
+                label: Temperatur (Ecke)
+                measurement:  sensor-37/weather/temperature
+  - id: wohnbereich-big
+    title: Wohnbereich
+    type: default
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: larger
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 3
+            ranges:
+              - label: 6 months
+                range:
+                  start: -6mo
+                aggregateWindow: 4h
+                showDate: true
+              - label: 1 month
+                range:
+                  start: -1mo
+                aggregateWindow: 1h
+                showDate: true
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit (Wand)
+                measurement: meq0180941/weather/humidity
+              - yAxisId: temp
+                label: Temperatur (Wand)
+                measurement: meq0180941/weather/temperature
+              - yAxisId: hum
+                label: Luftfeuchtigkeit (Ecke)
+                measurement: sensor-40/weather/humidity
+              - yAxisId: temp
+                label: Temperatur (Ecke)
+                measurement: sensor-40/weather/temperature
+  - id: gaestezimmer-big
+    title: Gästezimmer
+    type: default
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: larger
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 3
+            ranges:
+              - label: 6 months
+                range:
+                  start: -6mo
+                aggregateWindow: 4h
+                showDate: true
+              - label: 1 month
+                range:
+                  start: -1mo
+                aggregateWindow: 1h
+                showDate: true
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: leq1257637/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: leq1257637/weather/temperature
+  - id: buero-big
+    title: Büro
+    type: default
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: larger
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 3
+            ranges:
+              - label: 6 months
+                range:
+                  start: -6mo
+                aggregateWindow: 4h
+                showDate: true
+              - label: 1 month
+                range:
+                  start: -1mo
+                aggregateWindow: 1h
+                showDate: true
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: leq1258226/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: leq1258226/weather/temperature
+  - id: werkstatt-big
+    title: Werkstatt
+    type: default
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: larger
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 3
+            ranges:
+              - label: 6 months
+                range:
+                  start: -6mo
+                aggregateWindow: 4h
+                showDate: true
+              - label: 1 month
+                range:
+                  start: -1mo
+                aggregateWindow: 1h
+                showDate: true
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: leq0868067/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: leq0868067/weather/temperature
+  - id: bad-big
+    title: Badezimmer
+    type: default
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: larger
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 3
+            ranges:
+              - label: 6 months
+                range:
+                  start: -6mo
+                aggregateWindow: 4h
+                showDate: true
+              - label: 1 month
+                range:
+                  start: -1mo
+                aggregateWindow: 1h
+                showDate: true
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 12
+                suggestedMax: 30
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: oeq0300066/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: oeq0300066/weather/temperature

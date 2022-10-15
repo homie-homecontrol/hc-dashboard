@@ -1,0 +1,133 @@
+<div class="close">
+    <mat-toolbar color="primary">
+        {{sensorSettings.name}}
+        <button mat-icon-button (click)="closeDialog(false)">
+            <awac-icon name="close"></awac-icon>
+        </button>
+    </mat-toolbar>
+</div>
+<div class="sensor-settings">
+
+    <div class="settings-line">
+        <span class="settings-line-label">Name:</span>
+        <div class="settings-line-controls">
+            <mat-form-field class="example-full-width">
+                <input matInput [(ngModel)]="sensorSettings.name" type="text" maxlength="10" />
+
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="settings-line">
+        <span class="settings-line-label">Min:</span>
+        <div class="settings-line-controls tempSlider">
+
+            <mat-slider [thumbLabel]="true" [step]="sensorSettings.subject === 'bbq' ? 5: 1" [tickInterval]="1" [min]="0" [max]="sensorSettings.subject === 'bbq' ? 210: 100"
+                [value]="sensorSettings.min" (change)="setMin($event.value)"></mat-slider>
+
+            <button mat-icon-button (click)="addMin(-1)">
+                <mat-icon>remove</mat-icon>
+            </button>
+            <span class="temp">{{sensorSettings.min}}°C</span>
+            <button mat-icon-button (click)="addMin(1)">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="settings-line">
+        <span class="settings-line-label">Max:</span>
+        <div class="settings-line-controls tempSlider">
+
+            <mat-slider [thumbLabel]="true" [step]="sensorSettings.subject === 'bbq' ? 5: 1" [tickInterval]="1" [min]="0" [max]="sensorSettings.subject === 'bbq' ? 210: 100"
+                [value]="sensorSettings.max" (change)="setMax($event.value)"></mat-slider>
+
+            <button mat-icon-button (click)="addMax(-1)">
+                <mat-icon>remove</mat-icon>
+            </button>
+            <span class="temp">{{sensorSettings.max}}°C</span>
+            <button mat-icon-button (click)="addMax(1)">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="settings-line">
+        <span class="settings-line-label">Alarm:</span>
+        <div class="settings-line-controls">
+            <div class="alarmToggles">
+                <mat-slide-toggle class="example-margin" [checked]="isAlarmPush()" (change)="setPushAlarm()">
+                    Push</mat-slide-toggle>
+                <mat-slide-toggle class="example-margin" [checked]="isAlarmSummer()" (change)="setSummerAlarm()">Summer
+                </mat-slide-toggle>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="settings-line">
+        <span class="settings-line-label">Typ:</span>
+        <div class="settings-line-controls">
+
+            <mat-select [value]="sensorSettings.typ" (selectionChange)="setTyp($event.value)">
+                <mat-option *ngFor="let typ of types" [value]="typ.value">
+                    {{typ.label}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+
+    <div class="settings-line">
+        <span class="settings-line-label">Color:</span>
+        <div class="settings-line-controls">
+            <!-- <div class="typen">
+        <span class="labelText">Color:</span> -->
+            <mat-select [value]="selectedColor" (selectionChange)="setColor($event.value)">
+                <mat-select-trigger>
+                    <awac-icon [ngStyle]="{ 'color': toRGB(selectedColor) }" name="fas/fa-circle"></awac-icon>
+                </mat-select-trigger>
+                <mat-option *ngFor="let color of colors" [value]="color">
+                    <!-- {{color.label}} -->
+                    <awac-icon [ngStyle]="{ 'color': toRGB(color) }" name="fas/fa-circle"></awac-icon>{{color.label}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+
+
+    <div class="settings-line">
+        <span class="settings-line-label">Art:</span>
+        <div class="settings-line-controls">
+            <mat-button-toggle-group name="subject" [value]="sensorSettings.subject"
+                (change)="setSubject($event.value);">
+                <mat-button-toggle value="meat">Fleisch</mat-button-toggle>
+                <mat-button-toggle value="bbq">BBQ</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+    </div>
+
+
+    <!-- <div class="subject">
+        <span class="labelText">Messgegenstand:</span>
+        <mat-button-toggle-group name="subject" [value]="sensorSettings.subject" (change)="setSubject($event.value);" >
+            <mat-button-toggle value="meat">Fleisch</mat-button-toggle>
+            <mat-button-toggle value="bbq">BBQ</mat-button-toggle>
+          </mat-button-toggle-group>
+    </div> -->
+
+    <button class="wizzard-botton" mat-raised-button color="primary" (click)="openWizard()">
+        <awac-icon name="fas/fa-hat-wizard"></awac-icon>BBQ Wizzard
+    </button>
+
+</div>
+<div class="action-bar">
+    <button mat-raised-button (click)="closeDialog(true)">
+        <awac-icon name="fas/fa-save"></awac-icon> Save
+    </button>
+    <button mat-raised-button (click)="closeDialog(false)">
+        <awac-icon name="fas/fa-window-close"></awac-icon> Cancel
+    </button>
+</div>

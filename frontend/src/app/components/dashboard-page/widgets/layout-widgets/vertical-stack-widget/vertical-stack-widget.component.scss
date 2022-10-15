@@ -1,0 +1,17 @@
+.container{
+    width: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+
+hc-generic-widget {
+    width: 100%;
+    padding-left: 4px;
+}
+hc-generic-widget:first-child {
+    padding-left: 0px;
+}

@@ -1,0 +1,4 @@
+<div class="group-container">
+    <span class="title-text" *ngIf="widget.label">{{widget.label}}</span>
+    <hc-generic-widget *ngFor="let item of widget.items" [widget]="item"></hc-generic-widget>
+</div>

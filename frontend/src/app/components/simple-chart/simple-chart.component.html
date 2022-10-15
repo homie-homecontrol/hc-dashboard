@@ -1,0 +1,4 @@
+<div *ngIf="(chartData$ | async) && (chartOptions$ | async) && (chartLabels$ | async)" class="chart-container">
+    <canvas #chart=base-chart height="{{height$ | async}}"  baseChart [datasets]="chartData$ | async" [options]="chartOptions$ | async" 
+     [colors]="colors$ | async" [chartType]="'line'" [labels]="chartLabels$ | async" width="100%"></canvas>
+</div>

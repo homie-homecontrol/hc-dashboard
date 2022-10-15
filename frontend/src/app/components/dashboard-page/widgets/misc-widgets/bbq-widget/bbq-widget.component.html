@@ -1,0 +1,72 @@
+<div class="battery mat-elevation-z1">
+
+    <mat-icon fontSet="fas" fontIcon="fa-battery-full"></mat-icon>
+    <span>{{ battery$ | async | number:'1.0-0' }}%</span>
+
+    <awac-pgbar min="0" max="100" [value]="battery$ | async" bar-color="pgb-accent"></awac-pgbar>
+
+</div>
+
+<div class="cardTable">
+    <div class="cardTableCol">
+        <div class="cardTableColHeader">BBQ</div>
+        <div class="bbqCards">
+
+            <ng-container *ngFor="let mappingSubject of mappingSubjects">
+                <hc-bbqchannel-card class="bbqCard"
+                    *ngIf="(mappingSubject.subject$ | async) === 'bbq' && (mappingSubject.connected$ | async)"
+                    [channelMapping]="mappingSubject.channel">
+                </hc-bbqchannel-card>
+            </ng-container>
+        </div>
+    </div>
+    <div class="cardTableCol">
+        <div class="cardTableColHeader">Fleisch</div>
+        <div class="bbqCards">
+
+            <ng-container *ngFor="let mappingSubject of mappingSubjects">
+                <hc-bbqchannel-card class="bbqCard"
+                    *ngIf="(mappingSubject.subject$ | async) === 'meat' && (mappingSubject.connected$ | async)"
+                    [channelMapping]="mappingSubject.channel">
+                </hc-bbqchannel-card>
+            </ng-container>
+        </div>
+    </div>
+</div>
+<div class="time-ranges">
+
+    <div class="range-text">Timerange: {{TimeRanges[(timeRange$ | async)]}}</div>
+    <div class="range-slider">
+        <div class="time-ranges-icons">
+            <button mat-flat-button (click)="rangeMinus()">
+                <awac-icon name="fas/fa-search-minus"></awac-icon>
+            </button>
+        </div>
+
+        <mat-slider class="time-range-slider" [displayWith]="formatTimeRangeLabel" tickInterval="1" step="1" min="0"
+            [max]="TimeRanges.length-1" aria-label="units" (change)="_timeRange$.next($event.value);"
+            [value]="timeRange$ | async">
+        </mat-slider>
+        <div class="time-ranges-icons">
+            <button mat-flat-button (click)="rangePlus()">
+                <awac-icon name="fas/fa-search-plus"></awac-icon>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="charts">
+    <div class="chart-container">
+
+        <hc-simple-chart *ngIf="(bbqChannels$ | async)?.length > 0" [chartData]="chartDataBBQ$ | async" [height]="'300'"
+            [colorThemeName]="bbqChannelColorTheme$ | async" [chartOptions]="chartOptions"
+            [chartLabels]="lineChartLabelsBBQ$ | async">
+        </hc-simple-chart>
+    </div>
+    <div class="chart-container">
+        <!-- {{(meatChannels$ | async).map(channel=>JSON.stringify(channel)).join(', ')}} -->
+        <hc-simple-chart *ngIf="(meatChannels$ | async)?.length > 0" [chartData]="chartDataMeat$ | async"
+            [height]="'300'" [colorThemeName]="meatChannelColorTheme$ | async" [chartOptions]="chartOptions"
+            [chartLabels]="lineChartLabelsMeat$ | async">
+        </hc-simple-chart>
+    </div>
+</div>

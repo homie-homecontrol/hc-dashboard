@@ -1,0 +1,23 @@
+<hc-widget-layout>
+  <span *ngIf="widget.label && !widget.config?.hideLabel" hc-widget-label>{{widget.label}}</span>
+  <!-- <hc-widget-controls> -->
+    <div class="controls" [attr.hc-widget-controls]="widget.label ? true : null">
+      <div>
+        <mat-icon *ngIf="!widget.config?.hideValueIcons" class="valueIcon" fontSet="fas" fontIcon="fa-tint"></mat-icon>
+        <span>{{ hum$ | async | number:'1.0-0' }}%</span>
+        <awac-pgbar min="15" max="85" [value]="hum$ | async" bar-color="pgb-primary" ></awac-pgbar> 
+      </div>
+      <div>
+        <mat-icon *ngIf="!widget.config?.hideValueIcons" class="valueIcon" fontSet="fas" fontIcon="fa-thermometer-three-quarters"></mat-icon>
+        <span>{{ temp$ | async | number:'1.1-1' }}°C</span>
+        <awac-pgbar min="5" max="35" [value]="temp$ | async" bar-color="pgb-accent" ></awac-pgbar>
+      </div>
+      <div>
+        <mat-icon *ngIf="!widget.config?.hideValueIcons && !widget.config?.hideDewPoint" class="valueIcon" fontSet="fas" fontIcon="fa-snowflake"></mat-icon>
+        <span>{{ dewpoint$ | async | number:'1.1-1' }}°C</span>
+        <awac-pgbar min="5" max="35" [value]="dewpoint$ | async" bar-color="pgb-warn" ></awac-pgbar>
+      </div>
+    </div>
+    
+  <!-- </hc-widget-controls> -->
+</hc-widget-layout>

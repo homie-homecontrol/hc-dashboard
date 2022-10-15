@@ -1,0 +1,46 @@
+
+.time-ranges{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 84px;
+}
+
+
+.range-slider{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // min-height: 84px;
+}
+
+.time-ranges-icons{
+    flex: 1 0 15%;
+    text-align: center;
+}
+
+.time-range-slider{
+    // width: 100%;
+    flex: 1 1 70%;
+}
+
+.range-text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.extended {
+    display: flex;
+    flex-direction: column;
+  }
+  
+.extended > * {
+    width: 100%;
+}
+  
+.time-picker-component .mat-form-field-infix {
+    display: inherit;
+  }

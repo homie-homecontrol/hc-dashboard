@@ -1,0 +1,155 @@
+layout:
+  autoReflow: single
+  small:
+    columns:
+      - - garten
+        - keller
+        - bad
+        - schlafzimmer
+        - kinderzimmer
+        - wohnbereich
+        - gaestezimmer
+        - buero
+        - werkstatt
+
+  large:
+    columns:
+      - - garten
+        - keller
+        - buero
+      - - bad
+        - schlafzimmer
+        - gaestezimmer
+      - - kinderzimmer
+        - wohnbereich
+        - werkstatt
+  xlarge:
+    columns:
+      - - garten
+        - keller
+      - - schlafzimmer
+        - kinderzimmer
+      - - wohnbereich
+        - gaestezimmer
+      - - bad
+        - buero
+        - werkstatt
+
+cards:
+  - id: wohnbereich
+    title: Wohnbereich
+    type: default
+    launchOptions:
+      cardId: wohnbereich-big
+      wide: true
+    items:
+      - type: graph
+        label: Heizung Wohnbereich
+        config:
+          size: medium
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 1
+            ranges:
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 5
+                suggestedMax: 30
+              - id: valve
+                position: right
+                suggestedMin: 0
+                suggestedMax: 100
+              measurements:
+              - yAxisId: temp
+                label: Zieltemp (WZ)
+                measurement: leq0855632/thermostat/set-temperature
+              - yAxisId: valve
+                label: Ventil (WZ)
+                measurement: leq0855632/thermostat/valve
+              - yAxisId: temp
+                label: Zieltemp (EZ)
+                measurement: meq0006971/thermostat/set-temperature
+              - yAxisId: valve
+                label: Ventil (EZ)
+                measurement: qeq1118733/thermostat/valve
+
+# =============================================================================================================================
+# =============================================================================================================================
+# =============================================================================================================================
+
+
+  - id: wohnbereich-big
+    title: Wohnbereich
+    type: default
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: larger
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 3
+            ranges:
+              - label: 6 months
+                range:
+                  start: -6mo
+                aggregateWindow: 4h
+                showDate: true
+              - label: 1 month
+                range:
+                  start: -1mo
+                aggregateWindow: 1h
+                showDate: true
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 5
+                suggestedMax: 30
+              - id: valve
+                position: right
+                suggestedMin: 0
+                suggestedMax: 100
+              measurements:
+              - yAxisId: temp
+                label: Zieltemp (WZ)
+                measurement: leq0855632/thermostat/set-temperature
+              - yAxisId: valve
+                label: Ventil (WZ)
+                measurement: leq0855632/thermostat/valve
+              - yAxisId: temp
+                label: Zieltemp (EZ)
+                measurement: meq0006971/thermostat/set-temperature
+              - yAxisId: valve
+                label: Ventil (EZ)
+                measurement: qeq1118733/thermostat/valve

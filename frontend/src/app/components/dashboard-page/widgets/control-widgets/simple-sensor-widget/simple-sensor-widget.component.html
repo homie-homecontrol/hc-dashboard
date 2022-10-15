@@ -1,0 +1,19 @@
+<div class="overlay">
+    <hc-simple-chart *ngIf="!widget.config?.hideGraph" [chartData]="chartData$ | async" [height]="'64'"
+        [colorThemeName]="'simpleLineChart'" [chartOptions]="chartOptions" [chartLabels]="lineChartLabels$ | async">
+    </hc-simple-chart>
+
+    <div *ngIf="!widget.config?.hideReading || !widget.config?.hideLabel" class='readings gradient-card-fade-to-right'>
+        <div class="center-container">
+            <div class="sensor-label" *ngIf="!widget.config?.hideLabel">
+                <span>{{widget.label}}</span>
+            </div>
+            <div class="primary-reading" *ngIf="!widget.config?.hideReading">
+                <span>{{primaryReading$ | async | number:primaryNumberFormat}}{{ primarySensorUnit$ | async }}</span>
+                <span *ngIf="widget.mappings.secondarySensor" class="secondary-reading">
+                    ({{secondaryReading$ | async | number:secondaryNumberFormat}}{{ secondarySensorUnit$ | async }})
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

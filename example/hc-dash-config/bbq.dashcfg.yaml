@@ -1,0 +1,124 @@
+layout:
+  autoReflow: single
+  small:
+    columns:
+      - - bbq
+        - timers
+  medium:
+    columns:
+      - - bbq
+        - timers
+  large:
+    columns:
+      - - bbq
+        - timers
+  xlarge:
+    columns:
+      - - bbq
+        - timers
+cards:
+  - id: bbq
+    title: BBQ
+    icon: fas/fa-fire
+    type: conditional
+    config:
+      property: nanobbqv3/maintenance/reachable
+      condition: "true"
+    items:
+      - type: bbq
+        config:
+          device: nanobbqv3
+  - id: timers
+    title: Timers
+    type: conditional
+    config:
+      condition: 'true'
+      property: global-echo-timers-state/switch/state
+    launchOptions: 
+      wide: true
+      cardId: conditional
+    items:
+      - type: conditional
+        config:
+          property: echo-g090rf0474130dpe/timers/timer-1-status
+          condition: 'true'
+        items:
+          - type: timer
+            label: Echo Wohnzimmer
+            config:
+              deltaSeconds: 4
+            mappings:
+              creationTime: echo-g090rf0474130dpe/timers/timer-1-creation-date
+              duration: echo-g090rf0474130dpe/timers/timer-1-duration
+              label: echo-g090rf0474130dpe/timers/timer-1-label
+              status: echo-g090rf0474130dpe/timers/timer-1-status
+      - type: conditional
+        config:
+          property: echo-g090rf0474130dpe/timers/timer-2-status
+          condition: 'true'
+        items:
+          - type: timer
+            label: Echo Wohnzimmer
+            config:
+              deltaSeconds: 4
+            mappings:
+              creationTime: echo-g090rf0474130dpe/timers/timer-2-creation-date
+              duration: echo-g090rf0474130dpe/timers/timer-2-duration
+              label: echo-g090rf0474130dpe/timers/timer-2-label
+              status: echo-g090rf0474130dpe/timers/timer-2-status
+      - type: conditional
+        config:
+          property: echo-g090rf0474130dpe/timers/timer-3-status
+          condition: 'true'
+        items:
+          - type: timer
+            label: Echo Wohnzimmer
+            config:
+              deltaSeconds: 4
+            mappings:
+              creationTime: echo-g090rf0474130dpe/timers/timer-3-creation-date
+              duration: echo-g090rf0474130dpe/timers/timer-3-duration
+              label: echo-g090rf0474130dpe/timers/timer-3-label
+              status: echo-g090rf0474130dpe/timers/timer-3-status
+      - type: conditional
+        config:
+          property: echo-g2a1a60304240a15/timers/timer-1-status
+          condition: 'true'
+        items:
+          - type: timer
+            label: Echo Wohnzimmer
+            config:
+              deltaSeconds: 4
+            mappings:
+              creationTime: echo-g2a1a60304240a15/timers/timer-1-creation-date
+              duration: echo-g2a1a60304240a15/timers/timer-1-duration
+              label: echo-g2a1a60304240a15/timers/timer-1-label
+              status: echo-g2a1a60304240a15/timers/timer-1-status
+      - type: conditional
+        config:
+          property: echo-g2a1a60304240a15/timers/timer-2-status
+          condition: 'true'
+        items:
+          - type: timer
+            label: Echo Wohnzimmer
+            config:
+              deltaSeconds: 4
+            mappings:
+              creationTime: echo-g2a1a60304240a15/timers/timer-2-creation-date
+              duration: echo-g2a1a60304240a15/timers/timer-2-duration
+              label: echo-g2a1a60304240a15/timers/timer-2-label
+              status: echo-g2a1a60304240a15/timers/timer-2-status
+      - type: conditional
+        config:
+          property: echo-g2a1a60304240a15/timers/timer-3-status
+          condition: 'true'
+        items:
+          - type: timer
+            label: Echo Wohnzimmer
+            config:
+              deltaSeconds: 4
+            mappings:
+              creationTime: echo-g2a1a60304240a15/timers/timer-3-creation-date
+              duration: echo-g2a1a60304240a15/timers/timer-3-duration
+              label: echo-g2a1a60304240a15/timers/timer-3-label
+              status: echo-g2a1a60304240a15/timers/timer-3-status

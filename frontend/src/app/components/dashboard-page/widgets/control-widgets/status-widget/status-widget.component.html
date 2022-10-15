@@ -1,0 +1,18 @@
+<hc-widget-layout>
+  <span hc-widget-label *ngIf="!widget.config?.hideLabel">{{widget.label}}</span>
+  <hc-widget-controls>
+    <ng-container *ngFor="let statusMap of (statusMaps$ | async)">
+
+      <span *ngIf="statusMap.type === 'text'" [ngClass]="{ 'primary-text': statusMap.color==='primary', 'accent-text': statusMap.color==='accent', 'warn-text': statusMap.color==='warn' }" style="font-weight: {{  statusMap.fontWeight }}; font-size: {{ statusMap.size }}">  
+        {{statusMap.toValue}}
+      </span>
+      <span *ngIf="statusMap.type === 'label'"
+        [ngClass]="{ 'primary-bg': statusMap.color==='primary', 'accent-bg': statusMap.color==='accent', 'warn-bg': statusMap.color==='warn', 'label-small': statusMap.size==='small', 'label-medium': statusMap.size==='medium', 'label-big': statusMap.size==='large'}"
+        class="label">
+        {{statusMap.toValue}}
+      </span>
+      <awac-icon *ngIf="statusMap.type === 'icon'"  [ngClass]="{ 'primary-text': statusMap.color==='primary', 'accent-text': statusMap.color==='accent', 'warn-text': statusMap.color==='warn' }" 
+          name="{{ statusMap.icon }}"></awac-icon>
+    </ng-container>
+  </hc-widget-controls>
+</hc-widget-layout>

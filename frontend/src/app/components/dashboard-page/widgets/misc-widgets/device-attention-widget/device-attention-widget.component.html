@@ -1,0 +1,38 @@
+<hc-widget-layout *ngIf="(devicesCount$ | async) > 0">
+    <span hc-widget-label>{{widget.label}}</span>
+
+    <mat-chip-list hc-widget-second-line aria-label="devices needing attention">
+        <mat-chip *ngFor="let device of lowBatteryDevices$ | async" (click)="device.label= device.label ? '':' ('+device.name+')'">
+            <mat-chip-avatar>
+                <mat-icon class="status-icon" fontSet="fas" fontIcon="fa-battery-quarter"></mat-icon>
+            </mat-chip-avatar>
+            {{device.id}}{{device.label}}
+        </mat-chip>
+        <mat-chip *ngFor="let device of notReachableDevices$ | async" (click)="device.label= device.label ? '':' ('+device.name+')'">
+            <mat-chip-avatar>
+                <mat-icon class="status-icon" fontSet="fas" fontIcon="fa-unlink"></mat-icon>
+            </mat-chip-avatar>
+            {{device.id}}{{device.label}}
+        </mat-chip>
+        <mat-chip *ngFor="let device of notReadyDevices$ | async" (click)="device.label= device.label ? '':' ('+device.name+')'">
+            <mat-chip-avatar>
+                <mat-icon class="status-icon" fontSet="fas" fontIcon="fa-dizzy"></mat-icon>
+            </mat-chip-avatar>
+            {{device.id}}{{device.label}}
+        </mat-chip>
+    </mat-chip-list>
+</hc-widget-layout>
+    <!-- <div class="section" *ngIf="(lowBatteryDevicesCount$ | async) > 0">
+        <h2><awac-icon name="fas/fa-battery-quarter"></awac-icon> Low battery devices</h2>
+        <p class="device" *ngFor="let device of lowBatteryDevices$ | async">{{device.id}} - {{device.name}}</p>
+    </div>
+    <div class="section" *ngIf="(notReachableDevicesCount$ | async) > 0">
+        <h2><awac-icon name="fas/fa-unlink"></awac-icon > Not rechable devices</h2>
+        <p class="device" *ngFor="let device of (notReachableDevices$ | async)">{{device.id}} - {{device.name}}</p>
+    </div>
+    <div class="section" *ngIf="(notReadyDevicesCount$ | async) > 0">
+        <h2><awac-icon name="fas/fa-dizzy"></awac-icon> Not ready devices</h2>
+        <p class="device" *ngFor="let device of (notReadyDevices$ | async)">{{device.id}} - {{device.name}}</p>
+    </div> -->
+
+<!-- </div> -->

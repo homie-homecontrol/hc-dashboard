@@ -1,0 +1,3 @@
+<hc-widget-layout>
+  <button *ngLet="(state$ | async) as toggleState" mat-raised-button class="toggle-button" [color]="toggleState ? 'primary' : ''" (click)="toggle(!toggleState)">{{widget.label}}</button>
+</hc-widget-layout>

@@ -1,0 +1,319 @@
+layout:
+  autoReflow: single
+  small:
+    columns:
+      - - general-info
+  large:
+    columns:
+      - - general-info
+      - []
+      - []
+  xlarge:
+    columns:
+      - - general-info
+      - []
+      - []
+      - []
+
+cards:
+  - id: general-info
+    type: default
+    items:
+      - type: clock
+      - type: simpleSensor
+        label: Aussentemperatur
+        mappings:
+          primarySensor: meq1601978/weather/temperature
+          secondarySensor: meq1601978/weather/humidity
+      # - type: dualSensorBig
+      #   mappings:
+      #     bigSensorreading: meq1601978/weather/temperature
+      #     smallSensorreading: meq1601978/weather/humidity
+      - type: group
+        items:
+          - type: tilt
+            device: leq1284308
+            label: Garagentor
+            config:
+              size: medium
+          - type: pushButton
+            label: ▲ Tor auf / zu ▼
+            mappings:
+              target: grg-garagentor/activate/action
+            config:
+              setState: press
+              wide: true
+          - type: graph
+            label: Temperatur und Luftfeuche
+            config:
+              hideRangePicker: false
+              rangePickerConfig:
+                style: 'extended'
+                defaultRange: 
+                  label: 1week
+                  range: 
+                    start: 1634518800
+                  aggregateWindow: 4h
+                  showDate: true
+
+              size: medium
+              refreshInterval: 10
+              graphDefs:
+                - title: Garten (1week)
+                  yAxis:
+                  - id: temp
+                    position: left
+                    suggestedMin: -5
+                    suggestedMax: 50
+                    label: Temperature
+                  - id: hum
+                    position: right
+                    suggestedMin: 0
+                    suggestedMax: 90
+                    label: Luftfeuchtigkeit
+                  measurements:
+                  - yAxisId: temp
+                    label: Temperatur
+                    measurement: meq1601978/weather/temperature
+                  - yAxisId: temp
+                    label: Temperatur
+                    measurement: meq0180941/weather/temperature
+                  - yAxisId: temp
+                    label: Temperatur
+                    measurement: neq0937510/weather/temperature
+                  - yAxisId: hum
+                    label: Luftfeuchtigkeit
+                    measurement: meq1601978/weather/humidity
+                - title: Garten2 (1week)
+                  yAxis:
+                  - id: temp
+                    position: left
+                    suggestedMin: -5
+                    suggestedMax: 50
+                    label: Temperature
+                  - id: hum
+                    position: right
+                    suggestedMin: 0
+                    suggestedMax: 90
+                    label: Luftfeuchtigkeit
+                  measurements:
+                  - yAxisId: temp
+                    label: Temperatur
+                    measurement: meq1601978/weather/temperature
+                  - yAxisId: temp
+                    label: Temperatur
+                    measurement: meq0180941/weather/temperature
+                  - yAxisId: temp
+                    label: Temperatur
+                    measurement: neq0937510/weather/temperature
+                  - yAxisId: hum
+                    label: Luftfeuchtigkeit
+                    measurement: meq1601978/weather/humidity
+          - type: graph
+            label: Temperatur und Luftfeuche
+            config:
+              size: medium
+              refreshInterval: 10
+              rangePickerConfig:
+                style: 'simple'
+                defaultRange: 1
+                ranges:
+                  - label: 1 week
+                    range:
+                      start: -1w
+                    aggregateWindow: 15m
+                  - label: 1 day
+                    range:
+                      start: -1d
+                    aggregateWindow: 30m
+                  - label: half day
+                    range:
+                      start: -12h
+                    aggregateWindow: 1m
+
+              graphDefs:
+                - title: Garten
+                  yAxis:
+                  - id: temp
+                    position: left
+                    suggestedMin: -10
+                    suggestedMax: 35
+                  - id: hum
+                    position: right
+                    suggestedMin: 30
+                    suggestedMax: 90
+                  measurements:
+                  - yAxisId: temp
+                    label: Temperatur
+                    measurement: meq1601978/weather/temperature
+                  - yAxisId: hum
+                    label: Luftfeuchtigkeit
+                    measurement: meq1601978/weather/humidity
+
+      - type: group
+        label: Offene Fenster und Türen
+        items:
+          - type: conditional
+            config:
+              condition: "false"
+              property: sec-contacts-except-door/contact/state
+            items:
+              - type: contact
+                device: sec-contacts-except-door
+                label: Alle Fenster und Türen geschlossen
+                config:
+                  size: medium
+          - type: conditional
+            config:
+              condition: "true"
+              property: sec-contacts-except-door/contact/state
+            items:
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq2132384/contact/state
+              items:
+                  - type: contact
+                    device: oeq2132384
+                    label: Wohnungstür
+            - type: conditional
+              config:
+                condition: "true"
+                property: meq0753110/contact/state
+              items:
+                - type: contact
+                  device: meq0753110
+                  label: Kinderzimmer Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: meq0753061/contact/state
+              items:
+                - type: contact
+                  device: meq0753061
+                  label: Schlafzimmer Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq0429971/contact/state
+              items:
+                - type: contact
+                  device: oeq0429971
+                  label: Küche Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: meq0753071/contact/state
+              items:
+                - type: contact
+                  device: meq0753071
+                  label: Esszimmer Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq2132349/contact/state
+              items:
+                - type: contact
+                  device: oeq2132349
+                  label: Terassentür
+            - type: conditional
+              config:
+                condition: "true"
+                property: meq0753104/contact/state
+              items:
+                - type: contact
+                  device: meq0753104
+                  label: Wohnzimmer Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq0429851/contact/state
+              items:
+                - type: contact
+                  device: oeq0429851
+                  label: Bad Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq0431016/contact/state
+              items:
+                - type: contact
+                  device: oeq0431016
+                  label: Gästezimmer Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: req0227787/contact/state
+              items:
+                - type: contact
+                  device: req0227787
+                  label: Gästetoilette Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq0706059/contact/state
+              items:
+                - type: contact
+                  device: oeq0706059
+                  label: Werkstatt Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq0706161/contact/state
+              items:
+                - type: contact
+                  device: oeq0706161
+                  label: Werkstatt Tür
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq0706187/contact/state
+              items:
+                - type: contact
+                  device: oeq0706187
+                  label: Büro Fenster
+      - type: verticalStack
+        items:  
+          - type: group
+            label: Alarmanlage
+            items:
+              - type: onoff
+                label: Alarm
+                mappings:
+                  state: security/alarm/state
+                config:
+                  size: large
+              - type: toggleButton
+                label: Alarmanlage aktiv
+                mappings:
+                  switch: security/armed/state
+              - type: switch
+                label: Alarmanlage AUTO
+                mappings:
+                  switch: security/auto-arm/state
+              - type: pushButton
+                label: Reset Alarm
+                mappings:
+                  target: security/alarm/state
+                config:
+                  setState: "false"
+                  icon: clear
+          - type: group
+            label: Sensorstatus
+            items:
+              - type: presence
+                label: Anwesenheit
+                mappings:
+                  state: security-presence-all/switch/state
+              - type: contact
+                device: sec-contacts
+                label: Aussenhaut
+              - type: onoff
+                label: Bewegung
+                mappings:
+                  state: security-indoor-motion/motion/motion
+              - type: onoff
+                label: Sensorenalarm
+                mappings:
+                  state: security/sensor-alarm/state
+                  

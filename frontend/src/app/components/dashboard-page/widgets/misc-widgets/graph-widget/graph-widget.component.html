@@ -1,0 +1,5 @@
+<div class="chart">
+    <hc-time-range-picker *ngIf="!widget.config?.hideRangePicker" [rangeConfig]="widget.config?.rangePickerConfig" (timeRange)="setTimeRange($event)"></hc-time-range-picker>
+    <hc-line-graph *ngFor="let graphDef of widget.config?.graphDefs" [graphDef]="graphDef" [height]="height" [rangeConfig]="rangeInfo$ | async"
+        [refreshInterval]="widget.config.refreshInterval? widget.config.refreshInterval * 1000 : 120000"></hc-line-graph>
+</div>

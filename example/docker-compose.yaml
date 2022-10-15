@@ -1,0 +1,45 @@
+version: '3'
+services:
+    mqtt:
+        image: eclipse-mosquitto:latest
+        restart: "always"
+        deploy:
+            resources:
+                limits:
+                    memory: 125M
+        hostname: mqtt
+        ports: 
+            - "1883:1883"
+        volumes:
+            - ./mqtt/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+            - ./mqtt/data:/mosquitto/data
+            - ./mqtt/log:/mosquitto/log
+    hc-dashboard:
+        image: ghcr.io/homie-homecontrol/hc-dashboard:latest
+        restart: "always"
+        depends_on:
+            - mqtt
+        dns:
+            - 8.8.8.8
+        ports: 
+            - "80:8443"
+        deploy:
+            resources:
+                limits:
+                    memory: 525M
+        environment: 
+            HCDASH_HOST: 0.0.0.0
+            HCDASH_PORT: 8443
+            HCDASH_MQTT_URL: "mqtt://mqtt"
+            HCDASH_MQTT_TOPIC_ROOT: homie
+            HCDASH_STORE_BACKEND: inmemory
+            HCDASH_CONFIG_FOLDER: ./data
+            HCDASH_INFLUX_URL: "<INFLUXDB URL>"
+            HCDASH_INFLUX_TOKEN: "<INFLUXDB Token>"
+            HCDASH_INFLUX_ORG: "<INFLUXDB org>"
+            HCDASH_INFLUX_BUCKET: "<INFLUXDB Bucket>"
+            TZ: "Europe/Berlin"
+        volumes:
+            - ./hc-dash-config:/backend/data
+            - /etc/timezone:/etc/timezone:ro
+            - /usr/share/zoneinfo/Europe/Berlin:/etc/localtime:ro

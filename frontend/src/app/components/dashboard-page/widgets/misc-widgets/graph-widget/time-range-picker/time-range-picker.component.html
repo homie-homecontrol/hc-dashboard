@@ -1,0 +1,31 @@
+<div class="time-ranges" *ngIf="(rangeStyle$ | async) === 'simple'">
+
+    <div class="range-text">Timerange: {{(currentRange$ | async)?.label}}</div>
+    <div class="range-slider">
+        <div class="time-ranges-icons">
+            <button mat-flat-button (click)="rangeMinus()">
+                <awac-icon name="fas/fa-search-minus"></awac-icon>
+            </button>
+        </div>
+
+        <mat-slider class="time-range-slider" [displayWith]="formatTimeRangeLabel" tickInterval="1" step="1" min="0"
+            [max]="(ranges$ | async).length-1" aria-label="units" (change)="setTimeRangeIndex($event.value);"
+            [value]="timeRangeIndex$ | async">
+        </mat-slider>
+        <div class="time-ranges-icons">
+            <button mat-flat-button (click)="rangePlus()">
+                <awac-icon name="fas/fa-search-plus"></awac-icon>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="extended time-picker-component" *ngIf="(rangeStyle$ | async) === 'extended'">
+    <mat-form-field appearance="outline">
+        <mat-label>End Time</mat-label>
+        <input matInput type="time" placeholder="HH:MM" id="end_time_hour" [formControl]="timeFormControl">
+     <mat-select name="ampm" class="ampm" [(ngModel)]="event.eampm">
+          <mat-option value="AM">AM</mat-option>
+          <mat-option value="PM">PM</mat-option>
+     </mat-select>
+   </mat-form-field>
+</div>

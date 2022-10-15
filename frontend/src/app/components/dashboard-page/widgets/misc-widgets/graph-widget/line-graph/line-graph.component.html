@@ -1,0 +1,5 @@
+<div class="chart" style="height: {{ _height+50 }}px;">
+    <p class="title-text" *ngIf="(title$ | async) as title">{{title}}</p>
+    <hc-simple-chart [chartData]="chartData$ | async" [height]="_height" 
+        [chartOptions]="chartOptions$ | async" [chartLabels]="lineChartLabels$ | async"></hc-simple-chart>
+</div>

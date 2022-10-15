@@ -1,0 +1,23 @@
+<!-- <div class="container "> -->
+<div class="main mat-elevation-z3" (click)="openSettings()">
+    
+    <div class='infoArea'>
+        <hc-widget-layout>
+            <div class='colorIndicator mat-elevation-z1' style="background-color: {{color$|async}};" #colorIndicator>&nbsp;</div>
+            <span hc-widget-label class="channelName">{{name$ | async}}</span>
+            <hc-widget-controls>
+                <span class="channelNum">#{{number$ | async}}</span>
+            </hc-widget-controls>
+        </hc-widget-layout>
+        <hc-widget-layout>
+            <span hc-widget-label></span>
+            <hc-widget-controls>
+                <span class="temp">{{temp$ | async | number:'1.1-1'}}{{tempUnit$ | async}}</span>
+            </hc-widget-controls>
+        </hc-widget-layout>
+        <hc-bbqchannel-temp-bar [min]="min$ | async" [max]="max$|async" [unit]="tempUnit$ | async" [temp]="temp$ | async" ></hc-bbqchannel-temp-bar>
+    </div>
+
+</div>
+
+<!-- </div> -->

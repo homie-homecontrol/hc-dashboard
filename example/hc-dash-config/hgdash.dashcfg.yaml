@@ -1,0 +1,214 @@
+layout:
+  autoReflow: single
+  small:
+    columns:
+      - - general-info
+  large:
+    columns:
+      - - general-info
+      - []
+      - []
+  xlarge:
+    columns:
+      - - general-info
+      - []
+      - []
+      - []
+
+cards:
+  - id: general-info
+    type: default
+    items:
+      - type: clock
+      - type: simpleSensor
+        label: Aussentemperatur
+        mappings:
+          primarySensor: meq1601978/weather/temperature
+          secondarySensor: meq1601978/weather/humidity
+      # - type: dualSensorBig
+      #   mappings:
+      #     bigSensorreading: meq1601978/weather/temperature
+      #     smallSensorreading: meq1601978/weather/humidity
+      - type: group
+        items:
+          - type: tilt
+            device: leq1284308
+            label: Garagentor
+            config:
+              size: medium
+          - type: pushButton
+            label: ▲ Tor auf / zu ▼
+            mappings:
+              target: grg-switch-shelly1-test/switch/state
+            config:
+              setState: "true"
+              wide: true
+      - type: group
+        label: Offene Fenster und Türen
+        items:
+          - type: conditional
+            config:
+              condition: "false"
+              property: sec-contacts-except-door/contact/state
+            items:
+              - type: contact
+                device: sec-contacts-except-door
+                label: Alle Fenster und Türen geschlossen
+                config:
+                  size: medium
+          - type: conditional
+            config:
+              condition: "true"
+              property: sec-contacts-except-door/contact/state
+            items:
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq2132384/contact/state
+              items:
+                  - type: contact
+                    device: oeq2132384
+                    label: Wohnungstür
+            - type: conditional
+              config:
+                condition: "true"
+                property: meq0753110/contact/state
+              items:
+                - type: contact
+                  device: meq0753110
+                  label: Kinderzimmer Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: meq0753061/contact/state
+              items:
+                - type: contact
+                  device: meq0753061
+                  label: Schlafzimmer Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq0429971/contact/state
+              items:
+                - type: contact
+                  device: oeq0429971
+                  label: Küche Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: meq0753071/contact/state
+              items:
+                - type: contact
+                  device: meq0753071
+                  label: Esszimmer Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq2132349/contact/state
+              items:
+                - type: contact
+                  device: oeq2132349
+                  label: Terassentür
+            - type: conditional
+              config:
+                condition: "true"
+                property: meq0753104/contact/state
+              items:
+                - type: contact
+                  device: meq0753104
+                  label: Wohnzimmer Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq0429851/contact/state
+              items:
+                - type: contact
+                  device: oeq0429851
+                  label: Bad Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq0431016/contact/state
+              items:
+                - type: contact
+                  device: oeq0431016
+                  label: Gästezimmer Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: req0227787/contact/state
+              items:
+                - type: contact
+                  device: req0227787
+                  label: Gästetoilette Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq0706059/contact/state
+              items:
+                - type: contact
+                  device: oeq0706059
+                  label: Werkstatt Fenster
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq0706161/contact/state
+              items:
+                - type: contact
+                  device: oeq0706161
+                  label: Werkstatt Tür
+            - type: conditional
+              config:
+                condition: "true"
+                property: oeq0706187/contact/state
+              items:
+                - type: contact
+                  device: oeq0706187
+                  label: Büro Fenster
+      - type: group
+        label: Alarmanlage
+        items:
+          - type: onoff
+            label: Alarm
+            mappings:
+              state: security/alarm/state
+          - type: toggleButton
+            label: Alarmanlage aktiv
+            mappings:
+              switch: security/armed/state
+          - type: switch
+            label: Alarmanlage AUTO
+            mappings:
+              switch: security/auto-arm/state
+            config:
+              hideIcon: true
+          - type: pushButton
+            label: Reset Alarm
+            mappings:
+              target: security/alarm/state
+            config:
+              setState: "false"
+              icon: clear
+      - type: group
+        label: Alarmanlage Sensorstatus
+        items:
+          - type: toggleButton
+            label: Gast anwesend
+            mappings:
+              switch: security-presence-guest/switch/state
+          - type: presence
+            label: Anwesenheit
+            mappings:
+              state: security-presence-all/switch/state
+          - type: contact
+            device: sec-contacts
+            label: Aussenhaut
+          - type: onoff
+            label: Bewegung
+            mappings:
+              state: security-indoor-motion/motion/motion
+          - type: onoff
+            label: Sensorenalarm
+            mappings:
+              state: security/sensor-alarm/state
+              

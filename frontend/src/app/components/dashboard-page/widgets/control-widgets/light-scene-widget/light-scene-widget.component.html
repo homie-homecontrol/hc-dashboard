@@ -1,0 +1,8 @@
+<hc-widget-layout>
+  <span hc-widget-label>{{widget.label}}</span>
+  <!-- <hc-widget-second-line> -->
+    <mat-chip-list hc-widget-second-line aria-label="Scene selection" >
+      <mat-chip *ngFor="let scene of (scenes$ | async)" (click)="recall(scene)"> {{scene}}</mat-chip>
+    </mat-chip-list>
+  <!-- </hc-widget-second-line > -->
+</hc-widget-layout>

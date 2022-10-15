@@ -1,0 +1,124 @@
+
+.battery{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 48px;
+    mat-icon{
+        flex: 0 1 44px;
+        text-align: center;
+    }
+    span{
+        flex: 1 1 80px;
+        text-align: center;
+    }
+    awac-pgbar{
+        flex: 1 1 100%;
+        height: 12px;
+    }
+
+}
+
+.cardTable{
+    width: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+    min-height: 48px;
+    height: max-content;
+    align-items: stretch;
+    // margin: 4px;
+
+}
+
+.cardTableCol{
+    flex: 1 1 50%;
+}
+.cardTableCol:first-child{
+    padding-right: 3px;
+}
+.cardTableCol:last-child{
+    padding-left: 3px;
+}
+
+.cardTableColHeader{
+    font-size: larger;
+    font-weight: 700;
+    width: auto;
+    text-align: center;
+    margin: 6px;
+}
+
+.bbqCards{
+    width: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    min-height: 48px;
+    height: max-content;
+    align-items: stretch;
+    flex-wrap: wrap;
+
+}
+
+.bbqCard{
+    flex: 1 0 50%;
+}
+
+.time-ranges{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 84px;
+}
+
+
+.range-slider{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // min-height: 84px;
+}
+
+.time-ranges-icons{
+    flex: 1 0 15%;
+    text-align: center;
+}
+
+.time-range-slider{
+    // width: 100%;
+    flex: 1 1 70%;
+}
+
+.range-text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.charts{
+    width: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+    min-height: 48px;
+    height: max-content;
+    align-items: stretch;
+    flex-wrap: wrap;
+    // margin: 4px;
+
+}
+.chart-container{
+    flex: 1 0 50%;
+    min-width: 330px;
+    // max-width: 800px;
+}

@@ -1,0 +1,7 @@
+<mat-card-header *ngIf="card?.title || card?.icon || card?.launchOptions">
+  <mat-card-title *ngIf="card?.title">{{card?.title}}</mat-card-title>
+  <awac-icon mat-card-avatar [name]="card?.icon" *ngIf="card?.icon"></awac-icon>
+  <div *ngIf="card?.launchOptions && !hideLaunchButton" class="card-action"> <button mat-icon-button (click)="launch()">
+      <awac-icon name="launch"></awac-icon>
+    </button></div>
+</mat-card-header>

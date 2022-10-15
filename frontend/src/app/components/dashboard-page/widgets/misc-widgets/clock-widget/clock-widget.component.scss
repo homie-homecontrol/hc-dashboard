@@ -1,0 +1,46 @@
+.clock-container{
+    margin: 0px;
+    // height: 80px;
+}
+
+.time{
+    
+    margin-left:auto;
+    margin-right:auto;
+    // height:auto;
+    height: fit-content;
+    width:fit-content;
+}
+
+.time-text{
+    font-size: 52pt;
+    line-height: 52pt;
+    font-weight: bold;
+    margin:0px;
+    text-align: right;
+}
+.divider{
+    font-size: 52pt;
+    font-weight: 100;
+    margin:0px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.weather-text{
+    font-size: xx-large;
+    font-weight: lighter;
+    
+    margin:0px;
+    text-align: left;
+}
+.date{
+    margin-left:auto;
+    margin-right:auto;
+    // height:auto;
+    width:fit-content;
+}
+.date-text{
+    font-size: large;
+    vertical-align: bottom;
+   
+}

@@ -1,0 +1,12 @@
+<hc-widget-layout>
+    <span hc-widget-label>{{widget.label}}</span>
+    <hc-widget-controls>
+      <awac-icon name="brightness_medium"></awac-icon>
+      <mat-slider [thumbLabel]="true" 
+                  [step]="10" 
+                  [tickInterval]="1" 
+                  [value]="dimmerBrightnessValue$ | async"
+                  (change)="setBrightness($event.value)"></mat-slider>
+      <mat-slide-toggle [checked]="switchState$ | async" (change)="toggle($event.checked)"></mat-slide-toggle>
+    </hc-widget-controls>
+  </hc-widget-layout>

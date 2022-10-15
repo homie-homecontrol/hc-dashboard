@@ -1,0 +1,46 @@
+.clock-container{
+    margin: 0px;
+    // height: 80px;
+    margin-top: 6px;
+}
+
+.time{
+    
+    margin-right:12px;
+    // margin-right:auto;
+    // height:auto;
+    height: fit-content;
+    width:fit-content;
+}
+
+.time-text{
+    font-size: 48pt;
+    line-height: 48pt;
+    font-weight: bold;
+    margin:0px;
+    text-align: right;
+}
+
+.timer-label{
+    // margin-left:auto;
+    // margin-right:auto;
+    // // height:auto;
+    // width:fit-content;
+}
+.timer-label-text{
+    font-size: large;
+    vertical-align: bottom;
+    margin-top: 6px;
+   
+}
+
+.blink-text {
+    animation: blinker 1s linear infinite;
+  }
+  
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
+

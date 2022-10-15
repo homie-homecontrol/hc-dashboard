@@ -1,0 +1,24 @@
+<hc-widget-layout>
+  <span hc-widget-label>{{widget.label}}</span>
+  <hc-widget-controls>
+ 
+    <ng-container *ngIf="(setTemperature$ | async) as setTemperature">
+      <awac-icon *ngIf="(windowOpen$ | async)" name="report"></awac-icon>
+      <span>{{setTemperature | number:'1.1-1'}}°C</span>
+      <mat-slider [thumbLabel]="true" 
+                  [step]="1" 
+                  [tickInterval]="4" 
+                  [min]="5"
+                  [max]="30"
+                  (change)="updateSetTemperature($event.value)"
+                  [value]="setTemperature" #tempSlider></mat-slider>
+   </ng-container>
+   <span>{{(temperature$ | async | number:'1.1-1')}}°C</span>
+   <ng-container *ngLet="(mode$ | async) as mode">
+      <button mat-icon-button class="toggle-button autoButton" [color]="mode === 'auto' ? 'accent' : ''" (click)="toggleAutoMode(mode)">
+          <awac-icon name="schedule"></awac-icon>
+      </button>
+  </ng-container>
+
+  </hc-widget-controls>
+</hc-widget-layout>

@@ -1,0 +1,7 @@
+<hc-column-layout>
+    <hc-column *ngFor="let columnConfig of (pageLayout$ | async)">
+        <hc-column-tile *ngFor="let id of columnConfig">
+          <hc-generic-card [cardId]="id" [hideLaunchButton]="state.dialogMode$ | async" ></hc-generic-card>
+        </hc-column-tile>
+    </hc-column>
+</hc-column-layout>

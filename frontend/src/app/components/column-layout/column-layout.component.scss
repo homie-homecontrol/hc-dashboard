@@ -1,0 +1,35 @@
+.hc-column-layout {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-left: auto;
+    margin-right: auto;
+
+    .hc-column {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 100%;
+        flex: 1;
+        width: 0; // Force equal-width columns
+        align-items: center;
+        
+        // margin-left: 4px;
+        height: auto;
+        min-width: 220px;
+
+        &:last-child {
+            margin-right: 4px;
+        }
+    }
+
+    .hc-column-tile {
+        width: 100%;
+        margin: 0px;
+        // margin-top: 4px;
+        // min-height: 30px;
+        min-width: 220px;
+        // &:last-child {
+            // margin-bottom: 4px;
+        // }
+    }
+}

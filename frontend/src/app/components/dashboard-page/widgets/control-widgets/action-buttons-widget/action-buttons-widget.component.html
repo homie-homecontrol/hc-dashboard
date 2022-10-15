@@ -1,0 +1,17 @@
+<hc-widget-layout>
+  <span hc-widget-label *ngIf="!widget.config?.hideLabel">{{widget.label}}</span>
+  <hc-widget-controls>
+    <ng-container *ngFor="let button of widget.mappings?.targets">
+      <button *ngIf="!button.config?.size || button.config?.size==='small'" [color]="button.config?.color ? button.config.color : 'primary'" mat-mini-fab
+        (click)="setState(button.selector, button.config.setState)">
+        <awac-icon *ngIf="!button.config?.hideIcon"
+          name="{{ !!button.config?.icon ? button.config?.icon : 'fas/fa-power-off' }}"></awac-icon>
+      </button>
+      <button *ngIf="button.config?.size==='medium'" [color]="button.config?.color ? button.config.color : 'primary'" mat-fab
+        (click)="setState(button.selector, button.config.setState)">
+        <awac-icon *ngIf="!button.config?.hideIcon"
+          name="{{ !!button.config?.icon ? button.config?.icon : 'fas/fa-power-off' }}"></awac-icon>
+      </button>
+    </ng-container>
+  </hc-widget-controls>
+</hc-widget-layout>

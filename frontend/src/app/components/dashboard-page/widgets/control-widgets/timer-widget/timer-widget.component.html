@@ -1,0 +1,35 @@
+<!-- <div class="clock-container">
+    <div class="timer-label">
+        <span class="timer-label-text">{{label$ | async}}</span>
+    </div>
+    <div class="time">
+        <span class="time-text" *ngLet="(remainingTime$ | async) as rt">{{rt?.hour | number: '2.0-0'}}:{{rt?.min | number: '2.0-0'}}:{{rt?.sec | number: '2.0-0'}}</span>
+        <button mat-mini-fab color="accent" >
+            <awac-icon name="clear"></awac-icon>
+        </button>
+    </div>
+    <div class="timer-cancel">
+        
+    </div>
+</div> -->
+
+<hc-widget-layout>
+    <div hc-widget-first-line [position]="'center'" class="timer-label">
+        <span class="timer-label-text">{{label$ | async}}</span>
+    </div>
+    <span hc-widget-label>
+        <!-- <span >{{label$ | async}}</span> -->
+        <awac-icon name="far/fa-clock" (click)="cancel()"></awac-icon>
+        
+    </span>
+    <hc-widget-controls>
+        <div class="time">
+            <span class="time-text" [ngClass]="{'accent-text blink-text': (timerFinished$ | async)}"  *ngLet="(remainingTime$ | async) as rt">
+                {{rt?.hour | number: '2.0-0'}}:{{rt?.min | number: '2.0-0'}}:{{rt?.sec | number: '2.0-0'}}</span>
+        </div>
+        <button mat-mini-fab color="accent" >
+            <awac-icon name="clear" (click)="cancel()"></awac-icon>
+        </button>
+
+    </hc-widget-controls>
+  </hc-widget-layout>

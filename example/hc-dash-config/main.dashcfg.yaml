@@ -1,0 +1,1044 @@
+layout:
+  autoReflow: single
+  small:
+    columns:
+      - - timers
+        - devicecontrol
+        - control-center
+        - mediaplayers
+        - shutters
+        - heating
+        - waschraum
+        - clima
+        - keller
+        - graphs
+        - bbq
+        - security
+  large:
+    columns:
+      - - clima
+      - - clock
+        - control-center
+        - devicecontrol
+        - shutters
+        - graphs
+        - bbq
+      - - security
+        - timers
+        - heating
+        - mediaplayers
+        - waschraum
+        - keller
+
+  xlarge:
+    columns:
+      - - clima
+        - test7
+      - - clock
+        - control-center
+        - devicecontrol
+      - - security
+        - timers
+        - mediaplayers
+        - graphs
+        - bbq
+        - test8
+      - - heating
+        - shutters
+        - waschraum
+        - keller
+cards:
+  - id: devicecontrol
+    title: Wohnbereich
+    type: default
+    icon: fas/fa-couch
+    launchOptions:
+      pageId: devicecontrol.dashcfg
+    items:
+      - type: group
+        label: Raumsteuerung
+        items:
+          - type: dimmer
+            device: group-5
+            label: Wohnzimmer
+          - type: lightscene
+            label: Szenen Wohnzimmer
+            mappings:
+              scenes: group-5/scenes/recall
+          - type: switch
+            device: wz-switch-shelly-licht-decke
+            label: Wohnzimmer Decke
+          - type: dimmer
+            device: group-4
+            label: Esszimmer
+          - type: switch
+            device: kue-lights
+            config:
+              icon: far/fa-lightbulb
+          - type: conditional
+            config:
+              property: glob-settings/christmas-time/state
+              condition: "false"
+            items:
+              - type: dimmer
+                label: Ventilator
+                mappings:
+                  switch: wz-fan-xiaomi-3/switch/state
+                  brightness: wz-fan-xiaomi-3/fan/speed
+          - type: switch
+            device: nr-olaf
+            label: Olaf (Staubsauger)
+            config:
+              icon: svg/0 0 512 512/M431.36,80.64a248,248,0,0,0-350.72,0c-96.85,96.85-96.85,253.87,0,350.72a248,248,0,0,0,350.72,0C528.21,334.51,528.21,177.49,431.36,80.64ZM397.42,397.42A200,200,0,1,1,114.58,114.58,200,200,0,1,1,397.42,397.42ZM369,143C306.66,80.75,205.34,80.75,143,143A24,24,0,0,0,177,177,111.77,111.77,0,1,1,335,335,24,24,0,1,0,369,369,159.72,159.72,0,0,0,369,143ZM139.55,304.57a16,16,0,0,0-22.63,22.63l67.88,67.88a16,16,0,0,0,22.63-22.63Zm90.51-90.51a16,16,0,0,0-22.63,22.63l67.88,67.88a16,16,0,0,0,22.63-22.63Zm-67.88,22.63a16,16,0,0,0-22.63,22.62L252.69,372.45a16,16,0,0,0,22.62-22.63Z
+      - type: group
+        label: Weitere
+        items:
+          - type: conditional
+            config:
+              property: glob-settings/christmas-time/state
+              condition: "true"
+            items:
+              - type: switch
+                device: christmas-lights
+                label: Weihnachtsbeleuchtung
+                config:
+                  icon: svg/0 0 512 512/M224 160l26.7-53.3L304 80l-53.3-26.7L224 0l-26.7 53.3L144 80l53.3 26.7L224 160zm215.6 295.6L349.8 352h36c25.6 0 39.5-26.3 23.2-43.5L262.8 154 224 208l-38.8-54L39 308.5C22.7 325.7 36.6 352 62.2 352h36L8.4 455.6c-19 21.9-3.8 56.4 24.7 56.4h381.7c28.6 0 43.7-34.6 24.8-56.4zM160 312c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm128 128c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24z
+          - type: dimmer
+            device: group-7
+            label: Licht Schlafzimmer
+          - type: dimmer
+            device: light-15
+            label: Licht Kinderzimmer
+
+  - id: clock
+    type: default
+    items:
+      - type: clock
+  - id: security-details
+    type: default
+    icon: fas/fa-key
+    title: Sicherheit Details
+    items:
+      - type: switch
+        device: db-general-config
+        label: Hide closed contacts
+        config:
+          hideIcon: true
+
+  - id: security
+    type: default
+    icon: fas/fa-key
+    title: Sicherheit
+    launchOptions:
+      cardId: security-details
+    items:
+      - type: conditional
+        config:
+          condition: "true"
+          property: db-general-config/contacts-hide-closed/state
+        items:
+          - type: conditional
+            config:
+              condition: "true"
+              property: meq0753110/contact/state
+            items:
+              - type: contact
+                device: meq0753110
+                label: Kinderzimmer Fenster
+          - type: conditional
+            config:
+              condition: "true"
+              property: meq0753061/contact/state
+            items:
+              - type: contact
+                device: meq0753061
+                label: Schlafzimmer Fenster
+          - type: conditional
+            config:
+              condition: "true"
+              property: oeq0429971/contact/state
+            items:
+              - type: contact
+                device: oeq0429971
+                label: Küche Fenster
+          - type: conditional
+            config:
+              condition: "true"
+              property: meq0753071/contact/state
+            items:
+              - type: contact
+                device: meq0753071
+                label: Esszimmer Fenster
+          - type: conditional
+            config:
+              condition: "true"
+              property: oeq2132349/contact/state
+            items:
+              - type: contact
+                device: oeq2132349
+                label: Terassentür
+          - type: conditional
+            config:
+              condition: "true"
+              property: meq0753104/contact/state
+            items:
+              - type: contact
+                device: meq0753104
+                label: Wohnzimmer Fenster
+          - type: conditional
+            config:
+              condition: "true"
+              property: oeq0429851/contact/state
+            items:
+              - type: contact
+                device: oeq0429851
+                label: Bad Fenster
+          - type: conditional
+            config:
+              condition: "true"
+              property: oeq0431016/contact/state
+            items:
+              - type: contact
+                device: oeq0431016
+                label: Gästezimmer Fenster
+          - type: conditional
+            config:
+              condition: "true"
+              property: req0227787/contact/state
+            items:
+              - type: contact
+                device: req0227787
+                label: Gästetoilette Fenster
+          - type: conditional
+            config:
+              condition: "true"
+              property: oeq0706059/contact/state
+            items:
+              - type: contact
+                device: oeq0706059
+                label: Werkstatt Fenster
+          - type: conditional
+            config:
+              condition: "true"
+              property: oeq0706161/contact/state
+            items:
+              - type: contact
+                device: oeq0706161
+                label: Werkstatt Tür
+          - type: conditional
+            config:
+              condition: "true"
+              property: oeq0706187/contact/state
+            items:
+              - type: contact
+                device: oeq0706187
+                label: Büro Fenster
+      - type: conditional
+        config:
+          condition: "false"
+          property: db-general-config/contacts-hide-closed/state
+        items:
+          - type: contact
+            device: oeq2132384
+            label: Wohnungstür
+          - type: contact
+            device: meq0753110
+            label: Kinderzimmer Fenster
+          - type: contact
+            device: meq0753061
+            label: Schlafzimmer Fenster
+          - type: contact
+            device: oeq0429971
+            label: Küche Fenster
+          - type: contact
+            device: meq0753071
+            label: Esszimmer Fenster
+          - type: contact
+            device: oeq2132349
+            label: Terassentür
+          - type: contact
+            device: meq0753104
+            label: Wohnzimmer Fenster
+          - type: contact
+            device: oeq0429851
+            label: Bad Fenster
+          - type: contact
+            device: oeq0431016
+            label: Gästezimmer Fenster
+          - type: contact
+            device: req0227787
+            label: Gästetoilette Fenster
+          - type: contact
+            device: oeq0706059
+            label: Werkstatt Fenster
+          - type: contact
+            device: oeq0706161
+            label: Werkstatt Tür
+          - type: contact
+            device: oeq0706187
+            label: Büro Fenster
+  - id: clima
+    title: Temperatur & Luftfeuchtigkeit
+    type: default
+    icon: fas/fa-temperature-low
+    items:
+      - type: dualSensorBig
+        mappings:
+          bigSensorreading: meq1601978/weather/temperature
+          smallSensorreading: meq1601978/weather/humidity
+      - type: simpleSensor
+        label: Garten
+        mappings:
+          primarySensor: meq1601978/weather/temperature
+          secondarySensor: meq1601978/weather/humidity
+        config:
+          hideReading: true
+          hideLabel: true
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Wohnz.
+            device: meq0180941
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: meq0180941
+            config:
+              hideLabel: true
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Kinderz.
+            device: meq0478846
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: meq0478846
+            config:
+              hideLabel: true
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Gästez.
+            device: leq1257637
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: leq1257637
+            config:
+              hideLabel: true
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Schlafz.
+            device: neq0937510
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: neq0937510
+            config:
+              hideLabel: true
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Hausgang
+            device: sensor-4
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: sensor-4
+            config:
+              hideLabel: true
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Bad
+            device: oeq0300066
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: oeq0300066
+            config:
+              hideLabel: true
+
+      - type: verticalStack
+        items:            
+          - type: simpleSensor
+            label: Buero
+            device: leq1258226
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: leq1258226
+            config:
+              hideLabel: true
+
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Werkstatt
+            device: leq0868067
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: leq0868067
+            config:
+              hideLabel: true
+
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Keller
+            device: leq0122770
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: leq0122770
+            config:
+              hideLabel: true
+
+
+  - id: shutters
+    title: Rolläden
+    type: default
+    items:
+      - type: rollerShutter
+        device: shutter-40e8d8
+        label: Terrassentür
+        config:
+          levels:
+            openPosition: 0
+            closedPosition: 100 
+            halfopenPosition: 25
+            blindsPosition: 75
+
+      - type: rollerShutter
+        device: req1957223
+        label: Fenster
+        config:
+          levels:
+            openPosition: 0
+            closedPosition: 100 
+            halfopenPosition: 37
+            blindsPosition: 69
+
+  - id: heating
+    title: Heizung
+    type: default
+    icon: fas/fa-temperature-low
+    launchOptions: 
+      cardId: heating-control
+      title: Heizungscenter
+    items:
+      - type: thermostat
+        device: meq0180941
+        label: Wohnzimmer
+      - type: thermostat
+        device: neq0937510
+        label: Schlafzimmer
+      - type: thermostat
+        device: meq0478846
+        label: Kinderzimmer
+      - type: thermostat
+        device: oeq0300066
+        label: Bad
+      - type: thermostat
+        device: meq0449630
+        label: Toilette
+
+
+  - id: control-center
+    title: Control Center
+    type: default
+    icon: fas/fa-cogs
+    launchOptions:
+      cardId: global-settings
+    items:
+      - type: presence
+        label: Anwesenheit
+        mappings:
+          state: security-presence-all/switch/state
+      - type: verticalStack
+        items:
+          - type: toggleButton
+            label: Partymode
+            mappings:
+              switch: glob-settings/partymode/state
+          - type: toggleButton
+            label: Sofagast Modus
+            mappings:
+              switch: glob-settings/sofa-guest/state          
+      - type: device-attention
+        label: Devices needing attention
+        config:
+          lowBattery:
+            queries:
+              - query:
+                  node: 
+                    type: homie-homecontrol/v1/type=maintenance
+                  property: 
+                    id: low-battery
+                valueCondition: true
+              - query:
+                  node: 
+                    type: homie-homecontrol/v1/type=maintenance
+                  property: 
+                    id: battery-level
+                valueCondition:
+                  operator: "<"
+                  value: 30
+          notReady: 
+            queries:
+              - query:
+                  device:
+                    state: 
+                      operator: "<>"
+                      value: "ready"
+            ignoreList:
+              - aaa-test-vdev-2
+              - dev-auto-ctl-1
+              - global-echo-timers-state-dev
+              - security-indoor-motion-dev
+              - shelly-wrapper-dev
+                
+          notRechable: 
+            queries:
+              - query:
+                  node: 
+                    type: homie-homecontrol/v1/type=maintenance
+                  property: 
+                    id: reachable
+                valueCondition: false
+            ignoreList:
+              - aaa-test-vdev-2
+              - light-10
+              - light-11
+              - light-2
+              - light-22
+              - light-7
+              - light-8
+              - light-9
+              - nanobbqv3
+
+
+  - id: global-settings
+    title: Globale Einstellungen
+    type: default
+    icon: fas/fa-cogs
+    items:
+      - type: group
+        label: Anwesenheit
+        items:
+          - type: presence
+            label: Thomas
+            mappings:
+              state: homie-presence/mobiles/thomas
+          - type: presence
+            label: Andra
+            mappings:
+              state: homie-presence/mobiles/andra
+      - type: group
+        label: Modes
+        items:  
+          - type: switch
+            label: Partymode
+            mappings:
+              switch: glob-settings/partymode/state
+          - type: switch
+            label: Sofagast Modus
+            mappings:
+              switch: glob-settings/sofa-guest/state
+          - type: switch
+            label: Weihnachtszeit
+            mappings:
+              switch: glob-settings/christmas-time/state
+            config:
+              icon: svg/0 0 512 512/M232 256c-13.3 0-24 10.7-24 24s10.7 24 24 24 24-10.7 24-24-10.7-24-24-24zm80 96c-13.3 0-24 10.7-24 24s10.7 24 24 24 24-10.7 24-24-10.7-24-24-24zm190.1 82.8l-66.5-87c10.6-4.8 19.4-13.3 24.3-24.4 7.7-17.4 4.4-37.6-8.4-51.7L338 146.8l12.4-6.2c10.8-5.4 17.7-16.5 17.7-28.6s-6.8-23.2-17.7-28.6l-43.8-21.9-21.9-43.8C279.2 6.8 268.1 0 256 0s-23.2 6.8-28.6 17.7l-21.9 43.8-43.8 21.9C150.8 88.8 144 99.9 144 112s6.8 23.2 17.7 28.6l12.4 6.2L60.5 271.7c-12.8 14.1-16.1 34.3-8.4 51.7 4.9 11.1 13.7 19.6 24.3 24.4l-66.5 87c-11.1 14.5-13 34.1-4.9 50.4 8.1 16.4 24.8 26.7 43 26.7h416c18.3 0 34.9-10.4 43-26.7 8.1-16.3 6.2-35.9-4.9-50.4zM236.5 99.6c3.1-1.5 5.6-4.1 7.2-7.2L256 67.8l12.4 24.7c1.5 3.1 4.1 5.6 7.2 7.2l24.7 12.4-24.7 12.4c-3.1 1.5-5.6 4.1-7.2 7.2L256 156.2l-12.4-24.7c-1.5-3.1-4.1-5.6-7.2-7.2L211.8 112l24.7-12.4zM48 464l122.4-160H96l116.3-127.9 15.1 30.2c5.4 10.8 16.5 17.7 28.6 17.7s23.2-6.8 28.6-17.7l15.1-30.2L416 304h-74.4L464 464H48z
+      - type: group
+        label: Heizung
+        items:
+          - type: switch
+            label: Automatisches Winter/Sommer Programm
+            mappings:
+              switch: glob-settings/auto-heating-control/state
+            config:
+              icon: fas/fa-temperature-low
+          - type: select
+            label: Heizprogramm
+            mappings:
+              value: glob-settings/season-program/program 
+            config:
+              optionsLabels: ["sommer","winter"]   
+          - type: switch
+            label: Tester dummy
+            device: glob-dummy
+      - type: group
+        label: Allgem Einstellungen
+        items:
+          - type: switch
+            label: Benachrichtigungen
+            mappings:
+              switch: glob-settings/notifications/state
+            config:
+              icon: far/fa-bell
+          - type: switch
+            label: Auto Rolladen
+            mappings:
+              switch: glob-settings/auto-shutter/state
+            config:
+              icon: svg/0 0 512 512/M512,32V16A16,16,0,0,0,496,0H16A16,16,0,0,0,0,16V32A15.94,15.94,0,0,0,10.28,46.85L.07,158.55a16,16,0,0,0,9.65,16.09L.08,270.41a15.94,15.94,0,0,0,9.64,16.22L.08,382.41a15.94,15.94,0,0,0,9.64,16.22L.08,494.41a16,16,0,0,0,16,17.59H495.89a16,16,0,0,0,16-17.59l-9.64-95.78a15.93,15.93,0,0,0,9.64-16.22l-9.64-95.78a15.93,15.93,0,0,0,9.64-16.22l-9.64-95.77a16,16,0,0,0,9.65-16.09L501.72,46.85A15.94,15.94,0,0,0,512,32ZM58.38,48H120v80H51.06Zm-7,416,6.45-64H454.17l6.44,64ZM454.17,176l6.44,64H217.22a79.22,79.22,0,0,1,5.16,48H454.17l6.44,64H51.38l6.45-64h7.79a79.25,79.25,0,0,1,5.16-48H51.38l6.45-64H120v54.66a48,48,0,1,0,48,0V48H453.62l7.32,80H200v48Z
+          - type: switch
+            label: Olaf (Staubsauger)
+            mappings:
+              switch: glob-settings/auto-vacuum/state
+            config:
+              icon: svg/0 0 512 512/M431.36,80.64a248,248,0,0,0-350.72,0c-96.85,96.85-96.85,253.87,0,350.72a248,248,0,0,0,350.72,0C528.21,334.51,528.21,177.49,431.36,80.64ZM397.42,397.42A200,200,0,1,1,114.58,114.58,200,200,0,1,1,397.42,397.42ZM369,143C306.66,80.75,205.34,80.75,143,143A24,24,0,0,0,177,177,111.77,111.77,0,1,1,335,335,24,24,0,1,0,369,369,159.72,159.72,0,0,0,369,143ZM139.55,304.57a16,16,0,0,0-22.63,22.63l67.88,67.88a16,16,0,0,0,22.63-22.63Zm90.51-90.51a16,16,0,0,0-22.63,22.63l67.88,67.88a16,16,0,0,0,22.63-22.63Zm-67.88,22.63a16,16,0,0,0-22.63,22.62L252.69,372.45a16,16,0,0,0,22.62-22.63Z
+
+          - type: switch
+            label: Nachtlichter
+            mappings:
+              switch: glob-settings/nightlights/state
+            config:
+              icon: svg/0 0 640 512/M112,224a111.77,111.77,0,0,0,87-41.47,5.25,5.25,0,0,0-5.05-8.47A87.74,87.74,0,0,1,134.11,11.6a5.26,5.26,0,0,0-1.65-9.73A136.16,136.16,0,0,0,112,0a112,112,0,0,0,0,224ZM195,68.78l39.72,16.56,16.56,39.72a5.32,5.32,0,0,0,9.54,0l16.56-39.72,39.72-16.56a5.33,5.33,0,0,0,0-9.54L277.33,42.68,260.77,3a5.32,5.32,0,0,0-9.54,0L234.67,42.68,195,59.24a5.33,5.33,0,0,0,0,9.54Zm-37.9,310.46-39.72-16.56L100.77,323a5.32,5.32,0,0,0-9.54,0L74.67,362.68,35,379.24a5.33,5.33,0,0,0,0,9.54l39.72,16.56,16.56,39.72a5.32,5.32,0,0,0,9.54,0l16.56-39.72,39.72-16.56a5.33,5.33,0,0,0,0-9.54ZM634.63,296,576,242.85V144a16,16,0,0,0-16-16H544a16,16,0,0,0-16,16v55.34L424.06,105.12a36.35,36.35,0,0,0-48.15,0L165.37,296A16,16,0,0,0,164,318.58l10.62,12a16,16,0,0,0,22.59,1.33L224,307.61V472a40,40,0,0,0,40,40H536a40,40,0,0,0,40-40V307.61l26.75,24.26a16,16,0,0,0,22.59-1.33l10.62-12A16,16,0,0,0,634.63,296ZM528,464H272V264.06L400,148,528,264.06ZM352,304v64a16,16,0,0,0,16,16h64a16,16,0,0,0,16-16V304a16.05,16.05,0,0,0-16-16H368A16.05,16.05,0,0,0,352,304Z
+          - type: switch
+            label: Auto Bildschirm
+            mappings:
+              switch: glob-settings/auto-screen/state
+            config:
+              icon: fas/fa-desktop
+
+
+  - id: waschraum
+    title: Waschraum
+    type: default
+    icon: fas/fa-soap
+    items:
+      - type: onoff
+        label: Waschmaschine
+        mappings:
+          state: wr-waschmaschine/switch/state
+      - type: onoff
+        label: Waschmaschine WRAPPER
+        mappings:
+          state: wr-waschmaschine-wrapper/switch/state
+      - type: onoff
+        label: Trockner
+        mappings:
+          state: wr-trockner/switch/state
+
+
+  - id: graphs
+    title: Außentemperatur und Luftfeuchte
+    type: conditional
+    icon: fas/fa-cloud-sun
+    launchOptions:
+      cardId: graphs-big
+      wide: true
+    config:
+      property: nanobbqv3/maintenance/reachable
+      condition: "false"
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: small
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 1
+            ranges:
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 2h
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: -10
+                suggestedMax: 35
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: meq1601978/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: meq1601978/weather/temperature
+
+  - id: graphs-big
+    title: Außentemperatur und Luftfeuchte
+    type: default
+    icon: fas/fa-cloud-sun
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          size: larger
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 1
+            ranges:
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 15m
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 5m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 1m
+
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: -10
+                suggestedMax: 35
+              - id: hum
+                position: right
+                suggestedMin: 30
+                suggestedMax: 90
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: meq1601978/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: meq1601978/weather/temperature
+
+
+  - id: keller
+    title: Keller
+    type: default
+    items:
+      - type: graph
+        label: Temperatur und Luftfeuche
+        config:
+          hideRangePicker: true
+          rangePickerConfig:
+            style: 'extended'
+            defaultRange: 
+              label: 2week
+              range: 
+                start: -1w
+              aggregateWindow: 1h
+          size: smaller
+          refreshInterval: 300
+          graphDefs:
+            - yAxis:
+              - id: temp
+                position: left
+                suggestedMin: 10
+                suggestedMax: 25
+              - id: hum
+                position: right
+                suggestedMin: 52
+                suggestedMax: 62
+              hideXAxisLabels: true
+              hideYAxisLabels: true
+              hideLegend: true
+
+              measurements:
+              - yAxisId: hum
+                label: Luftfeuchtigkeit
+                measurement: leq0122770/weather/humidity
+              - yAxisId: temp
+                label: Temperatur
+                measurement: leq0122770/weather/temperature
+
+  - id: bbq
+    title: BBQ
+    icon: fas/fa-fire
+    type: conditional
+    config:
+      property: nanobbqv3/maintenance/reachable
+      condition: "true"
+    items:
+      - type: bbq
+        config:
+          device: nanobbqv3
+
+
+  - id: mediaplayers
+    title: Mediaplayers
+    type: conditional
+    config:
+      condition: 'true'
+      property: global-mediaplayers-state/switch/state
+    launchOptions: 
+      wide: true
+      cardId: mediaplayers
+    items:
+      - type: conditional
+        config:
+          condition: ['playing', 'paused']
+          property: yamaha-avr/mediaplayer/play-state
+        items:
+          - type: mediaplayer
+            device: yamaha-avr
+            label: Receiver Wohnzimmer
+      - type: conditional
+        config:
+          condition: ['playing']
+          property: echo-g090rf0474130dpe/mediaplayer/play-state
+        items:
+          - type: mediaplayer
+            device: echo-g090rf0474130dpe
+            label: Echo Wohnzimmer
+      - type: conditional
+        config:
+          condition: ['playing']
+          property: echo-g2a1a60304240a15/mediaplayer/play-state
+        items:
+          - type: mediaplayer
+            device: echo-g2a1a60304240a15
+            label: Echo Kueche
+      - type: conditional
+        config:
+          condition: ['playing']
+          property: echo-g091ev0503720hcr/mediaplayer/play-state
+        items:
+          - type: mediaplayer
+            device: echo-g091ev0503720hcr
+            label: Echo Bad
+
+  - id: timers
+    title: Timers
+    type: conditional
+    config:
+      condition: 'true'
+      property: global-echo-timers-state/switch/state
+    launchOptions: 
+      wide: true
+      cardId: conditional
+    items:
+      - type: conditional
+        config:
+          property: echo-g090rf0474130dpe/timers/timer-1-status
+          condition: 'true'
+        items:
+          - type: timer
+            label: Echo Wohnzimmer
+            config:
+              deltaSeconds: 4
+            mappings:
+              creationTime: echo-g090rf0474130dpe/timers/timer-1-creation-date
+              duration: echo-g090rf0474130dpe/timers/timer-1-duration
+              label: echo-g090rf0474130dpe/timers/timer-1-label
+              status: echo-g090rf0474130dpe/timers/timer-1-status
+      - type: conditional
+        config:
+          property: echo-g090rf0474130dpe/timers/timer-2-status
+          condition: 'true'
+        items:
+          - type: timer
+            label: Echo Wohnzimmer
+            config:
+              deltaSeconds: 4
+            mappings:
+              creationTime: echo-g090rf0474130dpe/timers/timer-2-creation-date
+              duration: echo-g090rf0474130dpe/timers/timer-2-duration
+              label: echo-g090rf0474130dpe/timers/timer-2-label
+              status: echo-g090rf0474130dpe/timers/timer-2-status
+      - type: conditional
+        config:
+          property: echo-g090rf0474130dpe/timers/timer-3-status
+          condition: 'true'
+        items:
+          - type: timer
+            label: Echo Wohnzimmer
+            config:
+              deltaSeconds: 4
+            mappings:
+              creationTime: echo-g090rf0474130dpe/timers/timer-3-creation-date
+              duration: echo-g090rf0474130dpe/timers/timer-3-duration
+              label: echo-g090rf0474130dpe/timers/timer-3-label
+              status: echo-g090rf0474130dpe/timers/timer-3-status
+      - type: conditional
+        config:
+          property: echo-g2a1a60304240a15/timers/timer-1-status
+          condition: 'true'
+        items:
+          - type: timer
+            label: Echo Wohnzimmer
+            config:
+              deltaSeconds: 4
+            mappings:
+              creationTime: echo-g2a1a60304240a15/timers/timer-1-creation-date
+              duration: echo-g2a1a60304240a15/timers/timer-1-duration
+              label: echo-g2a1a60304240a15/timers/timer-1-label
+              status: echo-g2a1a60304240a15/timers/timer-1-status
+      - type: conditional
+        config:
+          property: echo-g2a1a60304240a15/timers/timer-2-status
+          condition: 'true'
+        items:
+          - type: timer
+            label: Echo Wohnzimmer
+            config:
+              deltaSeconds: 4
+            mappings:
+              creationTime: echo-g2a1a60304240a15/timers/timer-2-creation-date
+              duration: echo-g2a1a60304240a15/timers/timer-2-duration
+              label: echo-g2a1a60304240a15/timers/timer-2-label
+              status: echo-g2a1a60304240a15/timers/timer-2-status
+      - type: conditional
+        config:
+          property: echo-g2a1a60304240a15/timers/timer-3-status
+          condition: 'true'
+        items:
+          - type: timer
+            label: Echo Wohnzimmer
+            config:
+              deltaSeconds: 4
+            mappings:
+              creationTime: echo-g2a1a60304240a15/timers/timer-3-creation-date
+              duration: echo-g2a1a60304240a15/timers/timer-3-duration
+              label: echo-g2a1a60304240a15/timers/timer-3-label
+              status: echo-g2a1a60304240a15/timers/timer-3-status
+
+  - id: heating-control
+    type: default
+    items:
+      - type: group
+        label: Zentralsteuerung
+        items: 
+          - type: switch
+            label: Automatisches Winter/Sommer Programm
+            mappings:
+              switch: glob-settings/auto-heating-control/state
+            config:
+              icon: fas/fa-temperature-low
+          - type: select
+            label: Heizprogramm
+            mappings:
+              value: glob-settings/season-program/program 
+            config:
+              optionsLabels: ["sommer","winter"]   
+      - type: group
+        label: Wohzimmer
+        items:
+          - type: select
+            label: Wochenprogram
+            mappings:
+              value: meq0180941/hm-config/active-program
+            config:
+              overrideOptionList: ["0","1","2"]
+              optionsLabels: ["winter","sommer","urlaub"]   
+          - type: switch
+            label: Boost nach Lueften
+            mappings:
+              switch: meq0180941/hm-config/boost-after-window-open
+            config:
+              hideIcon: true
+          - type: select
+            label: Boost-Dauer
+            mappings:
+              value: meq0180941/hm-config/boost-duration        
+      - type: group
+        label: Schlafzimmer
+        items:
+          - type: select
+            label: Wochenprogram
+            mappings:
+              value: neq0937510/hm-config/active-program
+            config:
+              overrideOptionList: ["0","1","2"]
+              optionsLabels: ["winter","sommer","urlaub"]   
+          - type: switch
+            label: Boost nach Lueften
+            mappings:
+              switch: neq0937510/hm-config/boost-after-window-open
+            config:
+              hideIcon: true
+          - type: select
+            label: Boost-Dauer
+            mappings:
+              value: neq0937510/hm-config/boost-duration       
+      - type: group
+        label: Kinderzimmer
+        items:
+          - type: select
+            label: Wochenprogram
+            mappings:
+              value: meq0478846/hm-config/active-program
+            config:
+              overrideOptionList: ["0","1","2"]
+              optionsLabels: ["winter","sommer","urlaub"]   
+          - type: switch
+            label: Boost nach Lueften
+            mappings:
+              switch: meq0478846/hm-config/boost-after-window-open
+            config:
+              hideIcon: true
+          - type: select
+            label: Boost-Dauer
+            mappings:
+              value: meq0478846/hm-config/boost-duration
+      - type: group
+        label: Bad
+        items:
+          - type: select
+            label: Wochenprogram
+            mappings:
+              value: oeq0300066/hm-config/active-program
+            config:
+              overrideOptionList: ["0","1","2"]
+              optionsLabels: ["winter","sommer","urlaub"]   
+          - type: switch
+            label: Boost nach Lueften
+            mappings:
+              switch: oeq0300066/hm-config/boost-after-window-open
+            config:
+              hideIcon: true
+          - type: select
+            label: Boost-Dauer
+            mappings:
+              value: oeq0300066/hm-config/boost-duration  
+      - type: group
+        label: Gaestetoilette
+        items:
+          - type: select
+            label: Wochenprogram
+            mappings:
+              value: gt-thermostat-heizung-dummy/hm-config/active-program
+            config:
+              overrideOptionList: ["0","1","2"]
+              optionsLabels: ["winter","sommer","urlaub"]   
+          - type: switch
+            label: Boost nach Lueften
+            mappings:
+              switch: meq0449630/hm-config/boost-after-window-open
+            config:
+              hideIcon: true
+          - type: select
+            label: Boost-Dauer
+            mappings:
+              value: meq0449630/hm-config/boost-duration  

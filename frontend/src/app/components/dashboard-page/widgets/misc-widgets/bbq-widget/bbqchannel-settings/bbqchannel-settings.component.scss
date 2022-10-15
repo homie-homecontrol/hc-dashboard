@@ -1,0 +1,118 @@
+
+.settings-line{
+    width: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    
+    .settings-line-label {
+        width: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1 1 25%;
+    }
+
+    .settings-line-controls {
+        width: auto;
+        margin-left: auto;
+        flex: 1 1 75%;
+        display: flex;
+        align-items: center;
+    }
+}
+
+
+
+
+.sensor-settings{
+    padding:12px;
+}
+
+.tempSlider{
+    display: flex;
+    align-items: center;
+
+    button{
+        flex: 0 1 40px;
+    }
+
+    mat-slider {
+        vertical-align: middle;
+    
+        flex: 1 1 55%;
+    }
+
+    .temp{
+        flex: 1 1 15%;
+        text-align: center;
+    }
+
+}
+
+
+
+.alarmToggles{
+    display: inline-block;
+    vertical-align: middle;
+
+    mat-slide-toggle{
+        padding-right: 12px;
+    }
+}
+
+mat-select{
+    // min-width: 280px;
+    width: 100%;
+}
+
+mat-button-toggle{
+    width: 80px;
+}
+
+.action-bar{
+    width: 270px;
+    margin-top: 32px;
+    margin-left:auto;
+    margin-right: auto;
+    display: block;
+    button{
+        margin-left:12px;
+        min-width: 120px;
+    }
+}
+
+.wizzard-botton{
+    margin-top:32px;
+    margin-bottom: 24px;
+    width: 200px;
+    margin-left:auto;
+    margin-right: auto;
+    display: block;
+}
+
+
+.close {
+    position: sticky;
+    top: 0px;
+    width: 100%;
+    height: 42px;
+    padding: 0px;
+    margin: 0px;
+    z-index: 1000;
+}
+
+.close mat-toolbar {
+    height: 42px;
+    top:0px;
+}
+
+.close button {
+    position: absolute;
+
+
+    // top: 0px;
+    right: 0px;
+}

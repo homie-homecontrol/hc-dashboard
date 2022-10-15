@@ -1,0 +1,9 @@
+<hc-widget-layout>
+  <span hc-widget-label>{{widget.label}}</span>
+  <hc-widget-controls>
+    <span *ngLet="state$ | async as isOpen" 
+    [ngClass]="{ 'primary-bg': !isOpen, 'accent-bg': isOpen, 'label-small': widget.config?.size==='small', 'label-medium': widget.config?.size==='medium', 'label-big': widget.config?.size==='large'}" class="label">
+      {{stateLabel$ | async}}
+    </span>
+  </hc-widget-controls>
+</hc-widget-layout>

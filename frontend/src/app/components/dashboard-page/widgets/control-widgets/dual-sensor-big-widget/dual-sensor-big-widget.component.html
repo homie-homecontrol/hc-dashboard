@@ -1,0 +1,12 @@
+<hc-widget-layout>
+  <hc-widget-controls>
+  <!-- <div class="temp"> -->
+  <span class="big-text">{{ bigSensorreading$ | async | number:bigSensorNumberFormat }}{{ bigSensorUnit$ | async }}</span>
+  <!-- </div> -->
+  <!-- <span class="divider">|</span> -->
+  <div class="divider-div"></div>
+  <!-- <div class="hum"> -->
+  <span class="small-text">{{ smallSensorreading$ | async | number:smallSensorNumberFormat }}{{ smallSensorUnit$ | async }}</span>
+  <!-- </div> -->
+  </hc-widget-controls>
+</hc-widget-layout>

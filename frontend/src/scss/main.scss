@@ -1,0 +1,60 @@
+@import '~@angular/material/theming';
+
+@include mat-core;
+
+@import '~angular-web-app-common/theming';
+@import "app-theme.scss";
+@import "palette.scss";
+@import "variables.scss";
+
+
+$app-primary: mat-palette($mat-blue-grey, A700, A400, A200);
+$app-accent: mat-palette($mat-deep-orange, A200, A100, A400);
+$app-warn: mat-palette($mat-purple);
+
+$app-dark-primary: mat-palette($mat-dark);
+$app-dark-accent: mat-palette($mat-deep-orange, A200, A100, A400);
+$app-dark-warn: mat-palette($mat-red);
+
+// Create light theme
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+@include angular-material-theme($app-theme);
+@include awac-core($app-theme);
+@include make-app-theme($app-theme, 0);
+
+.mat-card-header {
+    .awac-icon {
+        font-size: 32px !important;
+        height: 32px !important;
+        width: 32px !important;
+        text-align: center;
+
+        .mat-icon {
+            font-size: 32px !important;
+            height: 32px !important;
+            width: 32px !important;
+            text-align: center;
+        }
+        svg {
+            width: 32px !important;
+            height: 32px !important;
+        }
+    }
+}
+
+
+:root {
+    --small-screen-width: 600px;
+    --medium-screen-width: 970px;
+    --large-screen-width: 1280px;
+  }
+
+// Create dark theme
+.dark-theme {
+    $dark-app-theme: mat-dark-theme($app-dark-primary, $app-dark-accent, $app-dark-warn);
+
+    @include angular-material-theme($dark-app-theme);
+    @include make-base-theme($dark-app-theme);
+    @include make-app-theme($dark-app-theme, 1);
+}

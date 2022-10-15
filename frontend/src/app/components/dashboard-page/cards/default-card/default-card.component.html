@@ -1,0 +1,10 @@
+<mat-card>
+  <hc-card-header [card]="card" [hideLaunchButton]="hideLaunchButton"></hc-card-header>
+  <hc-generic-widget *ngFor="let item of card.items" [widget]="item" ></hc-generic-widget>
+  <!-- <hc-widget-layout *ngFor="let item of card.items">
+    <span hc-widget-label>{{item.label}}</span>
+    <hc-widget-controls>
+        <span>empty</span>
+    </hc-widget-controls>
+  </hc-widget-layout> -->
+</mat-card>

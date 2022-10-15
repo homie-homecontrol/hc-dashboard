@@ -1,0 +1,33 @@
+layout:
+  large:
+    columns:
+      - - test6
+      - - test7
+      - - test8
+        - test9
+        - test12
+
+cards:
+  - id: test6
+    title: Testcard 6c
+    type: default
+    icon: testicon
+    items:
+      - type: switch
+        device: grg-switch-shelly1-test
+        label: Garage Shelly Test
+      - type: dimmer
+        device: light-14
+        label: This is a test label
+      - type: switch
+        device: light-16
+      - type: dimmer
+        device: light-18
+      - type: contact
+        device: sec-contacts
+      - type: contact
+        device: sec-contacts-except-door
+      - type: switch
+        label: Trockner
+        mappings:
+          switch: wr-trockner/switch/state

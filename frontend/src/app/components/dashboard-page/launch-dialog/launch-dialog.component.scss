@@ -1,0 +1,79 @@
+@import "variables.scss";
+
+.container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header{
+    height: 48px;
+}
+
+.header mat-toolbar{
+    height: 48px;
+}
+.header button {
+    visibility: hidden;
+    display: none;
+}
+
+
+.content{
+    flex: auto;
+    overflow: auto;
+    padding-bottom: 150px;
+}
+
+.footer{
+    position: fixed;
+    height: 48px;
+    width: 100vw;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 0px;
+    z-index: 1000;
+    z-index: 1001;
+}
+
+.footer button{
+    height: 48px;
+    width: 90vw;
+}
+
+
+
+// var(--medium-screen-width)
+@media (min-width: $medium-screen-width) {
+    /* Tablet ~7 inch  */
+    .header button {
+        visibility: unset;
+        display: unset;
+    }
+
+    .content{
+        padding-bottom: 4px;
+    }
+
+    .footer{
+        visibility: hidden;
+        display: none;
+    }
+    // var(--large-screen-width)
+
+    @media (min-width: $large-screen-width) {
+        /* Tablet ~10 inch and Desktop */
+        .header button {
+            visibility: unset;
+            display: unset;
+        }
+        .content{
+            padding-bottom: 4px;
+        }
+        .footer{
+            visibility: hidden;
+            display: none;
+        }
+    }
+}

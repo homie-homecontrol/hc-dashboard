@@ -1,0 +1,119 @@
+.hc-widget-layout {
+    width: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .main-line-container{
+        width: 100%;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        
+        .hc-widget-label {
+            width: 100%;
+            min-height: 24px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .controls-container {
+            width: auto;
+            min-height: 24px;
+            margin-left: auto;
+
+            .hc-widget-controls {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            .hc-widget-controls-vertical {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+            }
+        }
+
+        .controls-container:empty {
+            display: none;
+        }
+
+    }
+
+    .main-line-container-vertical{
+        align-items: flex-start;
+    }
+
+    .main-line-container:empty{
+        display: none;
+    }
+
+
+    .first-line-container {
+        width: 100%;
+        min-height: 24px;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+
+        .hc-widget-first-line {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-left: auto;
+            width: fit-content;
+        }
+        .hc-widget-first-line-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .hc-widget-first-line-left {
+            margin-left: 0px;
+
+        }
+        .hc-widget-first-line-center {
+            margin-left: auto;
+            margin-right: auto;
+            width: fit-content;
+        }
+    }
+
+    .first-line-container:empty {
+        display: none;
+    }
+
+
+
+    .second-line-container {
+        width: auto;
+        min-height: 24px;
+        margin-left: auto;
+
+        .hc-widget-second-line {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .hc-widget-second-line-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+    }
+
+    .second-line-container:empty {
+        display: none;
+    }
+
+
+
+
+}

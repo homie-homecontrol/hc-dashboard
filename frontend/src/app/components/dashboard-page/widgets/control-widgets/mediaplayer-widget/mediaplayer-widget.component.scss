@@ -1,0 +1,88 @@
+.widget-label {
+    font-weight: bolder;
+    font-size: larger;
+
+    
+}
+
+.mediaplayer-header{
+    padding: 0px 24px 0px 4px;
+}
+.mediaplayer-header:not(.mat-expanded) {
+    height:32px !important;
+    padding: 0px 24px 0px 4px;
+}
+
+.control {
+    display: flex;
+    margin: 0 -14px 0px;
+}
+
+.left {
+    flex: 35%;
+    margin: 4px 14px 8px 14px;
+}
+
+.right {
+    flex: 65%;
+    margin: 4px;
+}
+
+.title {
+    font-weight: bolder;
+}
+
+.subTitle {
+    font-weight: lighter;
+}
+
+.media-progress{
+    height: 10px;
+    margin-right: 10px;
+}
+
+.volume {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    awac-icon {
+        height: 18px;
+        font-size: 18px;
+        line-height: 18px;
+        vertical-align: middle;
+    }
+
+    mat-slider {
+        // vertical-align: middle;
+
+        // width: 100%;
+        // width: 90%;
+    }
+}
+
+.player {
+    align-items: center;
+
+    .repeat-button {
+        margin-right: 12px;
+    }
+
+    button {
+        margin: 2px;
+    }
+
+
+    .shuffle-button {
+        margin-left: 12px;
+    }
+}
+
+.coverImg {
+    display: inline-block;
+    vertical-align: middle;
+    background-color: white;
+
+    // margin-right: auto;
+    width: 100%;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 12px 0 rgba(0, 0, 0, 0.19);
+}

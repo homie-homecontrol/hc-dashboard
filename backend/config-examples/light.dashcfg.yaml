@@ -1,0 +1,20 @@
+layout:
+  autoReflow: single
+  large:
+    columns:
+      - - test
+        - test4
+        - test7
+      - - test2
+        - test5
+      - - test3
+        - test6
+        - test8
+
+cards:
+  - id: test
+    title: Testcard 2
+    type: default
+    icon: fas/fa-cloud-sun
+    items: []
+

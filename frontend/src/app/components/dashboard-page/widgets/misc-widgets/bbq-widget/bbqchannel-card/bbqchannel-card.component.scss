@@ -1,0 +1,39 @@
+.main{
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 48px;
+    height: max-content;
+    align-items: stretch;
+    margin: 4px;
+}
+
+.colorIndicator{
+    width: 12px;
+    height: 24px;
+    margin: 0px;
+    background-color: green;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0;
+    line-height: 0;
+}
+
+.infoArea{
+    flex-grow: 1;
+}
+
+.channelName{
+    font-size: larger;
+    margin-left: 4px;
+}
+.channelNum{
+    margin-right: 4px;
+}
+.temp{
+    margin-right: 4px;
+    font-size: xx-large;
+    font-weight: 700;
+}

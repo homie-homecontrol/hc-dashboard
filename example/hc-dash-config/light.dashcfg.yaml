@@ -1,0 +1,33 @@
+layout:
+  autoReflow: single
+  large:
+    columns:
+      - - test
+        - test4
+        - test7
+      - - test2
+        - test5
+      - - test3
+        - test6
+        - test8
+
+cards:
+  - id: test
+    title: Testcard
+    type: default
+    icon: fas/fa-cloud-sun
+    items:
+      - type: dimmer
+        device: wz-lights
+      - type: dimmer
+        device: ez-lights
+        # mappings:
+        #   brightness: light-16/dimmer/brightness
+        #   switch: light-16/switch/state
+      - type: group
+        label: Wohnzimmer
+        items:
+          - type: dimmer
+            device: wz-stehlampe-papier
+          - type: dimmer
+            device: wz-stehlampe-sofa

@@ -1,0 +1,59 @@
+.overlay{
+    top:0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    position: relative;
+    height: 68px;
+}
+
+.readings{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: fit-content;
+    bottom: 0px;
+    z-index: 2;
+    line-height: 18pt;
+    font-size: 18pt;
+    vertical-align: middle;
+    display: flex;
+    padding-right: 42px;
+    max-width: 250px;
+
+
+}
+
+.center-container{
+    margin: auto;
+    max-width: 250px;
+    border-radius: 8px;
+}
+
+.sensor-label{
+    z-index: 2;
+    line-height: 12pt;
+    font-size: 12pt;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.primary-reading{
+    vertical-align: bottom;
+    line-height: 14pt;
+    font-size: 14pt;
+    font-weight: 600;
+    font-stretch: wider;
+    padding: 3px;
+
+}
+
+.secondary-reading{
+    vertical-align: bottom;
+    line-height: 12pt;
+    font-size: 10pt;
+    padding: 3px;
+    padding-right: 8px;
+}

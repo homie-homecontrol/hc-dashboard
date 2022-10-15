@@ -1,0 +1,7 @@
+<hc-widget-layout>
+  <span hc-widget-label>{{widget.label}}</span>
+  <hc-widget-controls>
+    <awac-icon *ngIf="!widget.config?.hideIcon" name="{{ !!widget.config?.icon ? widget.config?.icon : 'fas/fa-power-off' }}"></awac-icon>
+    <mat-slide-toggle [checked]="state$ | async" (change)="toggle($event.checked)"></mat-slide-toggle>
+  </hc-widget-controls>
+</hc-widget-layout>
