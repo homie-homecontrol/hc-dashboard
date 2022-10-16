@@ -128,7 +128,6 @@ services:
             HCDASH_PORT: 8443
             HCDASH_MQTT_URL: "mqtt://mqtt"
             HCDASH_MQTT_TOPIC_ROOT: homie-dev
-            HCDASH_STORE_BACKEND: inmemory
             HCDASH_CONFIG_FOLDER: ./data
             HCDASH_INFLUX_URL: "<INFLUXDB URL>"
             HCDASH_INFLUX_TOKEN: "<INFLUXDB Token>"

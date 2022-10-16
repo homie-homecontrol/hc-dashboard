@@ -1,16 +1,16 @@
 
 import * as WebSocket from 'ws';
 import * as winston from "winston";
-import { Core } from '../core/Core';
+import { Core } from '../../core/Core';
 import { Subject, Observable, merge } from 'rxjs';
-import { OnDestroy } from '../core/Lifecycle';
-import { OnInit } from 'node-homie/misc';
+import { OnDestroy, OnInit } from 'node-homie/misc';
 import { filter, map, share, take, takeUntil } from 'rxjs/operators';
 import { Validator } from 'jsonschema';
-import { APIMessage, DeviceQueryMessage, IncomingMessage, PongMessage, SubscribeDeviceQueryMessage } from '../model/api.model';
+import { APIMessage, DeviceQueryMessage, IncomingMessage, PongMessage, SubscribeDeviceQueryMessage } from '../../model/api.model';
 import { makePageSubAPI } from './pageSubAPI.func';
 import { makeDevicesSubAPI } from './devicesSubAPI.func';
 import { makePropertiesSubAPI } from './propertiesSubAPI.func';
+import { DashConfig } from '../../dashconfig/DashConfig';
 
 
 const wsapiSchema = require?.main?.require('./WSAPI.Schema.json');
@@ -21,13 +21,9 @@ export class WebSocketAPI implements OnDestroy {
 
   private wss: WebSocket.Server;
 
-  private core: Core;
-
   private connections: WebSocketConnection[] = [];
 
-
-
-  constructor(wss: WebSocket.Server, core: Core) {
+  constructor(wss: WebSocket.Server, private core: Core, private dashConfig: DashConfig) {
     this.log = winston.child({
       name: 'WebSocketAPI',
       type: this.constructor.name,
@@ -40,7 +36,7 @@ export class WebSocketAPI implements OnDestroy {
 
 
   onConnection(ws: WebSocket) {
-    const conn = new WebSocketConnection(ws, this.core);
+    const conn = new WebSocketConnection(ws, this.core, this.dashConfig);
     this.connections.push(conn);
     conn.onInit();
     conn.destroy$.pipe(take(1)).subscribe(
@@ -143,7 +139,7 @@ export class WebSocketConnection implements OnInit, OnDestroy {
 
   // protected 
 
-  constructor(private ws: WebSocket, private core: Core) {
+  constructor(private ws: WebSocket, private core: Core, private dashConfig: DashConfig) {
     this.log = winston.child({
       name: 'WebSocketAPI',
       type: this.constructor.name,
@@ -177,9 +173,9 @@ export class WebSocketConnection implements OnInit, OnDestroy {
 
 
     merge(
-      makePageSubAPI(messages$, this.core, this.onDestroy$),
-      makeDevicesSubAPI(messages$, this.core, this.onDestroy$),
-      makePropertiesSubAPI(messages$, this.core, this.onDestroy$),
+      makePageSubAPI(messages$, {dashConfig: this.dashConfig}, this.onDestroy$),
+      makeDevicesSubAPI(messages$, {deviceManager: this.core.deviceManager}, this.onDestroy$),
+      makePropertiesSubAPI(messages$, {deviceManager: this.core.deviceManager}, this.onDestroy$),
     ).pipe(takeUntil(this.onDestroy$)).subscribe(
       {
         next: msg => {

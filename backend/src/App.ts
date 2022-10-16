@@ -1,10 +1,10 @@
 import { Core } from './core/Core';
 import * as winston from "winston";
 import { DashHomieController } from './controller/Controller';
-import { Server } from './Server';
-import { OnDestroy, OnInit } from './core/Lifecycle';
+import { Server } from './server/Server';
 import { timeout } from './lib/Util';
-import { asyncTimeout } from 'node-homie/misc';
+import { asyncTimeout, OnDestroy, OnInit } from 'node-homie/misc';
+import { DashConfig } from './dashconfig/DashConfig';
 
 
 export class App implements OnDestroy, OnInit {
@@ -12,10 +12,9 @@ export class App implements OnDestroy, OnInit {
 
   private core: Core;
   private controller: DashHomieController
+  protected dashConfig: DashConfig;
 
   private server: Server;
-
-  // private discovery: Discovery;
 
   eventcounter = 0;
 
@@ -35,15 +34,12 @@ export class App implements OnDestroy, OnInit {
       topicRoot: this.core.settings.mqtt_topic_root
     };
 
-    this.controller = new DashHomieController(this.core, mqttOpts);
-    this.server = new Server(this.core);
+    this.controller = new DashHomieController(this.core);
 
-    // this.discovery = new Discovery(this.core);
+    this.dashConfig = new DashConfig(this.core.deviceManager, this.core.settings);
 
-    this.core.eventBus.events.subscribe(event => {
-      this.eventcounter++;
-      // this.log.info(`${this.eventcounter} - Event: `, { event });
-    })
+    this.server = new Server(this.core, this.dashConfig);
+
   }
 
   async onInit(): Promise<void> {
@@ -53,6 +49,7 @@ export class App implements OnDestroy, OnInit {
       this.log.info('... done! [Bootstrapping core]');
 
       await this.controller.onInit();
+      await this.dashConfig.onInit();
       await this.server.onInit();
 
     } catch (error) {
@@ -66,6 +63,7 @@ export class App implements OnDestroy, OnInit {
       await Promise.race([
         asyncTimeout(2000),
         Promise.all([
+          this.dashConfig.onDestroy(),
           this.controller.onDestroy(),
           this.server.onDestroy(),
           this.core.onDestroy()

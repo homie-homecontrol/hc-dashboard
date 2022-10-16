@@ -826,10 +826,10 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==
 
-cfg-watcher@~0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/cfg-watcher/-/cfg-watcher-0.3.3.tgz#24a6a67cbc650490a6c5803c5e0aa5afc7295d80"
-  integrity sha512-y03MuGGJ1ZyVP3cLVx9IzngmC5FNjYWVn24A8FB0UYKb7dVO3lQ/7tlWYZkcoMp9R6hU6ND5+7RtYIJWdG2P8w==
+cfg-watcher@~0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/cfg-watcher/-/cfg-watcher-0.3.4.tgz#c7eda8203dabb30587090d7be1bda446b68588e5"
+  integrity sha512-2XAuQ/+srvZbB4CR4L6oIm89ZgRWo0TDgW55qSOgAFAo3kyqIwZCjtx9qRyG6XCTrjSDIY+v2YM0GqgJLCGbow==
   dependencies:
     "@kubernetes/client-node" "~0.14.0"
     fast-deep-equal "~3.1.3"

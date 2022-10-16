@@ -1,7 +1,7 @@
 
 import { Router, Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
-import { Core } from '../core/Core';
+import { Core } from '../../core/Core';
 import * as winston from "winston";
 
 

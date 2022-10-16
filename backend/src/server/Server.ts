@@ -1,20 +1,23 @@
 import express from 'express';
+import { Router } from 'express';
 import * as bodyParser from 'body-parser';
 import * as http from 'http';
 import logger from 'morgan';
 import * as winston from "winston";
 import { AddressInfo } from 'net';
-import { Core } from './core/Core';
+import { Core } from '../core/Core';
 import passport from 'passport';
 import WebSocket from 'ws';
-import { makeJwtStrategy, makeVerifyWSClient } from './Authentication';
-import { LoginRouter } from './routes/LoginRouter';
-import { Globals } from './globals';
-import { RestAPI } from './RestAPI';
+import { makeJwtStrategy, makeVerifyWSClient } from '../Authentication';
+import { Globals } from '../globals';
 import { default as cors } from 'cors';
-import { OnDestroy, OnInit } from './core/Lifecycle';
 import { WebSocketAPI } from './wsapi/WebSocketAPI';
 import { ProxyRouter } from './routes/ProxyRouter';
+import { OnInit, OnDestroy } from 'node-homie/misc';
+import { DashConfigRouter } from './routes/DashConfigRouter';
+import { HomieControlRouter } from './routes/HomieControlRouter';
+import { InfluxDbRouter } from './routes/InfluxDbRouter';
+import { DashConfig } from '../dashconfig/DashConfig';
 
 export class Server implements OnInit, OnDestroy {
     protected readonly log: winston.Logger;
@@ -23,21 +26,16 @@ export class Server implements OnInit, OnDestroy {
     // ref to Express instance
     public express: express.Application;
     public wss: WebSocket.Server;
-    // private dm: IHomieDeviceManager;
-    private restApi: RestAPI;
-    private core: Core;
-    // eventBroadcast: EventBroadcast;
+
     webSocketAPI?: WebSocketAPI;
 
     // Run configuration methods on the Express instance.
-    constructor(core: Core) {
-        // this.dm = dm;
-        this.core = core;
+    constructor(private core: Core, private dashConfig: DashConfig) {
+
         this.log = winston.child({
             name: 'Server',
             type: this.constructor.name,
         });
-        this.restApi = new RestAPI(this.core);
         this.express = express();
         // Create HTTP Server for express
         this.server = http.createServer(this.express);
@@ -96,14 +94,24 @@ export class Server implements OnInit, OnDestroy {
 
     private routes(): void {
         //passport.authenticate('jwt', { session: false }), 
-        this.express.use('/api/v1', this.restApi.getAPIv1());
-        this.express.use('/login/v1', new LoginRouter(this.core).router);
+        this.express.use('/api/v1', this.makeRestAPI());
+        // this.express.use('/login/v1', new LoginRouter(this.core).router);
         this.express.use('/proxy', new ProxyRouter(this.core).router);
         this.express.use(express.static(Globals.WEB_PATH));
         this.express.get('*', function (req, res) {
             res.sendFile(Globals.WEB_PATH + 'index.html');
         });
     }
+
+
+    private makeRestAPI(){
+        const router = Router();
+        router.use('/dashconfig', new DashConfigRouter(this.core, this.dashConfig).router);
+        router.use('/homie', new HomieControlRouter(this.core).router);
+        router.use('/influxdb', new InfluxDbRouter(this.core).router);
+        return router;
+    }
+
 
 
     // HTTP Server handling....
@@ -121,7 +129,7 @@ export class Server implements OnInit, OnDestroy {
                 this.log.info(`Listening on ${bind}`);
                 // WebSocket is also listening so we can bind the eventBroadCaster here
                 this.log.info('Binding eventBroadcast to WebSocket...');
-                this.webSocketAPI = new WebSocketAPI(this.wss, this.core);
+                this.webSocketAPI = new WebSocketAPI(this.wss, this.core, this.dashConfig);
                 resolve();
             });
 

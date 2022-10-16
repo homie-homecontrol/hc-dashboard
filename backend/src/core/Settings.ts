@@ -1,92 +1,85 @@
+import { HomieID, isHomieID, MQTTConnectOpts } from 'node-homie/model';
 import { Globals } from '../globals';
 
-export class Settings {
-    mqtt_url: string;
-    mqtt_user: string;
-    mqtt_password: string;
-    mqtt_topic_root: string;
+function getEnvVar(name: string): string | undefined {
+    return process.env[`${Globals.SERVICE_NAMESPACE}_${name}`];
+}
 
-    store_backend: string;
-    store_kubernetes_configmap: string;
-    store_level_location: string;
+function stringENVVal(name: string, defval: string): string {
+    return getEnvVar(name) || defval;
+}
 
-    port: number;
-    host: string;
-    username: string;
-    password: string;
-    jwtKey: string;
-    jwtValidity: number;
-
-
-    config_backend: 'file' | 'kubernetes';
-    config_folder: string;
-
-    config_kubernetes_pagedef_configmap: string;
-    config_kubernetes_menu_configmap: string;
-
-    influx_url = this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_INFLUX_URL`, 'http://influxdb:8086');
-    influx_token = this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_INFLUX_TOKEN`, '');
-    influx_org = this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_INFLUX_ORG`, 'smarthome');
-    influx_bucket = this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_INFLUX_BUCKET`, 'homecontrol');
-
-
-
-
-    // rules_folder: string;
-
-    constructor() {
-        this.mqtt_url =                 this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_MQTT_URL`, '');
-        this.mqtt_user =                this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_MQTT_USERNAME`, '');
-        this.mqtt_password =            this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_MQTT_PASSWORD`, '');
-        this.mqtt_topic_root =          this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_MQTT_TOPIC_ROOT`, 'homie');
-        this.store_backend =            this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_STORE_BACKEND`, 'inmemory');
-        this.store_kubernetes_configmap = this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_STORE_KUBERNETES_CONFIGMAP`, 'hm2homie-data');
-        this.store_level_location =     this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_STORE_LEVEL_LOCATION`, '/data/store.kv');
-        
-        this.port =                     this.numberENVVal(`${Globals.SERVICE_NAMESPACE}_PORT`, 8443); 
-        this.host =                     this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_HOST`, '0.0.0.0'); 
-        this.username =                 this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_USERNAME`, 'homecontrol'); 
-        this.password =                 this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_PASSWORD`, 'homecontrol'); 
-
-        this.jwtKey =                   this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_JWTKEY`, '');
-        this.jwtValidity =              this.numberENVVal(`${Globals.SERVICE_NAMESPACE}_JWTVALIDITY`, 365);
-
-        this.config_backend =           this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_CONFIG_BACKEND`, 'file') as any; 
-        this.config_folder =            this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_CONFIG_FOLDER`, 'config'); 
-        
-        this.config_kubernetes_pagedef_configmap = this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_CONFIG_KUBERNETES_PAGEDEF_CONFIGMAP`, 'hc-dash-config'); 
-        this.config_kubernetes_menu_configmap =    this.stringENVVal(`${Globals.SERVICE_NAMESPACE}_CONFIG_KUBERNETES_MENU_CONFIGMAP`, 'hc-dash-config'); 
+function homieIDENVVal(name: string, defval: HomieID): string {
+    const val = getEnvVar(name) || defval;
+    if (!isHomieID(val)) {
+        throw new Error(`[${val}] is not a valid homie-id`);
     }
+    return val;
+}
 
-    stringENVVal(name: string, defval: string): string {
-        return process.env[name] || defval;
+function csvENVVal(name: string, defval: string[]): string[] {
+    if (getEnvVar(name)) {
+        return process.env[name]!.split(',');
     }
+    return defval;
+}
 
-    csvENVVal(name: string, defval: string[]): string[] {
-        if (process.env[name]){
-            return process.env[name]!.split(',');
-        }
+function boolENVVal(name: string, defval: boolean): boolean {
+    const val = getEnvVar(name);
+    if (!val) { return defval; }
+
+    if (val.toLowerCase() === 'true' || val === '1') {
+        return true;
+    } else if (val.toLowerCase() === 'false' || val === '0') {
+        return false;
+    } else {
         return defval;
     }
 
-    boolENVVal(name: string, defval: boolean): boolean {
-        const val = process.env[name];
-        if (!val) { return defval; }
+}
 
-        if (val.toLowerCase() === 'true' || val === '1') {
-            return true;
-        } else if (val.toLowerCase() === 'false' || val === '0') {
-            return false;
-        } else {
-            return defval;
+function numberENVVal(name: string, defval: number): number {
+    const val = getEnvVar(name) || defval;
+    const _number: number = (typeof val === 'string') ? parseInt(val, 10) : val;
+    return isNaN(_number) ? defval : _number;
+}
+
+
+export class Settings {
+
+    mqttOpts: MQTTConnectOpts;
+
+    constructor(
+        public mqtt_url = stringENVVal(`MQTT_URL`, ''),
+        public mqtt_user = stringENVVal(`MQTT_USERNAME`, ''),
+        public mqtt_password = stringENVVal(`MQTT_PASSWORD`, ''),
+        public mqtt_topic_root = stringENVVal(`MQTT_TOPIC_ROOT`, 'homie'),
+        public controller_id = homieIDENVVal(`CTRL_ID`, 'dash-ctl-1'),
+        public controller_name = stringENVVal(`CTRL_NAME`, 'dash-ctl-1'),
+        public port = numberENVVal(`PORT`, 8443),
+        public host = stringENVVal(`HOST`, '0.0.0.0'),
+        public username = stringENVVal(`USERNAME`, 'homecontrol'),
+        public password = stringENVVal(`PASSWORD`, 'homecontrol'),
+        public jwtKey = stringENVVal(`JWTKEY`, ''),
+        public jwtValidity = numberENVVal(`JWTVALIDITY`, 365),
+        public config_backend = stringENVVal(`CONFIG_BACKEND`, 'file') as any,
+        public config_folder = stringENVVal(`CONFIG_FOLDER`, 'config'),
+        public config_kubernetes_pagedef_configmap = stringENVVal(`CONFIG_KUBERNETES_PAGEDEF_CONFIGMAP`, 'hc-dash-config'),
+        public config_kubernetes_menu_configmap = stringENVVal(`CONFIG_KUBERNETES_MENU_CONFIGMAP`, 'hc-dash-config'),
+
+        public influx_url = stringENVVal(`INFLUX_URL`, ''),
+        public influx_token = stringENVVal(`INFLUX_TOKEN`, ''),
+        public influx_org = stringENVVal(`INFLUX_ORG`, 'smarthome'),
+        public influx_bucket = stringENVVal(`INFLUX_BUCKET`, 'homecontrol'),
+
+    ) {
+        this.mqttOpts = {
+            url: this.mqtt_url,
+            username: this.mqtt_user,
+            password: this.mqtt_password,
+            topicRoot: this.mqtt_topic_root
         }
 
-    }
-
-    numberENVVal(name: string, defval: number): number {
-        const val = process.env[name] || defval;
-        const _number: number = (typeof val === 'string') ? parseInt(val, 10) : val;
-        return isNaN(_number) ? defval : _number;
     }
 
 }

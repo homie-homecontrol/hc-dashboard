@@ -1,8 +1,9 @@
+import { HomieDeviceManager } from "node-homie";
 import { DictionaryStore, SimpleLogger } from "node-homie/misc";
 import { notNullish } from "node-homie/model";
 import { evaluateValueCondition } from "node-homie/util";
 import { filter, map, switchMap, combineLatest, distinctUntilChanged, of, takeUntil, merge, Observable } from "rxjs";
-import { DeviceQueryMessage, IRestDevice, SubscribeDeviceQueryMessage } from "../model/api.model";
+import { DeviceQueryMessage, IRestDevice, SubscribeDeviceQueryMessage } from "../../model/api.model";
 import { makeAPIFunc } from "./wsapi.model";
 
 const log = new SimpleLogger('deviceSubAPI', 'deviceSubcription');
@@ -15,7 +16,7 @@ export interface DeviceQuerySubscription {
   
 
 
-export const makeDevicesSubAPI: makeAPIFunc = (messages$, core, onDestroy$) => {
+export const makeDevicesSubAPI: makeAPIFunc<{deviceManager: HomieDeviceManager}> = (messages$, opts, onDestroy$) => {
     log.info('making DeviceSubs API');
     const deviceQuerySubs = new DictionaryStore<DeviceQuerySubscription>(sub => sub.msg.payload.id);
     const deviceQuerySubMsg$ = messages$.pipe(
@@ -25,7 +26,7 @@ export const makeDevicesSubAPI: makeAPIFunc = (messages$, core, onDestroy$) => {
             let obs = undefined;
             // Device only query
             if (msg.payload.query.device && !msg.payload.query.node && !msg.payload.query.property) {
-                obs = core.deviceManager.queryDevices(msg.payload.query.device).pipe(
+                obs = opts.deviceManager.queryDevices(msg.payload.query.device).pipe(
                     map(devs => <DeviceQueryMessage>{
                         type: 'deviceQuery', payload: {
                             queryId: msg.payload.id, devices: devs.filter(notNullish).map(dev => {
@@ -36,7 +37,7 @@ export const makeDevicesSubAPI: makeAPIFunc = (messages$, core, onDestroy$) => {
                 )
             } else {
                 // Devices by property query
-                obs = core.deviceManager.query(msg.payload.query).pipe(
+                obs = opts.deviceManager.query(msg.payload.query).pipe(
                     switchMap(props =>
                         notNullish(msg.payload.valueCondition) ? combineLatest(
                             props.map(prop => prop.valueAsType$.pipe(

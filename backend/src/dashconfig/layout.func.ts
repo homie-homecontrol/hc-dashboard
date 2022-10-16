@@ -1,4 +1,4 @@
-import { ScreenSize, PageLayout, ScreenSizes, ColumnConfig } from "../../model/dash.model";
+import { ScreenSize, PageLayout, ScreenSizes, ColumnConfig } from "../model/dash.model";
 
 
 

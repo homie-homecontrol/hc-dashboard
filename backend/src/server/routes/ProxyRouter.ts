@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { Core } from '../core/Core';
+import { Core } from '../../core/Core';
 import winston from 'winston';
 import { HomieValuesTypes, PropertySelector } from 'node-homie/model';
 import { mergeMap, take } from 'rxjs/operators';

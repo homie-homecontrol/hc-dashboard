@@ -36,6 +36,18 @@ const JSONS_CONVERSIONS = [
     // }
   },
   {
+    source: 'src/model/controller.model.ts',
+    type: 'MenuMQTTConfigInput',
+    output: 'MenuMQTTConfigInput.Schema.json',
+    defaultCfg: { encodeRefs: false },
+  },
+  {
+    source: 'src/model/controller.model.ts',
+    type: 'PagesMQTTConfigInput',
+    output: 'PagesMQTTConfigInput.Schema.json',
+    defaultCfg: { encodeRefs: false },
+  },
+  {
     source: 'src/model/api.model.ts',
     type: 'APIMessage',
     output: 'WSAPI.Schema.json',

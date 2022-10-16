@@ -1,5 +1,5 @@
 import { HomieDeviceManager, HomieProperty } from "node-homie";
-import { Card, CardType, ConditionalCard, DefaultCard, ICard } from "../../model/dash.model";
+import { Card, CardType, ConditionalCard, DefaultCard, ICard } from "../model/dash.model";
 import { collectWidgetProperties, normalizeWidgets } from "./widgets.func";
 
 type CardNormalizer = (item: Card) => Card;

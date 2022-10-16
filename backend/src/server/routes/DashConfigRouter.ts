@@ -1,16 +1,14 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { Core } from '../core/Core';
+import { Core } from '../../core/Core';
 import winston from 'winston';
-import { IRestDashboardPage, IRestProperty } from '../model/api.model';
+import { IRestDashboardPage, IRestProperty } from '../../model/api.model';
+import { DashConfig } from '../../dashconfig/DashConfig';
 
 export class DashConfigRouter {
     protected readonly log: winston.Logger;
     router: Router;
 
-    protected core: Core;
-
-    constructor(core: Core) {
-        this.core = core;
+    constructor(private core: Core, private dashConfig: DashConfig) {
         this.router = Router();
         this.log = winston.child({
             name: 'DashConfigRouter',
@@ -21,15 +19,15 @@ export class DashConfigRouter {
     }
 
     protected getMenu(req: Request, res: Response, next: NextFunction) {
-        this.log.info(`Returning menu: ${JSON.stringify(this.core.dashConfig.menuStore.getItem('menu')?.pageMenuEntries)}`)
-        res.status(200).json(this.core.dashConfig.menuStore.getItem('menu')?.pageMenuEntries);
+        this.log.info(`Returning menu: ${JSON.stringify(this.dashConfig.menuStore.getItem('menu')?.pageMenuEntries)}`)
+        res.status(200).json(this.dashConfig.menuStore.getItem('menu')?.pageMenuEntries);
     }
 
     protected getPageDef(req: Request, res: Response, next: NextFunction) {
         const pageId = req.params['pageId'];
         console.log('getting pageId: ', pageId);
 
-        const pageState = this.core.dashConfig.pageStore.getItem(pageId);
+        const pageState = this.dashConfig.pageStore.getItem(pageId);
         if (!pageState || !!pageState?.error) {
             res.status(404);
             return;

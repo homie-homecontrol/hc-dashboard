@@ -5,13 +5,12 @@ import { asyncScheduler, merge, Observable, pipe, Subject } from "rxjs";
 import { takeUntil, mergeMap, map, tap, throttleTime, withLatestFrom, distinctUntilChanged, delay, filter } from "rxjs/operators";
 import winston from "winston";
 import * as yaml from 'js-yaml';
-import { OnDestroy, OnInit } from "../Lifecycle";
-import { DictionaryStore } from "node-homie/misc";
+import { DictionaryStore, OnDestroy, OnInit } from "node-homie/misc";
 import { mergeWatchList, watchList } from "node-homie/rx";
 import { normalizeLayout } from "./layout.func";
-import { Card, PageDef, PageMenu } from "../../model/dash.model";
+import { Card, PageDef, PageMenu } from "../model/dash.model";
 import { collectCardProperties, normalizeCards } from "./cards.func";
-import { Settings } from "../Settings";
+import { Settings } from "../core/Settings";
 import { ConfigFileChange, ConfigFileWatcher, ConfigMapWatcher, ConfigWatcher } from "cfg-watcher";
 
 const pageDefSchema = require?.main?.require('./PageDef.Schema.json');

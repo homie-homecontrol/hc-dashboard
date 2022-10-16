@@ -22,7 +22,7 @@
     "@angular/router": "~13.3.0",
     "@angular/service-worker": "~13.3.0",
     "@fortawesome/fontawesome-free": "~6.1.1",
-    "angular-web-app-common": "~0.13.1",
+    "angular-web-app-common": "~0.13.2",
     "chart.js": "~2.9.3",
     "color-parse": "~1.4.2",
     "material-bottom-nav": "~1.2.0",

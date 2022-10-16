@@ -1861,10 +1861,10 @@ ajv@^8.0.0, ajv@^8.8.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-angular-web-app-common@~0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/angular-web-app-common/-/angular-web-app-common-0.13.1.tgz#1a0a2c2844e180e7eaef031c198a2575e5211172"
-  integrity sha512-4bVEmAJnH2wGQzejOy9uRNa/c0+cxCD0/Tv0MuvDFIf1H736mkCxngGAhpWXRqtBmYC0qbvl5y3XMBBcqIf/UQ==
+angular-web-app-common@~0.13.2:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/angular-web-app-common/-/angular-web-app-common-0.13.2.tgz#d0b5db44f0aff068d10dcc184c925061ccab39b6"
+  integrity sha512-VEkVTlVZT+1Djb3DG3o1zapQCS/ykQ7FuN4G+q0KufmEET4N6KXAObY/Xrd1bGJPQ2O4PLCWqcAoukcCaz5gEw==
   dependencies:
     tslib "^2.3.0"
 

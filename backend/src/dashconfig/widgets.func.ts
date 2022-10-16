@@ -8,7 +8,7 @@ import { parsePropertySelector } from "node-homie/util";
 import {
     Widget, isControlWidget, ControlWidget, isLayoutWidget, LayoutWidget, ControlWidetType,
     IMappingBase, GenericStateMapping, SwitchMapping, DimmerMapping, WeatherMapping, ThermostatMapping, layoutWidgetTypes, LayoutWidgetType, ConditionalWidget, SimpleSensorMapping, RollerShutterMapping, MiscWidgetType, GraphWidget, ComplexPropertyMapping, isExtendedPropertyMapping, ExtendedPropertyMapping, TempHumBarsMapping, BBQWidget, BBQChannelMapping, BBQChannelMappingProps, isMiscWidget, TimeRange, GraphWidgetConfig, GraphWidgetYAxis, GraphConfigGraphDef, RangePickerConfig, TimeRangeConfig, isDuration, BBQConfig, MediaPlayerMapping, toExtendedPropertyMapping
-} from "../../model/dash.model";
+} from "../model/dash.model";
 
 
 type widgetNormalizer = (deviceManager: HomieDeviceManager, item: Widget) => Widget | undefined;

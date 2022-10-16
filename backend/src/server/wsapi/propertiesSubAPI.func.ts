@@ -1,10 +1,10 @@
-import { HomieProperty } from "node-homie";
+import { HomieDeviceManager, HomieProperty } from "node-homie";
 import { DictionaryStore, SimpleLogger } from "node-homie/misc";
 import { notNullish } from "node-homie/model";
 import { isNotNullish } from "node-homie/rx";
 import { evaluateValueCondition } from "node-homie/util";
 import { filter, map, switchMap, combineLatest, distinctUntilChanged, of, takeUntil, merge, Observable, pluck, pairwise } from "rxjs";
-import { DeviceQueryMessage, IRestDevice, IRestProperty, PropertyQueryMessage, PropertyValueChangeMessage, SubscribeDeviceQueryMessage, SubscribePropertyQueryMessage } from "../model/api.model";
+import { DeviceQueryMessage, IRestDevice, IRestProperty, PropertyQueryMessage, PropertyValueChangeMessage, SubscribeDeviceQueryMessage, SubscribePropertyQueryMessage } from "../../model/api.model";
 import { makeAPIFunc } from "./wsapi.model";
 
 const log = new SimpleLogger('deviceSubAPI', 'deviceSubcription');
@@ -17,7 +17,7 @@ export interface PropertiesQuerySubscription {
 
 
 
-export const makePropertiesSubAPI: makeAPIFunc = (messages$, core, onDestroy$) => {
+export const makePropertiesSubAPI: makeAPIFunc<{deviceManager: HomieDeviceManager}> = (messages$, opts, onDestroy$) => {
     log.info('making PopertiesSubs API');
     const propertyQuerySubs = new DictionaryStore<PropertiesQuerySubscription>(sub => sub.msg.payload.id);
     const propertyQuery$ = messages$.pipe(
@@ -25,7 +25,7 @@ export const makePropertiesSubAPI: makeAPIFunc = (messages$, core, onDestroy$) =
         map(msg => <SubscribePropertyQueryMessage>msg),
         map(msg => {
             let obs = undefined;
-            obs = core.deviceManager.query(msg.payload.query).pipe(
+            obs = opts.deviceManager.query(msg.payload.query).pipe(
                 switchMap(props =>
                     notNullish(msg.payload.valueCondition) ? combineLatest(
                         props.map(prop => prop.value$.pipe(

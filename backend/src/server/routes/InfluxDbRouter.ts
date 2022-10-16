@@ -1,11 +1,11 @@
 
 
 import { Router, Request, Response, NextFunction } from 'express';
-import { Core } from '../core/Core';
+import { Core } from '../../core/Core';
 import winston from 'winston';
-import { InfluxDBQuery, InfluxDbResult } from '../model/api.model';
+import { InfluxDBQuery, InfluxDbResult } from '../../model/api.model';
 import { flux, fluxBool, fluxDateTime, fluxDuration, fluxExpression, FluxTableMetaData, InfluxDB, QueryApi } from '@influxdata/influxdb-client';
-import { isDuration } from '../model/dash.model';
+import { isDuration } from '../../model/dash.model';
 
 
 const DEFAULT_QUERY: InfluxDBQuery = {

@@ -1,14 +1,15 @@
 import { isNotNullish } from 'node-homie/rx';
 import { asyncScheduler, distinctUntilChanged, filter, map, merge, pairwise, pluck, switchMap, throttleTime } from 'rxjs';
-import { IRestProperty, PageDefMessage, PropertyValueChangeMessage, SubscribePageMessage } from '../model/api.model';
+import { DashConfig } from '../../dashconfig/DashConfig';
+import { IRestProperty, PageDefMessage, PropertyValueChangeMessage, SubscribePageMessage } from '../../model/api.model';
 import { makeAPIFunc } from './wsapi.model';
 
-export const makePageSubAPI: makeAPIFunc = (messages$, core, onDestroy$) => {
+export const makePageSubAPI: makeAPIFunc<{dashConfig: DashConfig}> = (messages$, opts, onDestroy$) => {
     const pageSubscription$ = messages$.pipe(
         filter(msg => msg.type === 'subscribePage' && !!msg.payload?.pageId),
         map(msg => <SubscribePageMessage>msg),
         switchMap(msg => {
-            return core.dashConfig.pageStore.state$.pipe(
+            return opts.dashConfig.pageStore.state$.pipe(
                 pluck(msg.payload!.pageId!),
                 filter(pageState => pageState !== undefined),
                 throttleTime(10000, asyncScheduler, { leading: true, trailing: true }),
