@@ -1,7 +1,7 @@
 import { Validator } from "jsonschema";
 import { HomieDeviceManager, HomieProperty, } from "node-homie";
 import { join, parse } from "path";
-import { asyncScheduler, merge, Observable, pipe, Subject } from "rxjs";
+import { asyncScheduler, merge, Observable, of, pipe, Subject } from "rxjs";
 import { takeUntil, mergeMap, map, tap, throttleTime, withLatestFrom, distinctUntilChanged, delay, filter } from "rxjs/operators";
 import winston from "winston";
 import * as yaml from 'js-yaml';
@@ -11,7 +11,8 @@ import { normalizeLayout } from "./layout.func";
 import { Card, PageDef, PageMenu } from "../model/dash.model";
 import { collectCardProperties, normalizeCards } from "./cards.func";
 import { Settings } from "../core/Settings";
-import { ConfigFileChange, ConfigFileWatcher, ConfigMapWatcher, ConfigWatcher } from "cfg-watcher";
+import { ConfigFileChange, ConfigFileWatcher, ConfigMapWatcher, ConfigObservableWatcher, ConfigWatcher } from "cfg-watcher";
+import { MQTTConfigInput } from "../model/controller.model";
 
 const pageDefSchema = require?.main?.require('./PageDef.Schema.json');
 const menuSchema = require?.main?.require('./PageMenu.Schema.json');
@@ -64,19 +65,26 @@ export class DashConfig implements OnInit, OnDestroy {
     private pageDefWatcher: ConfigWatcher;
     private menuWatcher: ConfigWatcher;
 
-    constructor(private deviceManager: HomieDeviceManager, private settings: Settings) {
+    constructor(private deviceManager: HomieDeviceManager, private settings: Settings, private menuCfg$?: Observable<MQTTConfigInput>, private pagesCfg$?: Observable<MQTTConfigInput>) {
         this.log = winston.child({
             name: 'dash-config',
             type: this.constructor.name,
         });
 
-        this.pageDefWatcher = (this.settings.config_backend === 'file' ?
-            new ConfigFileWatcher(['*.yaml', '*.yml'].map(fileFilter => join(this.settings.config_folder, fileFilter))) :
-            new ConfigMapWatcher(this.settings.config_kubernetes_pagedef_configmap));
+        if (this.settings.config_backend === 'file') {
+            this.pageDefWatcher = new ConfigFileWatcher(['*.yaml', '*.yml'].map(fileFilter => join(this.settings.config_folder, fileFilter)));
+            this.menuWatcher = new ConfigFileWatcher(['menu.yaml', 'menu.yml'].map(fileFilter => join(this.settings.config_folder, fileFilter)));
+        } else if (this.settings.config_backend === 'kubernetes') {
+            this.pageDefWatcher = new ConfigMapWatcher(this.settings.config_kubernetes_pagedef_configmap);
+            this.menuWatcher = new ConfigMapWatcher(this.settings.config_kubernetes_pagedef_configmap);
+        }else if (this.settings.config_backend === 'mqtt' && this.menuCfg$ && this.pagesCfg$) {
+            this.pageDefWatcher = new ConfigObservableWatcher(this.pagesCfg$);
+            this.menuWatcher = new ConfigObservableWatcher(this.menuCfg$)
+        }else{
+            this.pageDefWatcher = new ConfigObservableWatcher(of({}));
+            this.menuWatcher = new ConfigObservableWatcher(of({}));
+        }
 
-        this.menuWatcher = (this.settings.config_backend === 'file' ?
-            new ConfigFileWatcher(['menu.yaml', 'menu.yml'].map(fileFilter => join(this.settings.config_folder, fileFilter))) :
-            new ConfigMapWatcher(this.settings.config_kubernetes_pagedef_configmap));
     }
 
     private readPageDefFile() {
@@ -213,7 +221,7 @@ export class DashConfig implements OnInit, OnDestroy {
         // );
 
 
-        const readyPropertiesList$ = this.deviceManager.query({ device: { state: 'ready'} }, 1000).pipe(
+        const readyPropertiesList$ = this.deviceManager.query({ device: { state: 'ready' } }, 1000).pipe(
             throttleTime(2000, asyncScheduler, { leading: true, trailing: true }),
 
         );

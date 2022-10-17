@@ -37,14 +37,8 @@ const JSONS_CONVERSIONS = [
   },
   {
     source: 'src/model/controller.model.ts',
-    type: 'MenuMQTTConfigInput',
-    output: 'MenuMQTTConfigInput.Schema.json',
-    defaultCfg: { encodeRefs: false },
-  },
-  {
-    source: 'src/model/controller.model.ts',
-    type: 'PagesMQTTConfigInput',
-    output: 'PagesMQTTConfigInput.Schema.json',
+    type: 'MQTTConfigInput',
+    output: 'MQTTConfigInput.Schema.json',
     defaultCfg: { encodeRefs: false },
   },
   {

@@ -1,8 +1,3 @@
-import { PageDef, PageMenu } from "./dash.model"
-
-export interface MQTTConfigInput<T>{
-    [filename: string]: T
+export interface MQTTConfigInput{
+    [filename: string]: string
 }
-
-export type MenuMQTTConfigInput = MQTTConfigInput<PageMenu>;
-export type PagesMQTTConfigInput = MQTTConfigInput<PageDef>;

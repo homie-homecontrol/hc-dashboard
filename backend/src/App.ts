@@ -36,7 +36,7 @@ export class App implements OnDestroy, OnInit {
 
     this.controller = new DashHomieController(this.core);
 
-    this.dashConfig = new DashConfig(this.core.deviceManager, this.core.settings);
+    this.dashConfig = new DashConfig(this.core.deviceManager, this.core.settings, this.controller.menuCfgObs$, this.controller.pagesCfgObs$);
 
     this.server = new Server(this.core, this.dashConfig);
 

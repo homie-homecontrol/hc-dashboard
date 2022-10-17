@@ -39,6 +39,11 @@ See below for a usage example with docker compose.
 
 * MQTT topic under which all homie devices are published. By convention this defaults to `homie`, however for your testing or developing reasons this can be changed here as not to disturb productive usage.
 
+`HCDASH_CTRL_ID`
+* ID of controller device (default: dash-ctl-1)
+
+`HCDASH_CTRL_NAME`
+* Name of controller device (default: dash-ctl-1)
 
 ## Server config
 
@@ -55,11 +60,32 @@ See below for a usage example with docker compose.
 
 `HCDASH_CONFIG_BACKEND`
 
-* file | kubernetes
+* file | kubernetes | mqtt
 
-`HCDASH_CONFIG_FOLDER`
-
-* path to config folder
+depending on then config back the following additional variables can/must be set:
+ - file: 
+   - `HCDASH_CONFIG_FOLDER`: path to config folder
+ - kubernetes:
+   - `HCDASH_CONFIG_KUBERNETES_PAGEDEF_CONFIGMAP`: name for configmap containing all page defs (one string yaml file per map entry - entry name relates to filename)
+   - `HCDASH_CONFIG_KUBERNETES_MENU_CONFIGMAP`: name for configmap containing the menu defintion (one entry with menu.yaml or menu.yml containing yaml content for the menu) - this can be the same configmap as for the pagedef as long as a menu.yaml/.yml entry is in
+ - mqtt:
+  
+   no additional variables required. 2 properties will be published which can be used to set the config using json. Schema is included in the format field. 
+     - <controller_id>/config/menu
+     - <controller_id>/config/pages
+   
+   Data structure is a simple map with filenames for attributes and yaml file content as string value:
+   ```json
+    {
+        "menu.yaml": "....yaml here...."
+    }
+   ```
+   ```json
+    {
+        "dash-page1.yaml": "....yaml here....",
+        "dash-page2.yaml": "....yaml here....",
+    }
+   ```
 
 
 ## Influxdb connection config (for graphs)

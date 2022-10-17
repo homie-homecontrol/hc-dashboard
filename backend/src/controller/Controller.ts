@@ -2,11 +2,11 @@ import { DeviceDiscovery, HomieNode, HomieProperty } from "node-homie";
 import { Core } from "../core/Core";
 import { HomieControllerBase } from "node-homie/controller";
 import { H_SMARTHOME_TYPE_EXTENSTION } from "hc-node-homie-smarthome/model";
-import { takeUntil } from "rxjs";
+import { map, takeUntil } from "rxjs";
+import { mqttConfigInputSchema, parseMQTTConfigInput, toMQTTConfigInput } from "./controller.func";
 
 
-const pageDefSchema = require?.main?.require('./PagesMQTTConfigInput.Schema.json');
-const menuSchema = require?.main?.require('./MenuMQTTConfigInput.Schema.json');
+
 
 export class DashHomieController extends HomieControllerBase {
 
@@ -16,11 +16,11 @@ export class DashHomieController extends HomieControllerBase {
     protected pagesCfgProp: HomieProperty;
 
     public get menuCfgObs$() {
-        return this.menuCfgProp.value$;
+        return this.menuCfgProp.value$.pipe(toMQTTConfigInput());
     }
 
     public get pagesCfgObs$() {
-        return this.pagesCfgProp.value$;
+        return this.pagesCfgProp.value$.pipe(toMQTTConfigInput());
     }
 
 
@@ -39,19 +39,48 @@ export class DashHomieController extends HomieControllerBase {
             id: 'menu',
             name: 'Menu configuration',
             datatype: 'string',
-            format: `jsonschema:${JSON.stringify(menuSchema)}`,
+            format: `jsonschema:${JSON.stringify(mqttConfigInputSchema)}`,
             retained: true,
             settable: this.core.settings.config_backend === 'mqtt'
+        }, {
+            readValueFromMqtt: true,
+            readTimeout: 3000
         }));
 
         this.pagesCfgProp = configNode.add(new HomieProperty(configNode, {
             id: 'pages',
             name: 'Pages configuration',
             datatype: 'string',
-            format: `jsonschema:${JSON.stringify(pageDefSchema)}`,
+            format: `jsonschema:${JSON.stringify(mqttConfigInputSchema)}`,
             retained: true,
             settable: this.core.settings.config_backend === 'mqtt'
+        }, {
+            readValueFromMqtt: true,
+            readTimeout: 3000
         }));
+
+
+        this.menuCfgProp.onSetMessage$.subscribe({
+            next: msg => {
+                try {
+                    const data = parseMQTTConfigInput(msg.valueStr);
+                    msg.property.value = msg.valueStr;
+                } catch (err) {
+
+                }
+            }
+        });
+
+        this.pagesCfgProp.onSetMessage$.subscribe({
+            next: msg => {
+                try {
+                    const data = parseMQTTConfigInput(msg.valueStr);
+                    msg.property.value = msg.valueStr;
+                } catch (err) {
+
+                }
+            }
+        });
 
 
         this.discovery = new DeviceDiscovery(this.core.settings.mqttOpts);
