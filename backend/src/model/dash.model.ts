@@ -37,7 +37,7 @@ const controlWidgetTypes = ['contact', 'dimmer', 'online', 'switch', 'onoff', 's
     'presence', 'rollerShutter', 'text', 'status', 'toggleButton', 'pushButton', 'actionButtons', 'bbqSensor',
     'weather', 'clock', 'bigWeather', 'clockWeather', 'mediaplayer',
     'thermostat', 'dualSensorBig', 'linearGauge', 'simpleSensor',
-    'lightscene', 'tilt', 'tempHumBars', 'timer'] as const;
+    'lightscene', 'tilt', 'tempHumBars', 'timer', 'calendar'] as const;
 
 
 export type LayoutWidgetType = typeof layoutWidgetTypes[number];
@@ -167,7 +167,7 @@ export type VerticalStackWidget = ILayoutWidget<'verticalStack'>;
 
 export type ControlWidget = SwitchWidget | DimmerWidget | OnlineWidget | PresenceWidget | ContactWidget | OnOffWidget | SelectWidget | TiltWidget
     | RollerShutterWidget | TextWidget | StatusWidget | ToggleButtonWidget | PushButtonWidget | ActionButtonsWidget | WeatherWidget | ThermostatWidget | BBQSensorChannelWidget
-    | MediaPlayerWidget | DualSensorBigWidget | LinearGaugeWidget | SimpleSensorWidget | LightSceneWidget | TempHumBarsWidget | TimerWidget;
+    | MediaPlayerWidget | DualSensorBigWidget | LinearGaugeWidget | SimpleSensorWidget | LightSceneWidget | TempHumBarsWidget | TimerWidget | CalendarWidget;
 
 export function isControlWidget(widget: any): widget is ControlWidget {
     return !!widget && !!widget.type && controlWidgetTypes.includes(widget.type);
@@ -441,6 +441,23 @@ export interface TempHumBarsConfig {
     hideLabel?: boolean;
 }
 export type TempHumBarsWidget = IControlWidget<'tempHumBars', TempHumBarsMapping, TempHumBarsConfig>;
+
+
+export interface CalendarMapping extends IMappingBase {
+    events: PropertySelector;
+}
+
+export interface CalendarConfig {
+    showAllDayEvents?: boolean;
+    maxAllDayEvents?:number;
+    maxEvents?: number;
+    showTimes: boolean;
+}
+export type CalendarWidget = IControlWidget<'calendar', CalendarMapping, CalendarConfig>;
+
+
+
+
 
 
 // =======================

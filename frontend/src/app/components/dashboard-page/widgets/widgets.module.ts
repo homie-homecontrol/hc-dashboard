@@ -48,6 +48,7 @@ import { MediaplayerWidgetComponent } from './control-widgets/mediaplayer-widget
 import { TimerWidgetComponent } from './control-widgets/timer-widget/timer-widget.component';
 import { SelectWidgetComponent } from './control-widgets/select-widget/select-widget.component';
 import { DeviceAttentioWidgetComponent } from './misc-widgets/device-attention-widget/device-attention-widgetcomponent';
+import { CalendarWidgetComponent } from './control-widgets/calendar-widget/calendar-widget.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { DeviceAttentioWidgetComponent } from './misc-widgets/device-attention-w
     MediaplayerWidgetComponent,
     TimerWidgetComponent,
     SelectWidgetComponent,
-    DeviceAttentioWidgetComponent
+    DeviceAttentioWidgetComponent,
+    CalendarWidgetComponent
   ],
   imports: [
     CommonModule,
@@ -129,6 +131,7 @@ export class WidgetsModule {
 
     this.widgets.registerWidget('text', TextWidgetComponent);
     this.widgets.registerWidget('status', StatusWidgetComponent);
+    this.widgets.registerWidget('calendar', CalendarWidgetComponent);
 
     this.widgets.registerWidget('pushButton', PushButtonWidgetComponent);
 

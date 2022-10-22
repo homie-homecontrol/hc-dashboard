@@ -9,6 +9,7 @@ layout:
         - clock
         - test
       - - security
+        - calendar
         - graphs
         - keller
       - - heating
@@ -720,3 +721,14 @@ cards:
     items:
       - type: clock
 
+
+
+  - id: calendar
+    type: default
+    items:
+      - type: calendar
+        mappings:
+          events: nr-google-shared-calendar/upcoming/events
+        config:
+          showTimes: true
+          maxEvents: 5

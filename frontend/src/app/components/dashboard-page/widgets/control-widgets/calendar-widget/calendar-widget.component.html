@@ -1,0 +1,11 @@
+<div class="calendar">
+  <div class="title"></div>
+  <div *ngFor="let day of eventDays$|async" class="day">
+    <div class="date">{{day.day | date:'EE, MMM d'}}</div>
+    <div *ngFor="let event of day.events" class="event" class="event">
+      <div *ngIf="!event.isAllDay" class="time">{{event.start | date:'HH:mm'}} - {{event.end | date:'HH:mm'}}</div>
+      <div *ngIf="event.isAllDay" class="time primary-text allday"> |- all day -| </div>
+      <div class="summary">{{event.summary}}</div>
+    </div>
+  </div>
+</div>

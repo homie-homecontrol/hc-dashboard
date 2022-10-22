@@ -3,6 +3,7 @@ layout:
   small:
     columns:
       - - timers
+        - calendar
         - devicecontrol
         - control-center
         - mediaplayers
@@ -17,6 +18,7 @@ layout:
   large:
     columns:
       - - clima
+        - calendar
       - - clock
         - control-center
         - devicecontrol
@@ -38,6 +40,7 @@ layout:
         - control-center
         - devicecontrol
       - - security
+        - calendar
         - timers
         - mediaplayers
         - graphs
@@ -1042,3 +1045,33 @@ cards:
             label: Boost-Dauer
             mappings:
               value: meq0449630/hm-config/boost-duration  
+
+
+
+
+  - id: calendar
+    title: Shared Calendar
+    icon: event_note
+    type: default
+    launchOptions: 
+      wide: false
+      cardId: calendar-long
+    items:
+      - type: calendar
+        mappings:
+          events: nr-google-shared-calendar/upcoming/events
+        config:
+          showTimes: true
+          maxEvents: 3
+
+  - id: calendar-long
+    title: Shared Calendar
+    icon: event_note
+    type: default
+    items:
+      - type: calendar
+        mappings:
+          events: nr-google-shared-calendar/upcoming/events
+        config:
+          showTimes: true
+          maxEvents: 20

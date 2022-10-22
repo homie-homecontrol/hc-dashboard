@@ -1,0 +1,32 @@
+.calendar{
+    margin: 4px;
+}
+
+.calendar .day{
+    margin: 0px;
+    margin-top: 8px;
+}
+
+.calendar .day .date{
+    font-weight: 800;
+}
+
+.calendar .day .event{
+    margin: 0px;
+    display: flex;
+
+}
+
+.calendar .day .event .time{
+    flex: 0 0 90px;
+}
+
+.calendar .day .event .summary{
+    flex-grow: 1;
+    margin-left: 4px;
+}
+
+.calendar .day .event .allday{
+    margin: auto;
+    text-align:center;
+}
