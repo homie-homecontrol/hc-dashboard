@@ -26,8 +26,8 @@ function getLocaleDate(date: Date): string {
 const CONFIG_DEFAULT: CalendarConfig = {
   showTimes: true,
   maxEvents: 5,
-  maxAllDayEvents:0,
-  showAllDayEvents: true  
+  maxAllDayEvents: 0,
+  showAllDayEvents: true
 }
 
 @Component({
@@ -37,7 +37,7 @@ const CONFIG_DEFAULT: CalendarConfig = {
 })
 export class CalendarWidgetComponent extends WidgetBaseComponent<CalendarWidget> implements OnInit {
 
-  protected config: CalendarConfig = {...CONFIG_DEFAULT, ...this.widget.config}
+  protected config: CalendarConfig = { ...CONFIG_DEFAULT, ...this.widget.config }
 
   events$ = this.state.properties.makePropertValueStream(this.widget.mappings?.events).pipe(map(data => {
     const rawEntries = JSON.parse(data) as any[];
@@ -47,25 +47,27 @@ export class CalendarWidgetComponent extends WidgetBaseComponent<CalendarWidget>
 
   eventDays$ = this.events$.pipe(
     switchMap(events => {
-      
-      const timeEvents= events.filter(entry => !entry.isAllDay);
+
+      const timeEvents = events.filter(entry => !entry.isAllDay);
 
       // map all "all day events" to days
-      const allDayEvents=events.filter(entry => entry.isAllDay).reduce((acc, value) => {
+      const allDayEvents = events.filter(entry => entry.isAllDay).reduce((acc, value) => {
         const extended = [];
         var loop = new Date(value.start);
         console.log(`${value.start} -> ${value.end}: ${value.summary} `)
-        var index=0;
+        var index = 0;
         while (loop < value.end && index < this.config.maxEvents!) {
-          const start=new Date(loop);
+          const start = new Date(loop);
           const end = new Date(loop); end.setTime(start.getTime() + (24 * 60 * 60 * 1000) - 1000);
-          extended.push(<CalendarEntry>{...value, start, end });
+          if (!(end.getTime() < Date.now())) { // only add entries for today or later
+            extended.push(<CalendarEntry>{ ...value, start, end });
+          }
           loop.setDate(loop.getDate() + 1);
           index++;
         }
-        return [...acc, ... extended];
+        return [...acc, ...extended];
 
-      },<CalendarEvents>[]);
+      }, <CalendarEvents>[]);
 
       const displayEvents = [...allDayEvents, ...timeEvents];
       return of(...displayEvents).pipe(
@@ -76,7 +78,7 @@ export class CalendarWidgetComponent extends WidgetBaseComponent<CalendarWidget>
           )
         ),
         toArray(),
-        map(entries=> {
+        map(entries => {
           return entries.slice(0, this.config.maxEvents);
         })
       );
