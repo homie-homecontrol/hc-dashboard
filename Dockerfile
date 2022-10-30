@@ -4,12 +4,12 @@ ENV NODE_OPTIONS=--max-old-space-size=4096
 
 COPY backend /backend/
 WORKDIR /backend/
-RUN yarn --pure-lockfile
+RUN yarn --pure-lockfile --network-timeout 100000
 RUN yarn run gulp prod
 
 COPY frontend /frontend/
 WORKDIR /frontend
-RUN yarn --pure-lockfile
+RUN yarn --pure-lockfile --network-timeout 100000
 RUN yarn run build
 
 
@@ -17,7 +17,7 @@ FROM node:16-alpine
 COPY --from=serverbuild /backend/dist/ /backend/
 COPY --from=serverbuild /frontend/dist/* /backend/public_html/
 WORKDIR /backend/
-RUN yarn --pure-lockfile  --production=true
+RUN yarn --pure-lockfile --network-timeout 100000 --production=true
 
 
 ENV HCDASH_HOST=0.0.0.0
