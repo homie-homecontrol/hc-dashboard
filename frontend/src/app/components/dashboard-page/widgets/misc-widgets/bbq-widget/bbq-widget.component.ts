@@ -1,3 +1,4 @@
+import { identifierName } from '@angular/compiler';
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { asPropertyPointer } from 'node-homie/util';
@@ -198,10 +199,12 @@ export class BBQWidgetComponent extends WidgetBaseComponent<BBQWidget> implement
       name: `meat-colors`,
       colors: [
         ...colors.map(color => ({ borderColor: `rgb(${color})`, backgroundColor: `rgba(${color},0.08)` })),
-        ...colors.map(color => ({ borderColor: `rgba(${color},0.5)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [6, 3], borderWidth: 2 }))],
+        ...colors.map(color => ({ borderColor: `rgba(${color},0.8)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [6, 3], borderWidth: 2 })),
+        ...colors.map(color => ({ borderColor: `rgba(${color},0.4)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [2,2], borderWidth: 2 }))],
       colorsDark: [
         ...colors.map(color => ({ borderColor: `rgb(${color})`, backgroundColor: `rgba(${color},0.08)` })),
-        ...colors.map(color => ({ borderColor: `rgba(${color},0.5)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [6, 3], borderWidth: 2 }))],
+        ...colors.map(color => ({ borderColor: `rgba(${color},0.8)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [6, 3], borderWidth: 2 })),
+        ...colors.map(color => ({ borderColor: `rgba(${color},0.4)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [2,2], borderWidth: 2 }))],
     })),
     tap(theme => {
       // console.log('color theme: ', theme);
@@ -243,7 +246,15 @@ export class BBQWidgetComponent extends WidgetBaseComponent<BBQWidget> implement
           label: `${channelNames[index]} max`,
           data: result[asPropertyPointer(channel.max)].map(d => d.value ? d.value : lastNonNull),
         }
-      })];
+      }),
+      ...channelMappings.map((channel, index) => {
+        return <ChartDataSets>{
+          label: `${channelNames[index]} estimate`,
+          data: this.simpleMovingAveragePrediction(result[asPropertyPointer(channel.temp)].map(d => d.value), 12),
+        }
+      })
+    
+    ];
     })
   )
 
@@ -271,12 +282,14 @@ export class BBQWidgetComponent extends WidgetBaseComponent<BBQWidget> implement
       colors: [
         ...colors.map(color => ({ borderColor: `rgb(${color})`, backgroundColor: `rgba(${color},0.08)` })),
         ...colors.map(color => ({ borderColor: `rgba(${color},0.8)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [10, 5], borderWidth: 2 })),
-        ...colors.map(color => ({ borderColor: `rgba(${color},0.6)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [10, 5], borderWidth: 2 }))
+        ...colors.map(color => ({ borderColor: `rgba(${color},0.6)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [10, 5], borderWidth: 2 })),
+        ...colors.map(color => ({ borderColor: `rgba(${color},0.4)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [2,2], borderWidth: 2 }))
       ],
       colorsDark: [
         ...colors.map(color => ({ borderColor: `rgb(${color})`, backgroundColor: `rgba(${color},0.08)` })),
         ...colors.map(color => ({ borderColor: `rgba(${color},0.8)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [10, 5], borderWidth: 2 })),
-        ...colors.map(color => ({ borderColor: `rgba(${color},0.6)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [10, 5], borderWidth: 2 }))
+        ...colors.map(color => ({ borderColor: `rgba(${color},0.6)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [10, 5], borderWidth: 2 })),
+        ...colors.map(color => ({ borderColor: `rgba(${color},0.4)`, backgroundColor: 'rgba(0,0,0,0)', borderDash: [2, 2], borderWidth: 2 }))
       ],
     })),
     tap(theme => {
@@ -307,27 +320,33 @@ export class BBQWidgetComponent extends WidgetBaseComponent<BBQWidget> implement
   chartDataBBQ$ = this.influxQueryBBQ$.pipe(
     withLatestFrom(this.bbqChannels$, this.bbqChannelNames$),
     map(([result, channelMappings, channelNames]) => {
-      return [...channelMappings.map((channel, index) => {
-        return <ChartDataSets>{
-          label: channelNames[index],
-          data: result[asPropertyPointer(channel.temp)].map(d => d.value),
-        }
-      }),
-      ...channelMappings.map((channel, index) => {
-        const lastNonNull = this.findNonNull(result[asPropertyPointer(channel.min)], d => d.value);
-        return <ChartDataSets>{
-          label: `${channelNames[index]} min`,
-          data: result[asPropertyPointer(channel.min)].map(d => d.value ? d.value : lastNonNull),
-        }
-      }),
-      ...channelMappings.map((channel, index) => {
-        const lastNonNull = this.findNonNull(result[asPropertyPointer(channel.max)], d => d.value);
-        return <ChartDataSets>{
-          label: `${channelNames[index]} max`,
-          data: result[asPropertyPointer(channel.max)].map(d => d.value ? d.value : lastNonNull),
-        }
-      }),
-
+      return [
+        ...channelMappings.map((channel, index) => {
+          return <ChartDataSets>{
+            label: channelNames[index],
+            data: result[asPropertyPointer(channel.temp)].map(d => d.value),
+          }
+        }),
+        ...channelMappings.map((channel, index) => {
+          const lastNonNull = this.findNonNull(result[asPropertyPointer(channel.min)], d => d.value);
+          return <ChartDataSets>{
+            label: `${channelNames[index]} min`,
+            data: result[asPropertyPointer(channel.min)].map(d => d.value ? d.value : lastNonNull),
+          }
+        }),
+        ...channelMappings.map((channel, index) => {
+          const lastNonNull = this.findNonNull(result[asPropertyPointer(channel.max)], d => d.value);
+          return <ChartDataSets>{
+            label: `${channelNames[index]} max`,
+            data: result[asPropertyPointer(channel.max)].map(d => d.value ? d.value : lastNonNull),
+          }
+        }),
+        ...channelMappings.map((channel, index) => {
+          return <ChartDataSets>{
+            label: `${channelNames[index]} estimate`,
+            data: this.simpleMovingAveragePrediction(result[asPropertyPointer(channel.temp)].map(d => d.value), 12),
+          }
+        })
       ];
     })
   )
@@ -355,7 +374,7 @@ export class BBQWidgetComponent extends WidgetBaseComponent<BBQWidget> implement
   );
 
 
-  battery$=this.state.properties.makePropertValueStreamTyped<number>(this.widget.config?.batteryLevel);
+  battery$ = this.state.properties.makePropertValueStreamTyped<number>(this.widget.config?.batteryLevel);
 
   constructor(@Inject(WIDGET_INJECTIONTOKEN) public widget: BBQWidget, public state: DashboardStateService, public api: APIService, private chartColors: ChartColorThemeService) {
     super(widget, state, api);
@@ -396,5 +415,39 @@ export class BBQWidgetComponent extends WidgetBaseComponent<BBQWidget> implement
   public trackChannel(index: number, item: BBQChannelMapping) {
     return item.number
   }
+
+
+
+  private simpleMovingAveragePrediction(temps: number[], window = 5) {
+    if (!temps || temps.length < window) {
+      return [];
+    }
+
+    let index = window - 1;
+    const length = temps.length + 1;
+
+    const simpleMovingAverages: number[] = []; // = temps.slice(0, window-1);
+    const lastNonNullIndex = this.findNonNullIndex(temps, e => e)
+
+    while (++index < length ) {
+      const lastDelta = simpleMovingAverages[simpleMovingAverages.length - 1] - simpleMovingAverages[simpleMovingAverages.length - 2];
+      const windowSlice = temps.slice(index - window, index).map(v => v === null ? simpleMovingAverages[simpleMovingAverages.length - 1] + lastDelta : v);
+      const sum = windowSlice.reduce((prev, curr) => prev + curr, 0);
+      simpleMovingAverages.push(sum / window);
+    }
+
+    const result: any[] = temps.slice(0, lastNonNullIndex).map(v=>null);
+    const lastDelta = simpleMovingAverages[simpleMovingAverages.length - 1] - simpleMovingAverages[simpleMovingAverages.length - 2];
+    let lastResult = temps[lastNonNullIndex];
+    for (let i = 0; i < length - lastNonNullIndex; i++) {
+      lastResult += lastDelta;
+      result.push(lastResult);
+    }
+
+    return result;
+  }
+
+
+
 
 }
