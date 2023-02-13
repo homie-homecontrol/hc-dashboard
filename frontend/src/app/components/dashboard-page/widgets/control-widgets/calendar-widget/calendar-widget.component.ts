@@ -79,7 +79,7 @@ export class CalendarWidgetComponent extends WidgetBaseComponent<CalendarWidget>
         ),
         toArray(),
         map(entries => {
-          return entries.slice(0, this.config.maxEvents);
+          return entries.sort((a, b) => a.day.getTime() - b.day.getTime()).slice(0, this.config.maxEvents);
         })
       );
     })
