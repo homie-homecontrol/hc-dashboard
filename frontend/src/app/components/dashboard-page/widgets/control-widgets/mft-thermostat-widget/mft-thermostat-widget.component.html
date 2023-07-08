@@ -1,0 +1,43 @@
+<!-- <hc-widget-layout>
+  <span hc-widget-label>{{widget.label}}</span>
+  <hc-widget-controls>
+
+    <ng-container *ngIf="(setTemperature$ | async) as setTemperature">
+      <awac-icon *ngIf="(windowOpen$ | async)" name="report"></awac-icon>
+      <span>{{setTemperature | number:'1.1-1'}}°C</span>
+      <mat-slider [thumbLabel]="true" [step]="1" [tickInterval]="4" [min]="5" [max]="30"
+        (change)="updateSetTemperature($event.value)" [value]="setTemperature" #tempSlider></mat-slider>
+    </ng-container>
+    <span>{{(temperature$ | async | number:'1.1-1')}}°C</span>
+    <ng-container *ngLet="(mode$ | async) as mode">
+      <button mat-icon-button class="toggle-button autoButton" [color]="mode === 'auto' ? 'accent' : ''"
+        (click)="toggleAutoMode(mode)">
+        <awac-icon name="schedule"></awac-icon>
+      </button>
+    </ng-container>
+
+  </hc-widget-controls>
+</hc-widget-layout> -->
+
+<hc-multi-function-tile bgColor="pale" statusBgColor="primary">
+  <span hc-mft-side-status-container>{{(temperature$ | async | number:'1.1-1')}}°C</span>
+
+    <hc-mft-slider hc-mft-base-content [value]="setTemperature$ | async" [step]="1" [min]="5" [max]="30" (liveChange)="liveSetTemp=$event"
+      (change)="updateSetTemperature($event.value)" bgColor="pale" sliderColor="primary"></hc-mft-slider>
+  <awac-icon name="fas/fa-temperature-low" hc-mft-type-icon></awac-icon>
+
+  <hc-mft-overlay-pane>
+    <!-- <ng-container hc-mft-action-bar-item *ngLet="(mode$ | async) as mode"> -->
+      <button hc-mft-action-bar-item mat-icon-button *ngLet="(mode$ | async) as mode" class="toggle-button autoButton" [color]="mode === 'auto' ? 'accent' : ''"
+        (click)="toggleAutoMode(mode)" class="toggle-button mft-small-icon-button" >
+        <awac-icon name="schedule"></awac-icon>
+      </button>
+    <!-- </ng-container> -->
+    <awac-icon hc-mft-action-bar-item  *ngIf="(windowOpen$ | async)" name="report"></awac-icon>
+
+    <span hc-mft-label-text>{{widget.label}}</span>
+
+    <span hc-mft-value-status class="accent-text">{{liveSetTemp | number:'1.1-1'}}°C</span>
+    <span hc-mft-sub-label-text *ngIf="widget.config?.subLabel">{{widget.config?.subLabel}}</span>
+  </hc-mft-overlay-pane>
+</hc-multi-function-tile>

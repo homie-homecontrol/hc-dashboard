@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ComponentRef, Injector, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, Injector, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { filter, map, pluck, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { DashboardStateService } from '../../state/dashboard-state.service';
@@ -11,7 +11,8 @@ import { isNotNullish } from 'node-homie/rx';
 @Component({
   selector: 'hc-generic-card',
   templateUrl: './generic-card.component.html',
-  styleUrls: ['./generic-card.component.scss']
+  styleUrls: ['./generic-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GenericCardComponent extends LifecycleBaseComponent implements OnInit {
   @ViewChild('host', { read: ViewContainerRef, static: true }) cardHost?: ViewContainerRef;

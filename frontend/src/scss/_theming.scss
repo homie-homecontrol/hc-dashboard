@@ -1,0 +1,53 @@
+@import "leather-steel.palette.scss";
+
+
+@function make-background-palette($base-palette, $background, $darkest, $brightest) {
+    @return (
+        status-bar: $darkest,
+        app-bar: map-get($base-palette, 900),
+        background: $background,
+        hover: rgba($brightest, 0.04), // TODO(kara): check style with Material Design UX
+        card: map-get($base-palette, 800),
+        dialog: map-get($base-palette, 800),
+        disabled-button: rgba($brightest, 0.12),
+        raised-button: map-get($base-palette, 800),
+        focused-button:  rgba($brightest, 0.12),
+        selected-button: map-get($base-palette, 900),
+        selected-disabled-button: map-get($base-palette, 800),
+        disabled-button-toggle: $darkest,
+        unselected-chip: map-get($base-palette, 700),
+        disabled-list-option: rgba($brightest, 0.12),
+        tooltip: map-get($base-palette, 700),
+    )
+}
+
+@function modify-background($theme, $new-background-palette) {
+    $theme-color: map-get($theme, color);
+    $color-background-palette-modified: map-merge($theme-color, (background: $new-background-palette));
+    $modified-theme: map-merge($theme, (background: $new-background-palette, color: $color-background-palette-modified));
+    @return $modified-theme;
+}
+
+
+
+@function define-app-theme($primary, $accent, $warn, $pale, $isDark: false) {
+
+    $theme: if($isDark, mat-dark-theme($primary, $accent, $warn), mat-light-theme($primary, $accent, $warn));
+
+    $result: map-merge($theme, (pale: $pale ));
+
+    @return if($isDark, modify-background($result, make-background-palette($steeldark2, map-get($steeldark2, 900), #000, #fff)), $result);
+
+    // $modified-theme:();
+
+    // @if $isDark {
+    //     $darksteelbg: mat-palette($steeldark, A700, 200, 900); 
+    //     $modified-theme: modify-background($theme, $darksteelbg);
+    // }@else{
+    //     $modified-theme:$theme;
+    // }
+
+
+
+    // @return $result;
+}

@@ -1,0 +1,20 @@
+<!-- <div [ngClass]="{'main-line-container': true, 'main-line-container-vertical': direction === 'vertical'}"> -->
+<div class="hc-mft-main-container flex-row-ltr mft-glow" [ngClass]="{'container-small': size==='small'}">
+    <div class="side-status-container {{statusBgColorClass}}" [ngClass]="{'side-status-small': size==='small'}">
+        <ng-content select="hc-mft-side-status-container"></ng-content>
+        <ng-content select="[hc-mft-side-status-container]"></ng-content>
+    </div>
+    <div class="content-container {{containerBgColorClass}}" >
+        <ng-content select="hc-mft-base-content"></ng-content>
+        <ng-content select="[hc-mft-base-content]"></ng-content>
+
+        <div class="type-icon" *ngIf="size==='normal'">
+            <ng-content select="hc-mft-type-icon"></ng-content>
+            <ng-content select="[hc-mft-type-icon]"></ng-content>
+        </div>
+
+        <ng-content select="hc-mft-overlay-pane"></ng-content>
+        <ng-content select="[hc-mft-overlay-pane]"></ng-content>
+
+    </div>
+</div>

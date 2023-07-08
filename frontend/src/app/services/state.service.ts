@@ -7,9 +7,14 @@ import { APIService } from './api.service';
 import { PageMenu } from '../models/dash.model';
 import { BehaviorSubject, combineLatest, merge } from 'rxjs';
 import { WebSocketAPIService } from './websocket-api.service';
-import { ChartColorThemeService } from '../components/simple-chart/chart-color-theme.service';
+import { ChartColorThemeService, ColorTheme } from '../components/simple-chart/chart-color-theme.service';
 import { ChartOptions } from 'chart.js';
 import { ThemeService } from 'ng2-charts';
+import { MatColorScheme } from '../models/common.model';
+import { isNotNullish } from 'node-homie/rx';
+
+const rgb2hex = (rgb: any) => `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice(1).map((n : any) => parseInt(n, 10).toString(16).padStart(2, '0')).join('')}`
+
 @Injectable({
   providedIn: 'root'
 })
@@ -52,19 +57,34 @@ export class StateService extends BaseStateService {
   }
 
 
+  // Open last page 
+  //{primary: '#000', accent: '#000', warn: '#000', pale: '#000'}
+  private readonly _matColorScheme$ = new BehaviorSubject<MatColorScheme | undefined>(undefined);
+  readonly matColorSchem$ = this._matColorScheme$.asObservable();
+
+  public get matColorSchem(): MatColorScheme | undefined {
+    return this._matColorScheme$.value
+  }
+
+  public set matColorSchem(val: MatColorScheme | undefined) {
+    this._matColorScheme$.next(val);
+  }
+
+
+
   public adjustedScreenSize$ = combineLatest(
     [this.screenSize$, this.xLargeOverride$]
   ).pipe(
-    map(([size, override])=>{
-      if (override){
+    map(([size, override]) => {
+      if (override) {
         return ScreenSize.xlarge
-      }else{
+      } else {
         return size;
       }
     })
   )
-  
-  
+
+
 
   prefixMenuEntries: Page[] = [
     // { id: 'test', title: "Tester", url: "/test", icon: "fas/fa-running" },
@@ -88,7 +108,7 @@ export class StateService extends BaseStateService {
     }),
     tap(menu => {  // Side-Effect --> navigate to first page if no page is opened yet
       if (!this.activePage) {
-        if (this.pages !== null && this.pages.length>0) {
+        if (this.pages !== null && this.pages.length > 0) {
           this.router.navigate([this.pages[0].url]);
         }
       }
@@ -96,11 +116,62 @@ export class StateService extends BaseStateService {
   ));
 
 
+  createChartColorScheme = this.createEffect(
+    this.matColorSchem$.pipe(
+      isNotNullish(),
+      tap(colorSchema => {
+        const  ct: ColorTheme = {
+          name: 'default',
+          colors: [
+            {
+              backgroundColor: `rgba(${colorSchema.primary}, 0.1)`,
+              borderColor: `rgba(${colorSchema.primary}, 1)`,
+            },
+            {
+              backgroundColor: `rgba(${colorSchema.accent}, 0.05)`,
+              borderColor: `rgba(${colorSchema.accent}, 1)`,
+            },
+            {
+              backgroundColor: `rgba(${colorSchema.warn}, 0.1)`,
+              borderColor: `rgba(${colorSchema.warn}, 1)`,
+            },
+            {
+              backgroundColor: `rgba(${colorSchema.pale}, 0.1)`,
+              borderColor: `rgba(${colorSchema.pale}, 1)`,
+            }
+          ],
+          colorsDark: [
+            {
+              backgroundColor: `rgba(${colorSchema.primary}, 0.1)`,
+              borderColor: `rgba(${colorSchema.primary}, 1)`,
+            },
+            {
+              backgroundColor: `rgba(${colorSchema.accent}, 0.05)`,
+              borderColor: `rgba(${colorSchema.accent}, 1)`,
+            },
+            {
+              backgroundColor: `rgba(${colorSchema.warn}, 0.1)`,
+              borderColor: `rgba(${colorSchema.warn}, 1)`,
+            },
+            {
+              backgroundColor: `rgba(${colorSchema.pale}, 0.1)`,
+              borderColor: `rgba(${colorSchema.pale}, 1)`,
+            }
+          ]
+        }
+        this.chartColors.addTheme(ct);
+        console.log('Updating color theme', ct)
+        this.chartColors.darkMode = this.chartColors.darkMode || false;
+      })
+    )
+  )
+
+
   updateChartColorsOnThemeChange = this.createEffect(
     this.darkTheme$.pipe(
       tap(darkTheme => {
         let overrides: ChartOptions;
-        if (darkTheme){
+        if (darkTheme) {
           overrides = {
             legend: {
               labels: { fontColor: 'white' }
@@ -116,12 +187,12 @@ export class StateService extends BaseStateService {
               }]
             }
           };
-        }else{
+        } else {
           overrides = {};
         }
 
         this.chartTheme.setColorschemesOptions(overrides)
-        this.chartColors.darkMode=darkTheme || false;
+        this.chartColors.darkMode = darkTheme || false;
 
       })
     )

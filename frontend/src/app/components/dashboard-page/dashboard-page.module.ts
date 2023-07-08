@@ -11,6 +11,7 @@ import { LaunchDialogComponent } from './launch-dialog/launch-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { HcMultiFunctionTileModule } from '../multi-function-tile/multi-function-tile.module';
 
 
 
@@ -25,6 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
     AngularWebAppCommonModule,
     ColumnLayoutModule,
     HcWidgetLayoutModule,
+    HcMultiFunctionTileModule,
     CardsModule
   ],
   exports:[

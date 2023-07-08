@@ -1,0 +1,26 @@
+<!-- <hc-widget-layout>
+  <span hc-widget-label>{{widget.label}}</span>
+  <hc-widget-controls>
+    <span *ngLet="state$ | async as isOpen" 
+    [ngClass]="{ 'primary-bg': !isOpen, 'accent-bg': isOpen, 'label-small': widget.config?.size==='small', 'label-medium': widget.config?.size==='medium', 'label-big': widget.config?.size==='large'}" class="label">
+      {{stateLabel$ | async}}
+    </span>
+  </hc-widget-controls>
+</hc-widget-layout> -->
+<ng-container *ngLet="(state$ | async) as state">
+  <hc-multi-function-tile *ngLet="(colorScheme$ | async) as colorScheme" [bgColor]="colorScheme.tile" size="small" [statusBgColor]="colorScheme.status">
+    <span hc-mft-side-status-container>{{stateLabel$ | async}}</span>
+    <!-- <hc-mft-status-pane hc-mft-base-content [color]="(state$ | async)? 'accent': 'none'"> -->
+      <!-- <hc-mft-flat-button [color]="state ? 'accent': 'primary'"  ></hc-mft-flat-button> -->
+    <!-- </hc-mft-status-pane> -->
+
+
+    <!-- <awac-icon hc-mft-type-icon *ngIf="widget.config?.icon" name="{{ widget.config?.icon }}"></awac-icon> -->
+    <hc-mft-overlay-pane size="small">
+      <span hc-mft-label-text>{{widget.label}}</span>
+      <span hc-mft-sub-label-text *ngIf="widget.config?.subLabel">{{widget.config?.subLabel}}</span>
+      <!-- <span hc-mft-value-status>{{stateLabel$ | async}}</span> -->
+    </hc-mft-overlay-pane>
+  </hc-multi-function-tile>
+
+</ng-container>

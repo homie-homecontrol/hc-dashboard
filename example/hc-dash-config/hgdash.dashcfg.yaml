@@ -31,184 +31,232 @@ cards:
       #     smallSensorreading: meq1601978/weather/humidity
       - type: group
         items:
-          - type: tilt
-            device: leq1284308
+          - type: mft-pushButton
             label: Garagentor
-            config:
-              size: medium
-          - type: pushButton
-            label: ▲ Tor auf / zu ▼
             mappings:
               target: grg-switch-shelly1-test/switch/state
+              state: leq1284308/tilt/state
             config:
-              setState: "true"
-              wide: true
+              subLabel: ▲ Tor auf / zu ▼
+              setState: "toggle"
+              stateToTextMapping:
+                - from: "true"
+                  to: "OPEN"
+                - from: "false"
+                  to: "CLOSED"
+              stateToColorMapping:
+                - from: "true"
+                  to: "accent"
+                - from: "false"
+                  to: "pale"
+          # - type: verticalStack
+          #   items:
+          #     - type: tilt
+          #       device: leq1284308
+          #       label: Garagentor
+          #       config:
+          #         size: medium
+          #     - type: pushButton
+          #       label: ▲ Tor auf / zu ▼
+          #       mappings:
+          #         target: grg-switch-shelly1-test/switch/state
+          #       config:
+          #         setState: "true"
+          #         wide: true
       - type: group
         label: Offene Fenster und Türen
         items:
           - type: conditional
-            config:
+            showWhen:
               condition: "false"
               property: sec-contacts-except-door/contact/state
             items:
-              - type: contact
+              - type: mft-contact
                 device: sec-contacts-except-door
                 label: Alle Fenster und Türen geschlossen
-                config:
-                  size: medium
           - type: conditional
-            config:
+            showWhen:
               condition: "true"
               property: sec-contacts-except-door/contact/state
             items:
-            - type: conditional
-              config:
-                condition: "true"
-                property: oeq2132384/contact/state
+            - type: verticalStack
               items:
-                  - type: contact
-                    device: oeq2132384
-                    label: Wohnungstür
-            - type: conditional
-              config:
-                condition: "true"
-                property: meq0753110/contact/state
-              items:
-                - type: contact
+                - type: mft-contact
+                  device: oeq2132384
+                  showWhen:
+                    condition: "true"
+                    property: oeq2132384/contact/state
+                  label: Wohnungstür
+                - type: mft-contact
                   device: meq0753110
+                  showWhen:
+                    condition: "true"
+                    property: meq0753110/contact/state
                   label: Kinderzimmer Fenster
-            - type: conditional
-              config:
-                condition: "true"
-                property: meq0753061/contact/state
-              items:
-                - type: contact
+                - type: mft-contact
                   device: meq0753061
+                  showWhen:
+                    condition: "true"
+                    property: meq0753061/contact/state
                   label: Schlafzimmer Fenster
-            - type: conditional
-              config:
-                condition: "true"
-                property: oeq0429971/contact/state
-              items:
-                - type: contact
+                - type: mft-contact
                   device: oeq0429971
+                  showWhen:
+                    condition: "true"
+                    property: oeq0429971/contact/state
                   label: Küche Fenster
-            - type: conditional
-              config:
-                condition: "true"
-                property: meq0753071/contact/state
-              items:
-                - type: contact
+                - type: mft-contact
                   device: meq0753071
+                  showWhen:
+                    condition: "true"
+                    property: meq0753071/contact/state
                   label: Esszimmer Fenster
-            - type: conditional
-              config:
-                condition: "true"
-                property: oeq2132349/contact/state
-              items:
-                - type: contact
+                - type: mft-contact
                   device: oeq2132349
+                  showWhen:
+                    condition: "true"
+                    property: oeq2132349/contact/state
                   label: Terassentür
-            - type: conditional
-              config:
-                condition: "true"
-                property: meq0753104/contact/state
-              items:
-                - type: contact
+                - type: mft-contact
                   device: meq0753104
+                  showWhen:
+                    condition: "true"
+                    property: meq0753104/contact/state
                   label: Wohnzimmer Fenster
-            - type: conditional
-              config:
-                condition: "true"
-                property: oeq0429851/contact/state
-              items:
-                - type: contact
+                - type: mft-contact
                   device: oeq0429851
+                  showWhen:
+                    condition: "true"
+                    property: oeq0429851/contact/state
                   label: Bad Fenster
-            - type: conditional
-              config:
-                condition: "true"
-                property: oeq0431016/contact/state
-              items:
-                - type: contact
+                - type: mft-contact
                   device: oeq0431016
+                  showWhen:
+                    condition: "true"
+                    property: oeq0431016/contact/state
                   label: Gästezimmer Fenster
-            - type: conditional
-              config:
-                condition: "true"
-                property: req0227787/contact/state
-              items:
-                - type: contact
+                - type: mft-contact
                   device: req0227787
+                  showWhen:
+                    condition: "true"
+                    property: req0227787/contact/state
                   label: Gästetoilette Fenster
-            - type: conditional
-              config:
-                condition: "true"
-                property: oeq0706059/contact/state
-              items:
-                - type: contact
+                - type: mft-contact
                   device: oeq0706059
+                  showWhen:
+                    condition: "true"
+                    property: oeq0706059/contact/state
                   label: Werkstatt Fenster
-            - type: conditional
-              config:
-                condition: "true"
-                property: oeq0706161/contact/state
-              items:
-                - type: contact
+                - type: mft-contact
                   device: oeq0706161
+                  showWhen:
+                    condition: "true"
+                    property: oeq0706161/contact/state
                   label: Werkstatt Tür
-            - type: conditional
-              config:
-                condition: "true"
-                property: oeq0706187/contact/state
-              items:
-                - type: contact
+                - type: mft-contact
                   device: oeq0706187
+                  showWhen:
+                    condition: "true"
+                    property: oeq0706187/contact/state
                   label: Büro Fenster
       - type: group
         label: Alarmanlage
         items:
-          - type: onoff
+          - type: verticalStack
+            items:
+              - type: mft-pushButton
+                label: Alarmanlage
+                mappings:
+                  target: security/auto-arm/action
+                  state: security/auto-arm/state
+                config:
+                  subLabel: Automatische Steuerung
+                  setState: "toggle"
+                  stateToTextMapping:
+                    - from: "true"
+                      to: "AUTO"
+                    - from: "false"
+                      to: "AUS"
+                  # stateToColorMapping:
+                  #   - from: "true"
+                  #     to: "accent"
+                  #   - from: "false"
+                  #     to: "pale"
+
+              - type: mft-pushButton
+                label: Alarmanlage
+                mappings:
+                  target: security/armed/action
+                  state: security/armed/state
+                config:
+                  subLabel: Alarmanlange einschalten
+                  setState: "toggle"
+                  stateToTextMapping:
+                    - from: "true"
+                      to: "AKTIV"
+                    - from: "false"
+                      to: "AUS"
+                  stateToColorMapping:
+                    - from: "true"
+                      to: "accent"
+                    - from: "false"
+                      to: "pale"
+          - type: mft-pushButton
             label: Alarm
             mappings:
-              state: security/alarm/state
-          - type: toggleButton
-            label: Alarmanlage aktiv
-            mappings:
-              switch: security/armed/state
-          - type: switch
-            label: Alarmanlage AUTO
-            mappings:
-              switch: security/auto-arm/state
-            config:
-              hideIcon: true
-          - type: pushButton
-            label: Reset Alarm
-            mappings:
               target: security/alarm/state
+              state: security/alarm/state
             config:
+              subLabel: Reset alarm State
               setState: "false"
-              icon: clear
+              stateToTextMapping:
+                - from: "true"
+                  to: "ALARM"
+                - from: "false"
+                  to: "👎"
+              stateToColorMapping:
+                - from: "true"
+                  to: "warn"
+                - from: "false"
+                  to: "pale"
+
       - type: group
         label: Alarmanlage Sensorstatus
         items:
-          - type: toggleButton
+          - type: mft-pushButton
             label: Gast anwesend
             mappings:
-              switch: security-presence-guest/switch/state
-          - type: presence
-            label: Anwesenheit
-            mappings:
-              state: security-presence-all/switch/state
-          - type: contact
-            device: sec-contacts
-            label: Aussenhaut
-          - type: onoff
-            label: Bewegung
-            mappings:
-              state: security-indoor-motion/motion/motion
-          - type: onoff
-            label: Sensorenalarm
-            mappings:
-              state: security/sensor-alarm/state
+              target: security-presence-guest/switch/action
+              state: security-presence-guest/switch/state
+            config:
+              subLabel: Enable to disable auto arming
+              setState: "toggle"
+              stateToTextMapping:
+                - from: "true"
+                  to: "PRESENT"
+                - from: "false"
+                  to: "ABSENT"
+              stateToColorMapping:
+                - from: "true"
+                  to: "accent"
+                - from: "false"
+                  to: "pale"
+          - type: verticalStack
+            items:
+
+              - type: mft-presence
+                label: Anwesenheit
+                mappings:
+                  state: security-presence-all/switch/state
+              - type: mft-contact
+                device: sec-contacts
+                label: Aussenhaut
+              - type: mft-onoff
+                label: Bewegung
+                mappings:
+                  state: security-indoor-motion/motion/motion
+              - type: mft-onoff
+                label: Sensorenalarm
+                mappings:
+                  state: security/sensor-alarm/state
               

@@ -1,3 +1,5 @@
 <div class="container">
-    <hc-generic-widget *ngFor="let item of widget.items" [widget]="item"></hc-generic-widget>
+    <ng-container *ngFor="let item of widget.items">
+        <hc-generic-widget *ngIf="item | showWhen  | async"  [widget]="item"></hc-generic-widget>
+    </ng-container>
 <div>

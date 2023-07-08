@@ -1,0 +1,119 @@
+@import "multi-function-tile.variables.scss";
+
+.flex-row-ltr {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    overflow: hidden;
+}
+
+.hc-mft-main-container {
+    position: relative;
+    // border: 1px solid black;
+    border-radius: $tile-radius;
+    margin: 4px 4px 4px 4px;
+    min-width: 120px;
+    min-height: $normal-height;
+    gap: 0px;
+    // color: #fff;
+
+}
+
+
+.container-small {
+    min-height: $small-height;
+}
+
+
+.side-status-container {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 28px;
+    max-width: 28px;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    vertical-align: middle;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: $tile-radius;
+    border-bottom-right-radius: $tile-radius;
+    // border: 1px solid green;
+    font-weight: 700;
+    line-height: 28px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.side-status-small {
+    font-size: xx-small;
+}
+
+
+.side-status-container:empty {
+    display: none;
+}
+
+.content-container {
+    position: relative;
+    flex-grow: 1;
+    flex-shrink: 1;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: $tile-radius;
+    border-bottom-right-radius: $tile-radius;
+    // border: 1px solid red;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    // height: 100%;
+    // width: 100%;
+    z-index: 2;
+
+    hc-mft-slider {
+        height: 100%;
+        min-height: $small-height;
+    }
+}
+
+.type-icon {
+    pointer-events: none;
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    // border: 1px dotted blue;
+    height: 32px;
+    width: 32px;
+
+    // color: #fff;
+    font-weight: 700;
+    line-height: 32px;
+    overflow: hidden;
+    text-align: center;
+
+    z-index: 1;
+}
+
+.type-icon:empty {
+    display: none;
+}
+
+
+.overlay-content {
+    pointer-events: none;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    // height: 100%;
+    // width: 100%;
+    // border-top-left-radius: 0px;
+    // border-bottom-left-radius: 0px;
+    // border-top-right-radius: 8px;
+    // border-bottom-right-radius: 8px;
+    // border: 1px dotted violet;
+    z-index: 100;
+}

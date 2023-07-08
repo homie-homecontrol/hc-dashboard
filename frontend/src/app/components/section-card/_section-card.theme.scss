@@ -1,0 +1,53 @@
+@mixin section-card-theme-mixin($theme) {
+
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $pale: map-get($theme, pale);
+
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+
+    .section-card-bg {
+        background-color: mat-color($background, card);
+    }
+
+
+    .big-icon {
+        awac-icon {
+            >mat-icon {
+                line-height: 48px !important;
+                font-size: 36px !important;
+                text-align: center;
+                vertical-align: initial;
+                width: 48px !important;
+                height: 48px !important;
+    
+            }
+        }
+
+        .mat-icon-button {
+            line-height: 48px !important;
+            font-size: 36px !important;
+            text-align: center;
+            // vertical-align: top;
+            width: 48px !important;
+            height: 48px !important;
+
+            awac-icon {
+                >mat-icon {
+                    line-height: 48px !important;
+                    font-size: 36px !important;
+                    text-align: center;
+                    vertical-align: initial;
+
+                    width: 48px !important;
+                    height: 48px !important;
+                }
+            }
+        }
+    }
+
+
+}

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Card } from 'src/app/models/dash.model';
@@ -9,7 +9,8 @@ import { DashboardStateService } from '../../state/dashboard-state.service';
 @Component({
   selector: 'hc-card-header',
   templateUrl: './card-header.component.html',
-  styleUrls: ['./card-header.component.scss']
+  styleUrls: ['./card-header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardHeaderComponent implements OnInit {
 

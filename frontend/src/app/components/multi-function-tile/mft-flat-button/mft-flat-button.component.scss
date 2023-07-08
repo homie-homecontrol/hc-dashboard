@@ -1,0 +1,13 @@
+@import '../multi-function-tile.variables';
+
+.container{
+    position: absolute;
+    top:2px;
+    right: 2px;
+    left: 2px;
+    bottom:2px;
+    padding: 0px;
+    min-height: $small-height - 4;
+    border-radius: $tile-radius;
+
+}

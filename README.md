@@ -10,8 +10,8 @@ __`hc-dashboard` is part of:__
 
 # Screenshot
 
-![dashboard screenshot](./docs/images/dashboard.png)
-
+![dashboard light screenshot](./docs/images/dashboard_light_tile.png)
+![dashboard dark screenshot](./docs/images/dashboard_dark_tile.png)
 
 # Docker image
 ```

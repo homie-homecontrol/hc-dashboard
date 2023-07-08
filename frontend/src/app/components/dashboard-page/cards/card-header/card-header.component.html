@@ -1,7 +1,11 @@
-<mat-card-header *ngIf="card?.title || card?.icon || card?.launchOptions">
-  <mat-card-title *ngIf="card?.title">{{card?.title}}</mat-card-title>
-  <awac-icon mat-card-avatar [name]="card?.icon" *ngIf="card?.icon"></awac-icon>
-  <div *ngIf="card?.launchOptions && !hideLaunchButton" class="card-action"> <button mat-icon-button (click)="launch()">
+<hc-section-card-header *ngIf="card?.title || card?.icon || card?.launchOptions">
+  <hc-card-header-title *ngIf="card?.title">{{card?.title}}</hc-card-header-title>
+  <!--[name]="card?.icon"-->
+  <awac-icon hc-card-header-icon  [name]="card?.icon" *ngIf="card?.icon"></awac-icon>
+  <!-- <div hc-card-header-action *ngIf="card?.launchOptions && !hideLaunchButton" class="card-action"> <button mat-icon-button (click)="launch()">
       <awac-icon name="launch"></awac-icon>
-    </button></div>
-</mat-card-header>
+    </button></div> -->
+  <button hc-card-header-action *ngIf="card?.launchOptions && !hideLaunchButton" mat-icon-button (click)="launch()">
+      <awac-icon name="launch"></awac-icon>
+    </button>
+</hc-section-card-header>

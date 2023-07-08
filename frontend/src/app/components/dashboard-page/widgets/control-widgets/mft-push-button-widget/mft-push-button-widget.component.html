@@ -1,0 +1,10 @@
+<hc-multi-function-tile *ngLet="(colorScheme$ | async) as colorScheme" [bgColor]="colorScheme.tile"   size="small" [statusBgColor]="colorScheme.status">
+  <span hc-mft-side-status-container *ngIf="hasState">{{state$ | async | valueMapping:widget.config?.stateToTextMapping}}</span>
+  <!-- <hc-mft-status-pane hc-mft-base-content [color]="stateColor$ | async"> -->
+    <hc-mft-flat-button hc-mft-base-content  [color]="colorScheme.flatButton" (click)="setState()"></hc-mft-flat-button>
+  <!-- </hc-mft-status-pane> -->
+  <hc-mft-overlay-pane size="small">
+    <span hc-mft-label-text>{{widget.label}}</span>
+    <span hc-mft-sub-label-text *ngIf="widget.config?.subLabel">{{widget.config?.subLabel}}</span>
+  </hc-mft-overlay-pane>
+</hc-multi-function-tile>

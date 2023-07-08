@@ -19,14 +19,14 @@ const DefaultStatusMaps: { [index in 'text' | 'label' | 'icon']: StatusMapConfig
   'text': {
     type: 'text',
     size: undefined,
-    color: 'none',
+    color: 'pale',
     fontWeight: 400,
     toValue: undefined
   },
   'icon': {
     type: 'icon',
     size: 'small',
-    color: 'none',
+    color: 'pale',
     fontWeight: undefined,
     toValue: undefined
   },

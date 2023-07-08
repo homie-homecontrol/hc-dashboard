@@ -28,6 +28,7 @@ import { MatDividerModule } from '@angular/material/divider';
 // import { MatSortModule } from '@angular/material/sort';
 
 import { MatExpansionModule } from '@angular/material/expansion';
+import { ThemeEmitterComponent } from './components/theme-emitter/theme-emitter.component';
 
 @NgModule({
   imports: [
@@ -104,7 +105,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     // MatSortModule
     // MatNativeDateModule
   ],
-  declarations: [],
+  declarations: [
+  ],
   providers: [
   ]
 })

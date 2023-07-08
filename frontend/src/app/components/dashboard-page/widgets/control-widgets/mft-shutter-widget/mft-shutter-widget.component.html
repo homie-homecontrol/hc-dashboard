@@ -1,0 +1,19 @@
+<hc-multi-function-tile bgColor="pale">
+  <hc-mft-slider hc-mft-base-content  [value]="position$ | async" [min]="min" [max]="max"
+  (change)="setPosition($event.value)" [step]="step" bgColor="primary" sliderColor="primary"></hc-mft-slider>
+  <awac-icon name="far/fa-window-maximize" hc-mft-type-icon></awac-icon>
+
+  <hc-mft-overlay-pane>
+    <button hc-mft-action-bar-item  *ngIf="!widget.config?.hideButtons" class="toggle-button mft-small-icon-button" mat-icon-button aria-label="Scroll shutter down" (click)="down()">
+      <awac-icon name="fas/fa-angle-double-down"></awac-icon>
+    </button>
+    <button hc-mft-action-bar-item  *ngIf="!widget.config?.hideButtons" class="toggle-button mft-small-icon-button" mat-icon-button aria-label="Scroll shutter up" (click)="up()">
+      <awac-icon name="fas/fa-angle-double-up"></awac-icon>
+    </button>
+    <button hc-mft-action-bar-item  *ngIf="showStopButton$ | async" class="toggle-button mft-small-icon-button" mat-icon-button aria-label="Stop shutter scroll" (click)="stop()">
+      <awac-icon name="far/fa-window-close"></awac-icon>
+    </button>
+    <span hc-mft-label-text>{{widget.label}}</span>
+    <span hc-mft-sub-label-text *ngIf="widget.config?.subLabel">{{widget.config?.subLabel}}</span>
+  </hc-mft-overlay-pane>
+</hc-multi-function-tile>

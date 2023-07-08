@@ -1,0 +1,21 @@
+<!-- <div [ngClass]="{'main-line-container': true, 'main-line-container-vertical': direction === 'vertical'}"> -->
+    <div class="overlay-content">
+        <div class="action-bar" *ngIf="size==='normal'">
+            <ng-content select="hc-mft-action-bar-item"></ng-content>
+            <ng-content select="[hc-mft-action-bar-item]"></ng-content> 
+        </div>
+        <div class="first-text-line label-text text-strong" [ngClass]="{'text-line-small': size==='small'}">
+            <ng-content select="hc-mft-label-text"></ng-content>
+            <ng-content select="[hc-mft-label-text]"></ng-content> 
+        </div>
+        <div class="second-text-line flex-row-ltr" [ngClass]="{'text-line-small': size==='small'}">
+            <div class="label-text-container label-text value-text text-strong">
+                <ng-content select="hc-mft-value-status"></ng-content>
+                <ng-content select="[hc-mft-value-status]"></ng-content> 
+            </div>
+            <div class="label-text-container label-text sub-label-text text-light">
+                <ng-content select="hc-mft-sub-label-text"></ng-content>
+                <ng-content select="[hc-mft-sub-label-text]"></ng-content> 
+            </div>
+        </div>
+    </div>

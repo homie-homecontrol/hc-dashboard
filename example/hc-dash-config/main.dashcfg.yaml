@@ -3,7 +3,6 @@ layout:
   small:
     columns:
       - - timers
-        - calendar
         - devicecontrol
         - control-center
         - mediaplayers
@@ -12,6 +11,7 @@ layout:
         - waschraum
         - clima
         - keller
+        - calendar
         - graphs
         - bbq
         - security
@@ -40,7 +40,7 @@ layout:
         - control-center
         - devicecontrol
       - - security
-        - calendar
+        # - calendar
         - timers
         - mediaplayers
         - graphs
@@ -51,6 +51,16 @@ layout:
         - waschraum
         - keller
 cards:
+  - id: mft-test
+    title: MFT Test
+    type: default
+    items:
+      - type: verticalStack
+        items:
+          - type: mft-test
+          - type: mft-test
+
+
   - id: devicecontrol
     title: Wohnbereich
     type: default
@@ -61,57 +71,75 @@ cards:
       - type: group
         label: Raumsteuerung
         items:
-          - type: dimmer
-            device: group-5
-            label: Wohnzimmer
           - type: lightscene
             label: Szenen Wohnzimmer
             mappings:
               scenes: group-5/scenes/recall
-          - type: switch
-            device: wz-switch-shelly-licht-decke
-            label: Wohnzimmer Decke
-          - type: dimmer
-            device: group-4
-            label: Esszimmer
-          - type: switch
-            device: kue-lights
-            config:
-              icon: far/fa-lightbulb
-          - type: conditional
-            config:
-              property: glob-settings/christmas-time/state
-              condition: "false"
+          - type: verticalStack
             items:
-              - type: dimmer
+              - type: mft-switch
+                device: wz-switch-shelly-licht-decke
+                label: Wohnzimmer
+                config:
+                  icon: far/fa-lightbulb
+                  subLabel: Deckenlampe
+              - type: mft-dimmer
+                device: group-5
+                label: Wohnzimmer
+                config:
+                  subLabel: Lichter Gruppe
+              - type: mft-dimmer
+                device: group-4
+                label: Esszimmer
+                config:
+                  subLabel: Lichter Gruppe
+              - type: mft-switch
+                device: kue-lights
+                config:
+                  icon: far/fa-lightbulb
+                  subLabel: Deckenlampe & Arbeitsplatte
+              - type: mft-dimmer
                 label: Ventilator
+                showWhen:
+                  property: glob-settings/christmas-time/state
+                  condition: "false"
                 mappings:
                   switch: wz-fan-xiaomi-3/switch/state
                   brightness: wz-fan-xiaomi-3/fan/speed
-          - type: switch
-            device: nr-olaf
-            label: Olaf (Staubsauger)
-            config:
-              icon: svg/0 0 512 512/M431.36,80.64a248,248,0,0,0-350.72,0c-96.85,96.85-96.85,253.87,0,350.72a248,248,0,0,0,350.72,0C528.21,334.51,528.21,177.49,431.36,80.64ZM397.42,397.42A200,200,0,1,1,114.58,114.58,200,200,0,1,1,397.42,397.42ZM369,143C306.66,80.75,205.34,80.75,143,143A24,24,0,0,0,177,177,111.77,111.77,0,1,1,335,335,24,24,0,1,0,369,369,159.72,159.72,0,0,0,369,143ZM139.55,304.57a16,16,0,0,0-22.63,22.63l67.88,67.88a16,16,0,0,0,22.63-22.63Zm90.51-90.51a16,16,0,0,0-22.63,22.63l67.88,67.88a16,16,0,0,0,22.63-22.63Zm-67.88,22.63a16,16,0,0,0-22.63,22.62L252.69,372.45a16,16,0,0,0,22.62-22.63Z
+              - type: mft-switch
+                device: nr-olaf
+                label: Olaf
+                config:
+                  subLabel: Staubsauger
+                  icon: svg/0 0 512 512/M431.36,80.64a248,248,0,0,0-350.72,0c-96.85,96.85-96.85,253.87,0,350.72a248,248,0,0,0,350.72,0C528.21,334.51,528.21,177.49,431.36,80.64ZM397.42,397.42A200,200,0,1,1,114.58,114.58,200,200,0,1,1,397.42,397.42ZM369,143C306.66,80.75,205.34,80.75,143,143A24,24,0,0,0,177,177,111.77,111.77,0,1,1,335,335,24,24,0,1,0,369,369,159.72,159.72,0,0,0,369,143ZM139.55,304.57a16,16,0,0,0-22.63,22.63l67.88,67.88a16,16,0,0,0,22.63-22.63Zm90.51-90.51a16,16,0,0,0-22.63,22.63l67.88,67.88a16,16,0,0,0,22.63-22.63Zm-67.88,22.63a16,16,0,0,0-22.63,22.62L252.69,372.45a16,16,0,0,0,22.62-22.63Z
       - type: group
         label: Weitere
         items:
-          - type: conditional
-            config:
-              property: glob-settings/christmas-time/state
-              condition: "true"
+          - type: verticalStack
             items:
-              - type: switch
+              - type: mft-switch
+                device: light-8
+                label: Licht Büro
+                showWhen:
+                  property: light-8/switch/state
+                  condition: "true"
+                config:
+                  subLabel: Stehlampe
+                  icon: far/fa-lightbulb
+              - type: mft-switch
                 device: christmas-lights
                 label: Weihnachtsbeleuchtung
+                showWhen:
+                  property: glob-settings/christmas-time/state
+                  condition: "true"
                 config:
                   icon: svg/0 0 512 512/M224 160l26.7-53.3L304 80l-53.3-26.7L224 0l-26.7 53.3L144 80l53.3 26.7L224 160zm215.6 295.6L349.8 352h36c25.6 0 39.5-26.3 23.2-43.5L262.8 154 224 208l-38.8-54L39 308.5C22.7 325.7 36.6 352 62.2 352h36L8.4 455.6c-19 21.9-3.8 56.4 24.7 56.4h381.7c28.6 0 43.7-34.6 24.8-56.4zM160 312c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm128 128c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24z
-          - type: dimmer
-            device: group-7
-            label: Licht Schlafzimmer
-          - type: dimmer
-            device: light-15
-            label: Licht Kinderzimmer
+              - type: mft-dimmer
+                device: group-7
+                label: Licht Schlafzimmer
+              - type: mft-dimmer
+                device: light-15
+                label: Licht Kinderzimmer
 
   - id: clock
     type: default
@@ -122,11 +150,11 @@ cards:
     icon: fas/fa-key
     title: Sicherheit Details
     items:
-      - type: switch
+      - type: mft-toggleButton
         device: db-general-config
         label: Hide closed contacts
         config:
-          hideIcon: true
+          subLabel: When ON the dashboard will only show opened doors & windows
 
   - id: security
     type: default
@@ -136,150 +164,130 @@ cards:
       cardId: security-details
     items:
       - type: conditional
-        config:
+        showWhen:
           condition: "true"
           property: db-general-config/contacts-hide-closed/state
         items:
-          - type: conditional
-            config:
-              condition: "true"
-              property: meq0753110/contact/state
+          - type: verticalStack
             items:
-              - type: contact
-                device: meq0753110
-                label: Kinderzimmer Fenster
-          - type: conditional
-            config:
-              condition: "true"
-              property: meq0753061/contact/state
-            items:
-              - type: contact
-                device: meq0753061
-                label: Schlafzimmer Fenster
-          - type: conditional
-            config:
-              condition: "true"
-              property: oeq0429971/contact/state
-            items:
-              - type: contact
-                device: oeq0429971
-                label: Küche Fenster
-          - type: conditional
-            config:
-              condition: "true"
-              property: meq0753071/contact/state
-            items:
-              - type: contact
-                device: meq0753071
-                label: Esszimmer Fenster
-          - type: conditional
-            config:
-              condition: "true"
-              property: oeq2132349/contact/state
-            items:
-              - type: contact
-                device: oeq2132349
-                label: Terassentür
-          - type: conditional
-            config:
-              condition: "true"
-              property: meq0753104/contact/state
-            items:
-              - type: contact
-                device: meq0753104
-                label: Wohnzimmer Fenster
-          - type: conditional
-            config:
-              condition: "true"
-              property: oeq0429851/contact/state
-            items:
-              - type: contact
-                device: oeq0429851
-                label: Bad Fenster
-          - type: conditional
-            config:
-              condition: "true"
-              property: oeq0431016/contact/state
-            items:
-              - type: contact
-                device: oeq0431016
-                label: Gästezimmer Fenster
-          - type: conditional
-            config:
-              condition: "true"
-              property: req0227787/contact/state
-            items:
-              - type: contact
-                device: req0227787
-                label: Gästetoilette Fenster
-          - type: conditional
-            config:
-              condition: "true"
-              property: oeq0706059/contact/state
-            items:
-              - type: contact
-                device: oeq0706059
-                label: Werkstatt Fenster
-          - type: conditional
-            config:
-              condition: "true"
-              property: oeq0706161/contact/state
-            items:
-              - type: contact
-                device: oeq0706161
-                label: Werkstatt Tür
-          - type: conditional
-            config:
-              condition: "true"
-              property: oeq0706187/contact/state
-            items:
-              - type: contact
-                device: oeq0706187
-                label: Büro Fenster
+                  - type: mft-contact
+                    device: meq0753110
+                    showWhen:
+                      condition: "true"
+                      property: meq0753110/contact/state
+                    label: Kinderzimmer Fenster
+                  - type: mft-contact
+                    device: meq0753061
+                    showWhen:
+                      condition: "true"
+                      property: meq0753061/contact/state
+                    label: Schlafzimmer Fenster
+                  - type: mft-contact
+                    device: oeq0429971
+                    showWhen:
+                      condition: "true"
+                      property: oeq0429971/contact/state
+                    label: Küche Fenster
+                  - type: mft-contact
+                    device: meq0753071
+                    showWhen:
+                      condition: "true"
+                      property: meq0753071/contact/state
+                    label: Esszimmer Fenster
+                  - type: mft-contact
+                    device: oeq2132349
+                    showWhen:
+                      condition: "true"
+                      property: oeq2132349/contact/state
+                    label: Terassentür
+                  - type: mft-contact
+                    device: meq0753104
+                    showWhen:
+                      condition: "true"
+                      property: meq0753104/contact/state
+                    label: Wohnzimmer Fenster
+                  - type: mft-contact
+                    device: oeq0429851
+                    showWhen:
+                      condition: "true"
+                      property: oeq0429851/contact/state
+                    label: Bad Fenster
+                  - type: mft-contact
+                    device: oeq0431016
+                    showWhen:
+                      condition: "true"
+                      property: oeq0431016/contact/state
+                    label: Gästezimmer Fenster
+                  - type: mft-contact
+                    device: req0227787
+                    showWhen:
+                      condition: "true"
+                      property: req0227787/contact/state
+                    label: Gästetoilette Fenster
+                  - type: mft-contact
+                    device: oeq0706059
+                    showWhen:
+                      condition: "true"
+                      property: oeq0706059/contact/state
+                    label: Werkstatt Fenster
+                  - type: mft-contact
+                    device: oeq0706161
+                    showWhen:
+                      condition: "true"
+                      property: oeq0706161/contact/state
+                    label: Werkstatt Tür
+                  - type: mft-contact
+                    device: oeq0706187
+                    showWhen:
+                      condition: "true"
+                      property: oeq0706187/contact/state
+                    label: Büro Fenster
       - type: conditional
-        config:
+        showWhen:
           condition: "false"
           property: db-general-config/contacts-hide-closed/state
         items:
-          - type: contact
-            device: oeq2132384
-            label: Wohnungstür
-          - type: contact
-            device: meq0753110
-            label: Kinderzimmer Fenster
-          - type: contact
-            device: meq0753061
-            label: Schlafzimmer Fenster
-          - type: contact
-            device: oeq0429971
-            label: Küche Fenster
-          - type: contact
-            device: meq0753071
-            label: Esszimmer Fenster
-          - type: contact
-            device: oeq2132349
-            label: Terassentür
-          - type: contact
-            device: meq0753104
-            label: Wohnzimmer Fenster
-          - type: contact
-            device: oeq0429851
-            label: Bad Fenster
-          - type: contact
-            device: oeq0431016
-            label: Gästezimmer Fenster
-          - type: contact
-            device: req0227787
-            label: Gästetoilette Fenster
-          - type: contact
-            device: oeq0706059
-            label: Werkstatt Fenster
-          - type: contact
-            device: oeq0706161
-            label: Werkstatt Tür
-          - type: contact
-            device: oeq0706187
-            label: Büro Fenster
+          - type: verticalStack
+            items:
+              - type: mft-contact
+                device: oeq2132384
+                label: Wohnungstür
+              - type: mft-contact
+                device: meq0753110
+                label: Kinderzimmer Fenster
+              - type: mft-contact
+                device: meq0753061
+                label: Schlafzimmer Fenster
+              - type: mft-contact
+                device: oeq0429971
+                label: Küche Fenster
+              - type: mft-contact
+                device: meq0753071
+                label: Esszimmer Fenster
+              - type: mft-contact
+                device: oeq2132349
+                label: Terassentür
+              - type: mft-contact
+                device: meq0753104
+                label: Wohnzimmer Fenster
+              - type: mft-contact
+                device: oeq0429851
+                label: Bad Fenster
+              - type: mft-contact
+                device: oeq0431016
+                label: Gästezimmer Fenster
+              - type: mft-contact
+                device: req0227787
+                label: Gästetoilette Fenster
+              - type: mft-contact
+                device: oeq0706059
+                label: Werkstatt Fenster
+              - type: mft-contact
+                device: oeq0706161
+                label: Werkstatt Tür
+              - type: mft-contact
+                device: oeq0706187
+                label: Büro Fenster
   - id: clima
     title: Temperatur & Luftfeuchtigkeit
     type: default
@@ -413,25 +421,29 @@ cards:
     title: Rolläden
     type: default
     items:
-      - type: rollerShutter
-        device: shutter-40e8d8
-        label: Terrassentür
-        config:
-          levels:
-            openPosition: 0
-            closedPosition: 100 
-            halfopenPosition: 25
-            blindsPosition: 75
+      - type: verticalStack
+        items:
+          - type: rollerShutter
+            device: shutter-40e8d8
+            label: Terrassentür
+            config:
+              subLabel: Rolladen
+              levels:
+                openPosition: 0
+                closedPosition: 100 
+                halfopenPosition: 25
+                blindsPosition: 75
 
-      - type: rollerShutter
-        device: req1957223
-        label: Fenster
-        config:
-          levels:
-            openPosition: 0
-            closedPosition: 100 
-            halfopenPosition: 37
-            blindsPosition: 69
+          - type: rollerShutter
+            device: req1957223
+            label: Fenster
+            config:
+              subLabel: Rolladen
+              levels:
+                openPosition: 0
+                closedPosition: 100 
+                halfopenPosition: 37
+                blindsPosition: 69
 
   - id: heating
     title: Heizung
@@ -441,21 +453,23 @@ cards:
       cardId: heating-control
       title: Heizungscenter
     items:
-      - type: thermostat
-        device: meq0180941
-        label: Wohnzimmer
-      - type: thermostat
-        device: neq0937510
-        label: Schlafzimmer
-      - type: thermostat
-        device: meq0478846
-        label: Kinderzimmer
-      - type: thermostat
-        device: oeq0300066
-        label: Bad
-      - type: thermostat
-        device: meq0449630
-        label: Toilette
+      - type: verticalStack
+        items:
+          - type: thermostat
+            device: meq0180941
+            label: Wohnzimmer
+          - type: thermostat
+            device: neq0937510
+            label: Schlafzimmer
+          - type: thermostat
+            device: meq0478846
+            label: Kinderzimmer
+          - type: thermostat
+            device: oeq0300066
+            label: Bad
+          - type: thermostat
+            device: meq0449630
+            label: Toilette
 
 
   - id: control-center
@@ -465,20 +479,29 @@ cards:
     launchOptions:
       cardId: global-settings
     items:
-      - type: presence
+      - type: mft-presence
         label: Anwesenheit
         mappings:
           state: security-presence-all/switch/state
+        config:
+          subLabel: Zeigt an ob mind. 1 Person anwesend ist
       - type: verticalStack
         items:
-          - type: toggleButton
+          - type: mft-toggleButton
             label: Partymode
             mappings:
               switch: glob-settings/partymode/state
-          - type: toggleButton
-            label: Sofagast Modus
+            config:
+              subLabel: Disable all automations
+              onColor: primary
+          - type: mft-toggleButton
+            label: Sofagast Modus 
             mappings:
-              switch: glob-settings/sofa-guest/state          
+              switch: glob-settings/sofa-guest/state
+            config:
+              subLabel: Disable automatic shutters
+              onColor: primary
+        
       - type: device-attention
         label: Devices needing attention
         config:
@@ -624,18 +647,16 @@ cards:
     type: default
     icon: fas/fa-soap
     items:
-      - type: onoff
-        label: Waschmaschine
-        mappings:
-          state: wr-waschmaschine/switch/state
-      - type: onoff
-        label: Waschmaschine WRAPPER
-        mappings:
-          state: wr-waschmaschine-wrapper/switch/state
-      - type: onoff
-        label: Trockner
-        mappings:
-          state: wr-trockner/switch/state
+      - type: verticalStack
+        items:
+          - type: mft-onoff
+            label: Waschmaschine
+            mappings:
+              state: wr-waschmaschine/switch/state
+          - type: mft-onoff
+            label: Trockner
+            mappings:
+              state: wr-trockner/switch/state
 
 
   - id: graphs
@@ -791,6 +812,7 @@ cards:
 
   - id: mediaplayers
     title: Mediaplayers
+    icon: fas/fa-music
     type: conditional
     config:
       condition: 'true'
@@ -800,7 +822,7 @@ cards:
       cardId: mediaplayers
     items:
       - type: conditional
-        config:
+        showWhen:
           condition: ['playing', 'paused']
           property: yamaha-avr/mediaplayer/play-state
         items:
@@ -808,7 +830,23 @@ cards:
             device: yamaha-avr
             label: Receiver Wohnzimmer
       - type: conditional
-        config:
+        showWhen:
+          condition: ['playing', 'paused']
+          property: yamaha-kitchen/mediaplayer/play-state
+        items:
+          - type: actionButtons
+            label: Power Off
+            mappings:
+              targets:
+                - selector: yamaha-kitchen/main/state
+                  config:
+                    setState: "false"
+                    icon: fas/fa-power-off
+          - type: mediaplayer
+            device: yamaha-kitchen
+            label: Küche
+      - type: conditional
+        showWhen:
           condition: ['playing']
           property: echo-g090rf0474130dpe/mediaplayer/play-state
         items:
@@ -816,7 +854,7 @@ cards:
             device: echo-g090rf0474130dpe
             label: Echo Wohnzimmer
       - type: conditional
-        config:
+        showWhen:
           condition: ['playing']
           property: echo-g2a1a60304240a15/mediaplayer/play-state
         items:
@@ -824,7 +862,7 @@ cards:
             device: echo-g2a1a60304240a15
             label: Echo Kueche
       - type: conditional
-        config:
+        showWhen:
           condition: ['playing']
           property: echo-g091ev0503720hcr/mediaplayer/play-state
         items:
@@ -843,7 +881,7 @@ cards:
       cardId: conditional
     items:
       - type: conditional
-        config:
+        showWhen:
           property: echo-g090rf0474130dpe/timers/timer-1-status
           condition: 'true'
         items:
@@ -857,7 +895,7 @@ cards:
               label: echo-g090rf0474130dpe/timers/timer-1-label
               status: echo-g090rf0474130dpe/timers/timer-1-status
       - type: conditional
-        config:
+        showWhen:
           property: echo-g090rf0474130dpe/timers/timer-2-status
           condition: 'true'
         items:
@@ -871,7 +909,7 @@ cards:
               label: echo-g090rf0474130dpe/timers/timer-2-label
               status: echo-g090rf0474130dpe/timers/timer-2-status
       - type: conditional
-        config:
+        showWhen:
           property: echo-g090rf0474130dpe/timers/timer-3-status
           condition: 'true'
         items:
@@ -885,7 +923,7 @@ cards:
               label: echo-g090rf0474130dpe/timers/timer-3-label
               status: echo-g090rf0474130dpe/timers/timer-3-status
       - type: conditional
-        config:
+        showWhen:
           property: echo-g2a1a60304240a15/timers/timer-1-status
           condition: 'true'
         items:
@@ -899,7 +937,7 @@ cards:
               label: echo-g2a1a60304240a15/timers/timer-1-label
               status: echo-g2a1a60304240a15/timers/timer-1-status
       - type: conditional
-        config:
+        showWhen:
           property: echo-g2a1a60304240a15/timers/timer-2-status
           condition: 'true'
         items:
@@ -913,7 +951,7 @@ cards:
               label: echo-g2a1a60304240a15/timers/timer-2-label
               status: echo-g2a1a60304240a15/timers/timer-2-status
       - type: conditional
-        config:
+        showWhen:
           property: echo-g2a1a60304240a15/timers/timer-3-status
           condition: 'true'
         items:

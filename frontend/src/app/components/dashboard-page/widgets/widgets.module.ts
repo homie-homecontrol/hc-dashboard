@@ -13,7 +13,7 @@ import { DimmerWidgetComponent } from './control-widgets/dimmer-widget/dimmer-wi
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDividerModule } from '@angular/material/divider';
 import { GroupWidgetComponent } from './layout-widgets/group-widget/group-widget.component';
-import { ConditionalWidgetComponent } from './layout-widgets/conditional-widget/conditional-widget.component';
+import { ContainerWidgetComponent } from './layout-widgets/container-widget/container-widget.component';
 import { PlatformModule } from '@angular/cdk/platform';
 import { BinaryStateWidgetComponent } from './control-widgets/binary-state-widget/binary-state-widget.component';
 import { ClockWidgetComponent } from './misc-widgets/clock-widget/clock-widget.component';
@@ -49,6 +49,20 @@ import { TimerWidgetComponent } from './control-widgets/timer-widget/timer-widge
 import { SelectWidgetComponent } from './control-widgets/select-widget/select-widget.component';
 import { DeviceAttentioWidgetComponent } from './misc-widgets/device-attention-widget/device-attention-widgetcomponent';
 import { CalendarWidgetComponent } from './control-widgets/calendar-widget/calendar-widget.component';
+import { MFTTestWidgetComponent } from './control-widgets/mft-test-widget/mft-test-widget.component';
+import { HcMultiFunctionTileComponent } from '../../multi-function-tile/multi-function-tile.component';
+import { HcMultiFunctionTileModule } from '../../multi-function-tile/multi-function-tile.module';
+import { MftDimmerWidgetComponent } from './control-widgets/mft-dimmer-widget/mft-dimmer-widget.component';
+import { MftSwitchWidgetComponent } from './control-widgets/mft-switch-widget/mft-switch-widget.component';
+import { MftBinaryStateWidgetComponent } from './control-widgets/mft-binary-state-widget/mft-binary-state-widget.component';
+import { ShowWhenModule } from '../../showWhen/showWhen.module';
+import { MatRipple, MatRippleModule } from '@angular/material/core';
+import { valueMappingPipeModule } from '../../valueMappingPipe/valueMappingPipe.module';
+import { MftPushButtonWidgetComponent } from './control-widgets/mft-push-button-widget/mft-push-button-widget.component';
+import { MftShutterWidgetComponent } from './control-widgets/mft-shutter-widget/mft-shutter-widget.component';
+import { MftThermostatWidgetComponent } from './control-widgets/mft-thermostat-widget/mft-thermostat-widget.component';
+import { MftStatusWidgetComponent } from './control-widgets/mft-status-widget/mft-status-widget.component';
+import { MftToggleButtonWidgetComponent } from './control-widgets/mft-toggle-button-widget/mft-toggle-button-widget.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +70,7 @@ import { CalendarWidgetComponent } from './control-widgets/calendar-widget/calen
     SwitchWidgetComponent,
     DimmerWidgetComponent,
     GroupWidgetComponent,
-    ConditionalWidgetComponent,
+    ContainerWidgetComponent,
     VerticalStackWidgetComponent,
     BinaryStateWidgetComponent,
     ClockWidgetComponent,
@@ -79,7 +93,16 @@ import { CalendarWidgetComponent } from './control-widgets/calendar-widget/calen
     TimerWidgetComponent,
     SelectWidgetComponent,
     DeviceAttentioWidgetComponent,
-    CalendarWidgetComponent
+    CalendarWidgetComponent,
+    MFTTestWidgetComponent,
+    MftDimmerWidgetComponent,
+    MftSwitchWidgetComponent,
+    MftBinaryStateWidgetComponent,
+    MftPushButtonWidgetComponent,
+    MftShutterWidgetComponent,
+    MftThermostatWidgetComponent,
+    MftStatusWidgetComponent,
+    MftToggleButtonWidgetComponent
   ],
   imports: [
     CommonModule,
@@ -98,9 +121,13 @@ import { CalendarWidgetComponent } from './control-widgets/calendar-widget/calen
     MatInputModule,
     AngularWebAppCommonModule,
     HcWidgetLayoutModule,
+    HcMultiFunctionTileModule,
     ChartsModule,
     SimpleChartModule,
-    BBQWidgetModule
+    BBQWidgetModule,
+    ShowWhenModule,
+    MatRippleModule,
+    valueMappingPipeModule
   ],
   exports: [
     // SimpleLineChartComponent,
@@ -116,28 +143,42 @@ export class WidgetsModule {
     this.widgets.registerWidget('clock', ClockWidgetComponent);
 
     this.widgets.registerWidget('group', GroupWidgetComponent);
-    this.widgets.registerWidget('conditional', ConditionalWidgetComponent);
+    this.widgets.registerWidget('conditional', ContainerWidgetComponent);
+    this.widgets.registerWidget('container', ContainerWidgetComponent);
     this.widgets.registerWidget('verticalStack', VerticalStackWidgetComponent);
 
     this.widgets.registerWidget('switch', SwitchWidgetComponent);
+    this.widgets.registerWidget('mft-switch', MftSwitchWidgetComponent);
     this.widgets.registerWidget('toggleButton', ToggleButtonWidgetComponent);
+    this.widgets.registerWidget('mft-toggleButton', MftToggleButtonWidgetComponent);
     this.widgets.registerWidget('dimmer', DimmerWidgetComponent);
+    this.widgets.registerWidget('mft-dimmer', MftDimmerWidgetComponent);
     this.widgets.registerWidget('contact', BinaryStateWidgetComponent);
     this.widgets.registerWidget('presence', BinaryStateWidgetComponent);
     this.widgets.registerWidget('online', BinaryStateWidgetComponent);
-    this.widgets.registerWidget('onoff', BinaryStateWidgetComponent);
+    this.widgets.registerWidget('onoff', BinaryStateWidgetComponent);    
+    
+    this.widgets.registerWidget('mft-contact', MftBinaryStateWidgetComponent);
+    this.widgets.registerWidget('mft-presence', MftBinaryStateWidgetComponent);
+    this.widgets.registerWidget('mft-online', MftBinaryStateWidgetComponent);
+    this.widgets.registerWidget('mft-onoff', MftBinaryStateWidgetComponent);
+    this.widgets.registerWidget('mft-tilt', MftBinaryStateWidgetComponent);
+
     this.widgets.registerWidget('select', SelectWidgetComponent);
     this.widgets.registerWidget('tilt', BinaryStateWidgetComponent);
 
     this.widgets.registerWidget('text', TextWidgetComponent);
     this.widgets.registerWidget('status', StatusWidgetComponent);
+    this.widgets.registerWidget('mft-status', MftStatusWidgetComponent);
     this.widgets.registerWidget('calendar', CalendarWidgetComponent);
 
     this.widgets.registerWidget('pushButton', PushButtonWidgetComponent);
+    this.widgets.registerWidget('mft-pushButton', MftPushButtonWidgetComponent);
 
     this.widgets.registerWidget('actionButtons', ActionButtonsWidgetComponent);
 
     this.widgets.registerWidget('rollerShutter', ShutterWidgetComponent);
+    this.widgets.registerWidget('mft-rollerShutter', MftShutterWidgetComponent);
 
     this.widgets.registerWidget('dualSensorBig', DualSensorBigWidgetComponent);
 
@@ -147,6 +188,7 @@ export class WidgetsModule {
     this.widgets.registerWidget('lightscene', LightSceneWidgetComponent);
 
     this.widgets.registerWidget('thermostat', ThermostatWidgetComponent);
+    this.widgets.registerWidget('mft-thermostat', MftThermostatWidgetComponent);
 
     this.widgets.registerWidget('mediaplayer', MediaplayerWidgetComponent);
 
@@ -158,6 +200,8 @@ export class WidgetsModule {
     this.widgets.registerWidget('bbq', BBQWidgetComponent);
 
     this.widgets.registerWidget('device-attention', DeviceAttentioWidgetComponent);
+
+    this.widgets.registerWidget('mft-test', MFTTestWidgetComponent);
 
   }
 }

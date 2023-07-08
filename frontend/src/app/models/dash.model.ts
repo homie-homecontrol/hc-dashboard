@@ -1,4 +1,4 @@
-import { DeviceSelector, HomieID, HomieValuesTypes, isPropertySelector, PropertyCondition, PropertyQuery, PropertySelector, Query, ValueCondition, ValueMappingDefintion } from "node-homie/model";
+import { DeviceSelector, HomieID, HomieValuesTypes, isPropertySelector, PropertyCondition, PropertyQuery, PropertySelector, Query, ValueCondition, ValueMappingDefintion, ValueMappingList } from "node-homie/model";
 
 export type PageMenu = PageMenuEntry[];
 
@@ -17,6 +17,8 @@ export interface ColumnConfig {
     columns: string[][];
 }
 
+export const ColorSchemes = ['primary', 'accent', 'warn', 'pale'] as const;
+export type MatColorName = typeof ColorSchemes[number];
 
 export const ScreenSizes = ['small', 'medium', 'large', 'xlarge'] as const;
 
@@ -33,15 +35,14 @@ export interface PageDef {
 }
 
 export type ControlWidetType = typeof controlWidgetTypes[number];
-const controlWidgetTypes = ['contact', 'dimmer', 'online', 'switch', 'onoff', 'select',
-    'presence', 'rollerShutter', 'text', 'status', 'toggleButton', 'pushButton', 'actionButtons', 'bbqSensor',
-    'weather', 'clock', 'bigWeather', 'clockWeather', 'mediaplayer',
-    'thermostat', 'dualSensorBig', 'linearGauge', 'simpleSensor',
-    'lightscene', 'tilt', 'tempHumBars', 'timer', 'calendar'] as const;
+const controlWidgetTypes = ['contact', 'mft-contact', 'dimmer', 'mft-dimmer', 'online', 'mft-online', 'switch', 'mft-switch', 'onoff', 'mft-onoff', 'select',
+    'presence', 'mft-presence', 'rollerShutter', 'mft-rollerShutter', 'text', 'status', 'mft-status', 'toggleButton', 'mft-toggleButton', 'pushButton', 'mft-pushButton', 'actionButtons', 'bbqSensor',
+    'weather', 'clock', 'bigWeather', 'clockWeather', 'mediaplayer', 'thermostat', 'mft-thermostat', 'dualSensorBig', 'linearGauge', 'simpleSensor',
+    'lightscene', 'tilt', 'mft-tilt', 'tempHumBars', 'timer', 'calendar', 'mft-test',] as const;
 
 
 export type LayoutWidgetType = typeof layoutWidgetTypes[number];
-export const layoutWidgetTypes = ['group', 'conditional', 'lights', 'verticalStack'] as const;
+export const layoutWidgetTypes = ['group', 'conditional', 'container', 'lights', 'verticalStack'] as const;
 
 export type MiscWidgetType = typeof miscWidgetTypes[number];
 export const miscWidgetTypes = ['clock', 'graph', 'bbq', 'device-attention'] as const;
@@ -73,6 +74,11 @@ export function getSelector<T = any>(mapping: PropertyMapping<T>): PropertySelec
     return isExtendedPropertyMapping(mapping) ? mapping.selector : mapping;
 }
 
+export type MftMode = 'moderate' | 'intense';
+export interface MftConfigBase {
+    subLabel?: string;
+    mode?: MftMode;
+}
 export interface IMappingBase<MAPPINGCFG = any> {
     [attribute: string]: ComplexPropertyMapping<MAPPINGCFG> | undefined;
 }
@@ -82,18 +88,21 @@ export interface IControlWidget<TYPE extends ControlWidetType, MAPPINGS extends 
     device?: DeviceSelector;
     mappings?: MAPPINGS;
     config?: CONFIG;
+    showWhen?: PropertyConditional;
 }
 
 export interface ILayoutWidget<TYPE extends LayoutWidgetType, CONFIG = any> {
     type: TYPE;
     label?: string;
     config?: CONFIG;
+    showWhen?: PropertyConditional;
     items: Widget[];
 }
 
 export interface IMiscWidget<TYPE extends MiscWidgetType, CONFIG = any> {
     type: TYPE;
     label?: string;
+    showWhen?: PropertyConditional;
     config?: CONFIG;
 }
 
@@ -139,7 +148,7 @@ export type Card = DefaultCard | ConditionalCard;
 //  Layout Widgets
 // =======================
 
-export type LayoutWidget = GroupWidget | ConditionalWidget | LightsWidget | VerticalStackWidget;
+export type LayoutWidget = GroupWidget | ConditionalWidget | ContainerlWidget | LightsWidget | VerticalStackWidget;
 
 export function isLayoutWidget(widget: any): widget is LayoutWidget {
     return !!widget && !!widget.type && layoutWidgetTypes.includes(widget.type);
@@ -150,6 +159,7 @@ export function isLayoutWidget(widget: any): widget is LayoutWidget {
 
 export type GroupWidget = ILayoutWidget<'group'>;
 export type ConditionalWidget = ILayoutWidget<'conditional', PropertyConditional>;
+export type ContainerlWidget = ILayoutWidget<'container'>;
 export type LightsWidget = ILayoutWidget<'lights'>;
 
 export interface VerticalStackConfig {
@@ -165,9 +175,10 @@ export type VerticalStackWidget = ILayoutWidget<'verticalStack'>;
 //  Control Widgets
 // =======================
 
-export type ControlWidget = SwitchWidget | DimmerWidget | OnlineWidget | PresenceWidget | ContactWidget | OnOffWidget | SelectWidget | TiltWidget
-    | RollerShutterWidget | TextWidget | StatusWidget | ToggleButtonWidget | PushButtonWidget | ActionButtonsWidget | WeatherWidget | ThermostatWidget | BBQSensorChannelWidget
-    | MediaPlayerWidget | DualSensorBigWidget | LinearGaugeWidget | SimpleSensorWidget | LightSceneWidget | TempHumBarsWidget | TimerWidget | CalendarWidget;
+export type ControlWidget = SwitchWidget | MftSwitchWidget | DimmerWidget | MftDimmerWidget | OnlineWidget | PresenceWidget | ContactWidget | OnOffWidget
+    | SelectWidget | TiltWidget | RollerShutterWidget | MftRollerShutterWidget | TextWidget | StatusWidget | MftStatusWidget | ToggleButtonWidget | MftToggleButtonWidget | PushButtonWidget | MftPushButtonWidget | ActionButtonsWidget 
+    | WeatherWidget | ThermostatWidget | MftThermostatWidget | BBQSensorChannelWidget | MediaPlayerWidget | DualSensorBigWidget | LinearGaugeWidget | SimpleSensorWidget | LightSceneWidget 
+    | TempHumBarsWidget | TimerWidget | CalendarWidget | MFTTestWidget | MftOnlineWidget | MftPresenceWidget | MftContactWidget | MftOnOffWidget | MftTiltWidget;
 
 export function isControlWidget(widget: any): widget is ControlWidget {
     return !!widget && !!widget.type && controlWidgetTypes.includes(widget.type);
@@ -180,6 +191,7 @@ export type WidgetSizesType = typeof WidgetSizes[number];
 export interface WidgetSizeConfig {
     size?: WidgetSizesType;
     hideLabel?: boolean;
+    subLabel?: string;
 }
 
 export interface WidgetIconConfig {
@@ -195,9 +207,22 @@ export interface SwitchConfig {
     hideIcon?: boolean;
     icon?: string;
 }
+export interface MftSwitchConfig extends MftConfigBase, SwitchConfig {
+
+}
+
 export type SwitchWidget = IControlWidget<'switch', SwitchMapping, SwitchConfig>
+export type MftSwitchWidget = IControlWidget<'mft-switch', SwitchMapping, MftSwitchConfig>
 
 export type ToggleButtonWidget = IControlWidget<'toggleButton', SwitchMapping>
+
+export interface MftToggleButtonConfig extends MftConfigBase {
+    onColor?: MatColorName;
+    offColor?: MatColorName;
+    onText?: string;
+    offText?: string;
+}
+export type MftToggleButtonWidget = IControlWidget<'mft-toggleButton', SwitchMapping, MftToggleButtonConfig>
 
 
 
@@ -213,6 +238,17 @@ export interface PushButtonMapping extends IMappingBase {
 }
 export type PushButtonWidget = IControlWidget<'pushButton', PushButtonMapping, PushButtonConfig>
 
+export interface MftPushButtonConfig extends WidgetSizeConfig, MftConfigBase {
+    setState: string;
+    stateToTextMapping?: ValueMappingList;
+    stateToColorMapping?: ValueMappingList<HomieValuesTypes, MatColorName>;
+}
+export interface MftPushButtonMapping extends PushButtonMapping {
+    state?: PropertySelector;
+}
+export type MftPushButtonWidget = IControlWidget<'mft-pushButton', MftPushButtonMapping, MftPushButtonConfig>
+
+
 
 export interface ActionButtonsConfig {
     hideLabel: boolean;
@@ -221,7 +257,7 @@ export interface ActionButtonsMappingConfig extends WidgetSizeConfig {
     setState: string;
     hideIcon?: boolean;
     icon?: string;
-    color?: 'primary' | 'accent' | 'warn';
+    color?: MatColorName;
 
 }
 
@@ -236,6 +272,7 @@ export interface DimmerMapping extends IMappingBase {
     brightness: PropertySelector;
 }
 export type DimmerWidget = IControlWidget<'dimmer', DimmerMapping>
+export type MftDimmerWidget = IControlWidget<'mft-dimmer', DimmerMapping, MftConfigBase>
 export interface GenericStateMapping extends IMappingBase {
     state: string;
 }
@@ -244,6 +281,22 @@ export type PresenceWidget = IControlWidget<'presence', GenericStateMapping, Wid
 export type ContactWidget = IControlWidget<'contact', GenericStateMapping, WidgetSizeConfig>;
 export type OnOffWidget = IControlWidget<'onoff', GenericStateMapping, WidgetSizeConfig>;
 export type TiltWidget = IControlWidget<'tilt', GenericStateMapping, WidgetSizeConfig>;
+
+export interface MftBinaryStateConfig extends MftConfigBase{
+    stateToTextMapping?: ValueMappingList;
+    stateToColorMapping?: ValueMappingList<HomieValuesTypes, MatColorName>;
+}
+
+export type MftOnlineWidget = IControlWidget<'mft-online', GenericStateMapping, MftBinaryStateConfig>;
+export type MftPresenceWidget = IControlWidget<'mft-presence', GenericStateMapping, MftBinaryStateConfig>;
+export type MftContactWidget = IControlWidget<'mft-contact', GenericStateMapping, MftBinaryStateConfig>;
+export type MftOnOffWidget = IControlWidget<'mft-onoff', GenericStateMapping, MftBinaryStateConfig>;
+export type MftTiltWidget = IControlWidget<'mft-tilt', GenericStateMapping, MftBinaryStateConfig>;
+
+
+
+
+export type MFTTestWidget = IControlWidget<'mft-test', GenericStateMapping, WidgetSizeConfig>;
 
 export interface SelectShutterMapping extends IMappingBase {
     value: PropertySelector;
@@ -270,9 +323,12 @@ export interface RollerShutterConfig {
         blindsPosition: number;
     }
     hideButtons?: boolean;
+    subLabel?: string;
 }
 
 export type RollerShutterWidget = IControlWidget<'rollerShutter', RollerShutterMapping, RollerShutterConfig>;
+
+export type MftRollerShutterWidget = IControlWidget<'mft-rollerShutter', RollerShutterMapping, RollerShutterConfig>;
 
 export interface TextMapping extends IMappingBase {
     text: PropertySelector;
@@ -289,7 +345,7 @@ export interface StatusMapConfig extends WidgetSizeConfig {
     forValue?: ValueCondition<HomieValuesTypes>;
     type?: 'text' | 'label' | 'icon';
     icon?: string;
-    color?: 'none' | 'primary' | 'accent' | 'warn';
+    color?: MatColorName;
     fontWeight?: number;
     toValue?: string;
 }
@@ -302,6 +358,12 @@ export interface StatusConfig {
 }
 
 export type StatusWidget = IControlWidget<'status', StatusMapping, StatusConfig>;
+
+export interface MftStatusMapping extends IMappingBase {
+    status: ExtendedPropertyMapping<StatusMappingConfig>;
+}
+
+export type MftStatusWidget = IControlWidget<'mft-status', MftStatusMapping, MftConfigBase>;
 
 
 
@@ -319,6 +381,8 @@ export interface ThermostatMapping extends IMappingBase {
     windowopen?: PropertySelector;
 }
 export type ThermostatWidget = IControlWidget<'thermostat', ThermostatMapping>;
+
+export type MftThermostatWidget = IControlWidget<'mft-thermostat', ThermostatMapping, MftConfigBase>;
 
 export interface BBQSensorChannelMapping extends IMappingBase {
     name: PropertySelector;
@@ -449,7 +513,7 @@ export interface CalendarMapping extends IMappingBase {
 
 export interface CalendarConfig {
     showAllDayEvents?: boolean;
-    maxAllDayEvents?:number;
+    maxAllDayEvents?: number;
     maxEvents?: number;
     showTimes: boolean;
 }
@@ -596,17 +660,17 @@ export interface DeviceAttentionWidgetQuery {
     valueCondition?: ValueCondition<HomieValuesTypes>;
 }
 
-export interface DeviceAttentionWidgetQueries{
+export interface DeviceAttentionWidgetQueries {
     queries: DeviceAttentionWidgetQuery[];
     ignoreList?: HomieID[]
 }
 
-export interface DeviceAttentionWidgetCfg{
+export interface DeviceAttentionWidgetCfg {
     lowBattery?: DeviceAttentionWidgetQueries;
     notRechable?: DeviceAttentionWidgetQueries;
     notReady?: DeviceAttentionWidgetQueries;
 }
-export type  DeviceAttentionWidget = IMiscWidget<'device-attention', DeviceAttentionWidgetCfg>;
+export type DeviceAttentionWidget = IMiscWidget<'device-attention', DeviceAttentionWidgetCfg>;
 
 
 export type MiscWidget = ClockWidget | GraphWidget | BBQWidget | DeviceAttentionWidget;

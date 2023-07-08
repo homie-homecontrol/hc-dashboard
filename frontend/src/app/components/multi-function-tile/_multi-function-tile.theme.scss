@@ -1,0 +1,159 @@
+@import './multi-function-tile.variables';
+
+@mixin multi-function-tile-theme-mixin($theme) {
+
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $pale: map-get($theme, pale);
+
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+
+    .mft-capture-pointer-events {
+        pointer-events: all;
+    }
+
+    .mft-primary-bg {
+        background-color: mat-color($primary);
+    }
+
+    .mft-accent-bg {
+        background-color: mat-color($accent);
+    }
+
+    .mft-warn-bg {
+        background-color: mat-color($warn);
+    }
+
+
+    .mft-pale-bg {
+        background-color: mat-color($pale);
+    }
+
+    .mft-accent-lighter-bg {
+        background-color: mat-color($accent, lighter);
+    }
+
+    .mft-primary-lighter-bg {
+        background-color: mat-color($primary, lighter);
+    }
+
+    .mft-warn-lighter-bg {
+        background-color: mat-color($warn, lighter);
+    }
+
+    .mft-pale-lighter-bg {
+        background-color: mat-color($pale, lighter);
+    }
+
+    .mft-right-indicator-primary {
+        border-right: 4px solid mat-color($primary);
+    }
+
+    .mft-right-indicator-accent {
+        border-right: 4px solid mat-color($accent);
+    }
+
+    .mft-right-indicator-warn {
+        border-right: 4px solid mat-color($warn);
+    }
+
+    .mft-right-indicator-pale {
+        border-right: 4px solid mat-color($pale);
+    }
+
+    .mft-primary-text {
+        color: mat-color($primary, default-contrast);
+    }
+
+    .mft-primary-lighter-text {
+        color: mat-color($primary, lighter-contrast);
+    }
+
+    .mft-accent-text {
+        color: mat-color($accent, default-contrast);
+        // mat-contrast($accent, default);
+    }
+
+    .mft-accent-lighter-text {
+        color: mat-color($accent, lighter-contrast);
+    }
+
+    .mft-warn-text {
+        color: mat-color($warn, default-contrast);
+    }
+
+    .mft-warn-lighter-text {
+        color: mat-color($warn, lighter-contrast);
+    }
+
+    .mft-pale-text {
+        color: mat-color($pale, default-contrast);
+
+    }
+
+    .mft-pale-lighter-text {
+        color: mat-color($pale, lighter-contrast);
+    }
+
+
+    .mft-primary-color {
+        color: mat-color($primary);
+
+
+    }
+
+    .mft-primary-lighter-color {
+        color: mat-color($primary, lighter-contrast);
+    }
+
+    .mft-accent-color {
+        color: mat-color($accent);
+        stroke: mat-color($accent);
+    }
+
+    .mft-accent-lighter-color {
+        color: mat-color($accent, lighter-contrast);
+    }
+
+    .mft-warn-color {
+        color: mat-color($warn);
+    }
+
+    .mft-warn-lighter-color {
+        color: mat-color($warn, lighter-contrast);
+    }
+
+    .mft-pale-color {
+        color: mat-color($pale);
+    }
+
+    .mft-pale-lighter-color {
+        color: mat-color($pale, lighter-contrast);
+    }
+
+
+    .mft-glow {
+        box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2)
+    }
+
+
+    .mft-small-icon-button {
+        width: 28px !important;
+        min-width: 28px !important;
+        padding: 0px 2px 0px 2px !important;
+        ;
+        height: 28px !important;
+        line-height: 28px !important;
+    }
+
+
+    .svg-fg {
+        fill: currentColor;
+        color: currentColor;
+    }
+
+
+}

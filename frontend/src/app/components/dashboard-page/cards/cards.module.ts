@@ -10,6 +10,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { ConditionalCardComponent } from './conditional-card/conditional-card.component';
 import { CardHeaderComponent } from './card-header/card-header.component';
+import { SectionCardModule } from '../../section-card/section-card.module';
+import { MatIconModule } from '@angular/material/icon';
+import { ShowWhenPipe } from '../../showWhen/showWhen.pipe';
+import { ShowWhenModule } from '../../showWhen/showWhen.module';
 
 
 
@@ -20,8 +24,11 @@ import { CardHeaderComponent } from './card-header/card-header.component';
     BrowserModule,
     MatCardModule,
     MatButtonModule,
+    MatIconModule,
     AngularWebAppCommonModule,
-    WidgetsModule
+    SectionCardModule,
+    WidgetsModule,
+    ShowWhenModule
   ],
   exports: [
     GenericCardComponent

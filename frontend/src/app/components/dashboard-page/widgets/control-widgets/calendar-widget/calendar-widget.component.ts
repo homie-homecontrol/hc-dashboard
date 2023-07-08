@@ -54,7 +54,7 @@ export class CalendarWidgetComponent extends WidgetBaseComponent<CalendarWidget>
       const allDayEvents = events.filter(entry => entry.isAllDay).reduce((acc, value) => {
         const extended = [];
         var loop = new Date(value.start);
-        console.log(`${value.start} -> ${value.end}: ${value.summary} `)
+        // console.log(`${value.start} -> ${value.end}: ${value.summary} `)
         var index = 0;
         while (loop < value.end && index < this.config.maxEvents!) {
           const start = new Date(loop);

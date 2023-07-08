@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { evaluateValueCondition } from 'node-homie/util';
 import { map } from 'rxjs/operators';
 import { ConditionalCard } from 'src/app/models/dash.model';
@@ -7,7 +7,8 @@ import { CardBaseComponent } from '../card-base.control';
 @Component({
   selector: 'hc-conditional-card',
   templateUrl: './conditional-card.component.html',
-  styleUrls: ['./conditional-card.component.scss']
+  styleUrls: ['./conditional-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConditionalCardComponent extends CardBaseComponent<ConditionalCard> implements OnInit {
 

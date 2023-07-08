@@ -1,0 +1,23 @@
+<hc-multi-function-tile bgColor="primary" statusBgColor="accent">
+  <span hc-mft-side-status-container>CLOSED</span>
+  <!-- <div > -->
+  <!-- I am the base -->
+  <hc-mft-slider hc-mft-base-content [value]="value" (liveChange)="value=$event" min="0" max="100" bgColor="primary"
+    sliderColor="accent"></hc-mft-slider>
+  <!-- </div> -->
+  <awac-icon name="fas/fa-door-open" hc-mft-type-icon></awac-icon>
+  <!-- <div hc-mft-overlay-content> <br />  I am the overlay</div> -->
+  <!-- <ng-container hc-mft-action-bar-item> -->
+  <hc-mft-overlay-pane>
+    <button mat-icon-button color="primary" class="toggle-button mft-small-icon-button" hc-mft-action-bar-item>
+      <awac-icon hc-mft-action-bar-item name="fas/fa-power-off"></awac-icon>
+    </button>
+    <!-- <button mat-icon-button color="primary" class="toggle-button" hc-mft-action-bar-item>
+      <awac-icon name="home2"></awac-icon>
+    </button> -->
+    <span hc-mft-label-text>Wohnzimmer</span>
+    <span hc-mft-value-status class="accent-text">{{value}}%</span>
+    <span hc-mft-sub-label-text>Fenster</span>
+  </hc-mft-overlay-pane>
+  <!-- </ng-container > -->
+</hc-multi-function-tile>

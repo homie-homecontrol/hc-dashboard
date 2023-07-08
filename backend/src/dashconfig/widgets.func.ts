@@ -39,7 +39,7 @@ function conditionalPropertyCollector(deviceManager: HomieDeviceManager, item: W
             props.push(prop);
         }
     }
-    return [...mappingsPropertyCollector(deviceManager, item), ...props];
+    return [...genericWidgetPropertyCollector(deviceManager, item), ...props];
 }
 
 function graphPropertyCollector(deviceManager: HomieDeviceManager, item: Widget): HomieProperty[] {
@@ -154,8 +154,14 @@ function mappingToExtendedPropertyMapping<T = any>(mapping: ComplexPropertyMappi
 
 
 
-function mappingsPropertyCollector(deviceManager: HomieDeviceManager, item: Widget): HomieProperty[] {
+function genericWidgetPropertyCollector(deviceManager: HomieDeviceManager, item: Widget): HomieProperty[] {
     let props: HomieProperty[] = [];
+    if (item.showWhen){
+        const prop = deviceManager.getProperty(item.showWhen.property);
+        if (prop?.parent?.parent?.attributes?.state === "ready") {
+            props.push(prop);
+        }
+    }
     if (isControlWidget(item)) {
         if (!item.mappings) { return []; }
 
@@ -173,7 +179,7 @@ function mappingsPropertyCollector(deviceManager: HomieDeviceManager, item: Widg
 
 export function collectWidgetProperties(deviceManager: HomieDeviceManager, items: Widget[]): HomieProperty[] {
     return items.map(item => {
-        const coll = propertyCollectors[item.type] ? propertyCollectors[item.type]! : mappingsPropertyCollector;
+        const coll = propertyCollectors[item.type] ? propertyCollectors[item.type]! : genericWidgetPropertyCollector;
         return coll(deviceManager, item);
     }).flat();
 }
@@ -260,13 +266,18 @@ export function normalizeWidgets(deviceManager: HomieDeviceManager, items: Widge
 export function mappingFromDevice(type: ControlWidetType, device: HomieDevice): IMappingBase | undefined {
     switch (type) {
         case 'contact':
+        case 'mft-contact':
             return contactMappingFromDevice(device);
         case 'tilt':
+        case 'mft-tilt':
             return tiltMappingFromDevice(device);
         case 'dimmer':
+        case 'mft-dimmer':
             return dimmerMappingFromDevice(device);
         case 'switch':
+        case 'mft-switch':
         case 'toggleButton':
+        case 'mft-toggleButton':
             return switchMappingFromDevice(device);
         case 'weather':
         case 'clockWeather':

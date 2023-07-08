@@ -1,0 +1,24 @@
+$swift-ease-out-duration: 200ms !default;
+$swift-ease-out-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;
+$swift-ease-out: all $swift-ease-out-duration $swift-ease-out-timing-function !default;
+
+.slider-container{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    min-height: 2px;
+}
+
+
+.slider-bar {
+    position: absolute;
+    height:100%;
+    width: 100%;
+    transform-origin: 0 0;
+    min-height: 2px;
+    transition:
+        transform $swift-ease-out-duration $swift-ease-out-timing-function,
+        background-color $swift-ease-out-duration $swift-ease-out-timing-function;
+  }

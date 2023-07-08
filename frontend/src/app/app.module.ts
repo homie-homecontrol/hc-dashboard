@@ -17,12 +17,17 @@ import { WebSocketAPIService } from './services/websocket-api.service';
 import { HcWidgetLayoutModule } from './components/widget-layout/widget-layout.module';
 import { SimpleChartModule } from './components/simple-chart/simple-chart.module';
 import { ChartColorThemeService } from './components/simple-chart/chart-color-theme.service';
+import { HcMultiFunctionTileModule } from './components/multi-function-tile/multi-function-tile.module';
+import { SectionCardModule } from './components/section-card/section-card.module';
+import { ThemeEmitterComponent } from './components/theme-emitter/theme-emitter.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TestComponent,
-    MainDashboardComponent
+    MainDashboardComponent,
+    ThemeEmitterComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +40,8 @@ import { ChartColorThemeService } from './components/simple-chart/chart-color-th
     ColumnLayoutModule,
     DashboardPageModule,
     HcWidgetLayoutModule,
+    HcMultiFunctionTileModule,
+    SectionCardModule,
     SimpleChartModule
   ],
   providers: [WebSocketAPIService],
@@ -43,45 +50,45 @@ import { ChartColorThemeService } from './components/simple-chart/chart-color-th
 export class AppModule {
   constructor(private chartColors: ChartColorThemeService) {
 
-    this.chartColors.addTheme({
-      name: 'default',
-      colors: [
-        {
-          backgroundColor: 'rgba(52, 81, 95, 0.1)',
-          borderColor: 'rgba(52, 81, 95, 1)'
-        },
-        {
-          backgroundColor: 'rgba(196, 28, 0, 0.05)',
-          borderColor: 'rgba(196, 28, 0, 1)'
-        },
-        {
-          backgroundColor: 'rgba(156, 39, 176, 0.1)',
-          borderColor: 'rgba(156, 39, 176, 1)'
-        },
-        {
-          backgroundColor: 'rgba(5, 5, 5, 0.1)',
-          borderColor: 'rgba(5, 5, 5, 1)'
-        }
-      ],
-      colorsDark: [
-        {
-          backgroundColor: 'rgba(61, 133, 198, 0.1)',
-          borderColor: 'rgba(61, 133, 198, 1)'
-        },
-        {
-          backgroundColor: 'rgba(255, 138, 80, 0.05)',
-          borderColor: 'rgba(255, 138, 80, 1)'
-        },
-        {
-          backgroundColor: 'rgba(255, 134, 124, 0.1)',
-          borderColor: 'rgba(255, 134, 124, 1)'
-        },
-        {
-          backgroundColor: 'rgba(250, 250, 250, 0.1)',
-          borderColor: 'rgba(250, 250, 250, 1)'
-        }
-      ]
-    });
+    // this.chartColors.addTheme({
+    //   name: 'default',
+    //   colors: [
+    //     {
+    //       backgroundColor: 'rgba(52, 81, 95, 0.1)',
+    //       borderColor: 'rgba(52, 81, 95, 1)'
+    //     },
+    //     {
+    //       backgroundColor: 'rgba(196, 28, 0, 0.05)',
+    //       borderColor: 'rgba(196, 28, 0, 1)'
+    //     },
+    //     {
+    //       backgroundColor: 'rgba(156, 39, 176, 0.1)',
+    //       borderColor: 'rgba(156, 39, 176, 1)'
+    //     },
+    //     {
+    //       backgroundColor: 'rgba(5, 5, 5, 0.1)',
+    //       borderColor: 'rgba(5, 5, 5, 1)'
+    //     }
+    //   ],
+    //   colorsDark: [
+    //     {
+    //       backgroundColor: 'rgba(61, 133, 198, 0.1)',
+    //       borderColor: 'rgba(61, 133, 198, 1)'
+    //     },
+    //     {
+    //       backgroundColor: 'rgba(255, 138, 80, 0.05)',
+    //       borderColor: 'rgba(255, 138, 80, 1)'
+    //     },
+    //     {
+    //       backgroundColor: 'rgba(255, 134, 124, 0.1)',
+    //       borderColor: 'rgba(255, 134, 124, 1)'
+    //     },
+    //     {
+    //       backgroundColor: 'rgba(250, 250, 250, 0.1)',
+    //       borderColor: 'rgba(250, 250, 250, 1)'
+    //     }
+    //   ]
+    // });
 
 
     this.chartColors.addTheme({

@@ -1,15 +1,26 @@
 @import "variables.scss";
+@import "../app/components/multi-function-tile/multi-function-tile.theme";
+@import "../app/components/section-card/section-card.theme";
+@import "../app/components/theme-emitter/theme-emitter.theme";
 
 @mixin make-app-theme($theme, $is-dark-theme) {
     // Extract the palettes you need from the theme definition.
     $mprimary: map-get($theme, primary);
     $maccent: map-get($theme, accent);
     $mwarn: map-get($theme, warn);
+    $mpale: map-get($theme, pale);
 
     $mbackground: map-get($theme, background);
     $mforeground: map-get($theme, foreground);
 
-    $highlight-control-bg: mat-get-color-from-palette($mforeground, base, if($is-dark-theme, 0.1, 0.04));;
+    $highlight-control-bg: mat-get-color-from-palette($mforeground, base, if($is-dark-theme == 1, 0.1, 0.04));
+    $light-accent-bg: mat-get-color-from-palette($maccent, base, if($is-dark-theme == 1, 0.1, 0.04));
+    $light-primary-bg: mat-get-color-from-palette($mprimary, base, if($is-dark-theme == 1, 0.1, 0.04));
+
+
+    @include multi-function-tile-theme-mixin($theme);
+    @include section-card-theme-mixin($theme);
+    @include theme-emitter($theme);
 
     .label {
         display: inline;
@@ -25,42 +36,33 @@
         border-radius: 2px;
         box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 
-        &-small{
+        &-small {
             line-height: 20px;
             height: 20px;
             font-size: 80%;
         }
 
-        &-medium{
+        &-medium {
             line-height: 24px;
             height: 24px;
             font-size: 85%;
         }
 
-        &-big{
+        &-big {
             line-height: 34px;
             height: 34px;
             font-size: 95%;
         }
     }
 
-    .primary-text{
-        color:mat-color($mprimary);
-    }
 
-    .accent-text{
-        color:mat-color($maccent);
-    }
-
-    .warn-text{
-        color:mat-color($mwarn);
-    } 
 
     .gradient-card-fade-to-right {
-        background-image: linear-gradient(to right,mat-color($mbackground, card, 1) 20%, mat-color($mbackground, card, 0.9) 50%, mat-color($mbackground, card, 0.8) 75%, transparent 100%);
+        background-image: linear-gradient(to right, mat-color($mbackground, card, 1) 20%, mat-color($mbackground, card, 0.9) 50%, mat-color($mbackground, card, 0.8) 75%, transparent 100%);
 
     }
-    .card-bg{
+
+    .card-bg {
         background-color: mat-color($mbackground, card);
     }
 
@@ -84,7 +86,7 @@
         height: 100vh;
     }
 
-    .title-text{
+    .title-text {
         line-height: initial;
         font-weight: 600;
         font-variant-caps: small-caps;
@@ -97,26 +99,27 @@
 
 
 
-@media (min-width: $medium-screen-width) {
-    /* Tablet ~7 inch  */
-    .launch-dialog-container .mat-dialog-container {
-        padding: 0px;
-        width: 70vw;
-        max-width: 550px;
-        max-height: 90vh;
-        height: 90vh;
+    .main-container {
+        width: 100%;
+        // max-width: 600px;
     }
 
-    .launch-dialog-container-wide .mat-dialog-container {
-        padding: 0px;
-        width: 90vw;
-        max-width: 90vw;
-        max-height: 90vh;
-        height: 90vh;
+
+    
+
+
+
+    .narrow-border{
+        border-radius: $narrow-border-radius;
     }
 
-    @media (min-width: $large-screen-width) {
-        /* Tablet ~10 inch and Desktop */
+    .normal-border{
+        border-radius: $normal-border-radius;
+    }
+
+    @media (min-width: $medium-screen-width) {
+
+        /* Tablet ~7 inch  */
         .launch-dialog-container .mat-dialog-container {
             padding: 0px;
             width: 70vw;
@@ -132,8 +135,33 @@
             max-height: 90vh;
             height: 90vh;
         }
+
+        .main-container {
+            width: 98%;
+            // max-width: 600px;
+        }
+
+
+        @media (min-width: $large-screen-width) {
+
+            /* Tablet ~10 inch and Desktop */
+            .launch-dialog-container .mat-dialog-container {
+                padding: 0px;
+                width: 70vw;
+                max-width: 550px;
+                max-height: 90vh;
+                height: 90vh;
+            }
+
+            .launch-dialog-container-wide .mat-dialog-container {
+                padding: 0px;
+                width: 90vw;
+                max-width: 90vw;
+                max-height: 90vh;
+                height: 90vh;
+            }
+        }
     }
-}
 
 
 

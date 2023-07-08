@@ -1,0 +1,29 @@
+<!-- <hc-widget-layout>
+  <span hc-widget-label *ngIf="!widget.config?.hideLabel">{{widget.label}}</span>
+  <hc-widget-controls>
+    <ng-container *ngFor="let statusMap of (statusMaps$ | async)">
+
+      <span *ngIf="statusMap.type === 'text'" [ngClass]="{ 'primary-text': statusMap.color==='primary', 'accent-text': statusMap.color==='accent', 'warn-text': statusMap.color==='warn' }" style="font-weight: {{  statusMap.fontWeight }}; font-size: {{ statusMap.size }}">  
+        {{statusMap.toValue}}
+      </span>
+      <span *ngIf="statusMap.type === 'label'"
+        [ngClass]="{ 'primary-bg': statusMap.color==='primary', 'accent-bg': statusMap.color==='accent', 'warn-bg': statusMap.color==='warn', 'label-small': statusMap.size==='small', 'label-medium': statusMap.size==='medium', 'label-big': statusMap.size==='large'}"
+        class="label">
+        {{statusMap.toValue}}
+      </span>
+      <awac-icon *ngIf="statusMap.type === 'icon'"  [ngClass]="{ 'primary-text': statusMap.color==='primary', 'accent-text': statusMap.color==='accent', 'warn-text': statusMap.color==='warn' }" 
+          name="{{ statusMap.icon }}"></awac-icon>
+    </ng-container>
+  </hc-widget-controls>
+</hc-widget-layout> -->
+
+
+<hc-multi-function-tile *ngLet="(statusMap$ | async) as statusMap" [bgColor]="statusMap.color" [size]="statusMap.type === 'icon' ? 'normal' : 'small'" [statusBgColor]="statusMap.color">
+  <span hc-mft-side-status-container *ngIf="statusMap.type === 'label'">{{statusMap.toValue}}</span>
+  <awac-icon hc-mft-type-icon *ngIf="statusMap.type === 'icon'" name="{{ statusMap.icon }}" ></awac-icon>
+  <!-- <hc-mft-status-pane hc-mft-base-content [color]="statusMap.color"></hc-mft-status-pane> -->
+  <hc-mft-overlay-pane [size]="statusMap.type === 'icon' ? 'normal' : 'small'">
+    <span hc-mft-label-text>{{widget.label}}</span>
+    <span hc-mft-sub-label-text *ngIf="statusMap.type === 'text'">{{statusMap.toValue}}</span>
+  </hc-mft-overlay-pane>
+</hc-multi-function-tile>

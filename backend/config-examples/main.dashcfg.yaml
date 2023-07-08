@@ -3,6 +3,7 @@ layout:
   xlarge:
     columns:
       - - test7
+        - test
         - clima
         - test7
       - - heating-control

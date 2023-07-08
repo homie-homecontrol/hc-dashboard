@@ -84,6 +84,12 @@ cards:
           # - type: switch
           #   device: light-22
           #   label: Ventilator
+          - type: mft-switch
+            device: light-8
+            label: Licht Büro
+            config:
+              subLabel: Stehlampe
+              icon: far/fa-lightbulb
           - type: group
             label: Ventilator
             items:
@@ -136,6 +142,21 @@ cards:
                     toValue: umgedreht
                     type: label
                     color: warn
+      - type: mft-status
+        label: Stuhlposition
+        mappings:
+          status:
+            selector: ez-stuhl-position/orientation/state
+            config:
+              statusMap:
+                - forValue: upright
+                  toValue: aufrecht
+                  type: label
+                  color: primary
+                - forValue: upside-down
+                  toValue: umgedreht
+                  type: label
+                  color: warn
   - id: dc_ez
     title: Esszimmer
     type: default
@@ -240,6 +261,39 @@ cards:
     type: default
     icon: fas/fa-power-off
     items:
+      - type: mft-status
+        label: TV-Lift Status
+        mappings:
+          status:
+              selector: tv-lift-controller/tv-lift-control/status
+              config:
+                statusMap:
+                  - forValue: in
+                    toValue: eingefahren
+                    type: text
+                    color: primary
+                  - forValue: ['tv_in','lift_in']
+                    toValue: wird eingefahren...
+                    type: text
+                    color: warn
+                  - forValue: ['tv_out','lift_out']
+                    toValue: wird ausgefahren...
+                    type: text
+                    color: warn
+                  - forValue: out
+                    toValue: ausgefahren
+                    type: text
+                    color: accent
+                  - forValue: stop
+                    toValue: NOT-AUS
+                    type: text
+                    color: warn
+                    size: large
+                catchAll:
+                    toValue: unbekannt
+                    type: text
+                    color: pale
+                    size: medium     
       - type: status
         label: TV-Lift Status
         mappings:
@@ -271,8 +325,9 @@ cards:
                 catchAll:
                     toValue: unbekannt
                     type: text
-                    color: none
-                    size: medium                                  
+                    color: pale
+                    size: medium          
+                        
 
       - type: actionButtons
         label: TV-Lift Control
