@@ -284,8 +284,10 @@ export function mappingFromDevice(type: ControlWidetType, device: HomieDevice): 
         case 'bigWeather':
             return weatherMappingFromDevice(device);
         case 'thermostat':
+        case 'mft-thermostat':
             return thermostatMappingFromDevice(device);
         case 'rollerShutter':
+        case 'mft-rollerShutter':
             return rollerShutterMappingFromDevice(device);
         case 'clock':
             return {};

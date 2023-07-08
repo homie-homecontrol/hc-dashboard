@@ -54,7 +54,7 @@ $app-dark-pale: mat-palette($palesteel, 300, 500);
 $app-theme: define-app-theme($app-primary, $app-accent, $app-warn, $app-pale);
 
 
-@include debug-map($app-theme);
+// @include debug-map($app-theme);
 
 @include angular-material-theme($app-theme);
 @include awac-core($app-theme);

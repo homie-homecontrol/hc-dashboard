@@ -7,18 +7,17 @@ layout:
         - control-center
         - mediaplayers
         - shutters
+        - calendar
         - heating
         - waschraum
         - clima
         - keller
-        - calendar
         - graphs
         - bbq
         - security
   large:
     columns:
       - - clima
-        - calendar
       - - clock
         - control-center
         - devicecontrol
@@ -30,6 +29,7 @@ layout:
         - heating
         - mediaplayers
         - waschraum
+        - calendar
         - keller
 
   xlarge:
@@ -40,27 +40,16 @@ layout:
         - control-center
         - devicecontrol
       - - security
-        # - calendar
         - timers
-        - mediaplayers
-        - graphs
         - bbq
-        - test8
+        - mediaplayers
+        - calendar
+        - graphs
       - - heating
         - shutters
         - waschraum
         - keller
 cards:
-  - id: mft-test
-    title: MFT Test
-    type: default
-    items:
-      - type: verticalStack
-        items:
-          - type: mft-test
-          - type: mft-test
-
-
   - id: devicecontrol
     title: Wohnbereich
     type: default
@@ -145,6 +134,7 @@ cards:
     type: default
     items:
       - type: clock
+
   - id: security-details
     type: default
     icon: fas/fa-key
@@ -195,10 +185,10 @@ cards:
                       property: meq0753071/contact/state
                     label: Esszimmer Fenster
                   - type: mft-contact
-                    device: oeq2132349
+                    device: sec-contacts-terrassentuer
                     showWhen:
                       condition: "true"
-                      property: oeq2132349/contact/state
+                      property: sec-contacts-terrassentuer/contact/state
                     label: Terassentür
                   - type: mft-contact
                     device: meq0753104
@@ -265,7 +255,7 @@ cards:
                 device: meq0753071
                 label: Esszimmer Fenster
               - type: mft-contact
-                device: oeq2132349
+                device: sec-contacts-terrassentuer
                 label: Terassentür
               - type: mft-contact
                 device: meq0753104
@@ -288,6 +278,7 @@ cards:
               - type: mft-contact
                 device: oeq0706187
                 label: Büro Fenster
+
   - id: clima
     title: Temperatur & Luftfeuchtigkeit
     type: default
@@ -317,7 +308,17 @@ cards:
             device: meq0180941
             config:
               hideLabel: true
-
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Sofa Ecke
+            device: sensor-50
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: sensor-50
+            config:
+              hideLabel: true
       - type: verticalStack
         items:
           - type: simpleSensor
@@ -423,7 +424,7 @@ cards:
     items:
       - type: verticalStack
         items:
-          - type: rollerShutter
+          - type: mft-rollerShutter
             device: shutter-40e8d8
             label: Terrassentür
             config:
@@ -434,7 +435,7 @@ cards:
                 halfopenPosition: 25
                 blindsPosition: 75
 
-          - type: rollerShutter
+          - type: mft-rollerShutter
             device: req1957223
             label: Fenster
             config:
@@ -444,6 +445,7 @@ cards:
                 closedPosition: 100 
                 halfopenPosition: 37
                 blindsPosition: 69
+
 
   - id: heating
     title: Heizung
@@ -455,19 +457,22 @@ cards:
     items:
       - type: verticalStack
         items:
-          - type: thermostat
+          - type: mft-thermostat
             device: meq0180941
             label: Wohnzimmer
-          - type: thermostat
+          - type: mft-thermostat
             device: neq0937510
             label: Schlafzimmer
-          - type: thermostat
+          - type: mft-thermostat
             device: meq0478846
             label: Kinderzimmer
-          - type: thermostat
+          - type: mft-thermostat
             device: oeq0300066
             label: Bad
-          - type: thermostat
+          - type: mft-thermostat
+            device: 00391f29ad6a7c
+            label: Gästezimmer
+          - type: mft-thermostat
             device: meq0449630
             label: Toilette
 
@@ -501,7 +506,7 @@ cards:
             config:
               subLabel: Disable automatic shutters
               onColor: primary
-        
+
       - type: device-attention
         label: Devices needing attention
         config:
@@ -534,6 +539,8 @@ cards:
               - global-echo-timers-state-dev
               - security-indoor-motion-dev
               - shelly-wrapper-dev
+              - dash-ctl-1
+              - oeq0572363
                 
           notRechable: 
             queries:
@@ -553,6 +560,7 @@ cards:
               - light-8
               - light-9
               - nanobbqv3
+              - oeq0572363
 
 
   - id: global-settings
@@ -640,6 +648,9 @@ cards:
               switch: glob-settings/auto-screen/state
             config:
               icon: fas/fa-desktop
+          - type: switch
+            label: Frontdoor Alarm
+            device: sec-door-notify
 
 
   - id: waschraum
@@ -711,6 +722,67 @@ cards:
                 label: Temperatur
                 measurement: meq1601978/weather/temperature
 
+
+
+  - id: speedtest
+    title: Speedtest
+    type: conditional
+    icon: fas/fa-gauge-high
+    launchOptions:
+      cardId: graphs-big
+      wide: true
+    config:
+      property: nanobbqv3/maintenance/reachable
+      condition: "false"
+    items:
+      - type: graph
+        label: Speedtest
+        config:
+          size: small
+          refreshInterval: 300
+          rangePickerConfig:
+            style: 'simple'
+            defaultRange: 2
+            ranges:
+              - label: 1 week
+                range:
+                  start: -1w
+                aggregateWindow: 2h
+                showDate: true
+              - label: 1 day
+                range:
+                  start: -1d
+                aggregateWindow: 15m
+              - label: half day
+                range:
+                  start: -12h
+                aggregateWindow: 5m
+              - label: last hour
+                range:
+                  start: -1h
+                aggregateWindow: 5m
+          graphDefs:
+            - yAxis:
+              - id: speed
+                position: left
+                suggestedMin: 50
+                suggestedMax: 600
+              - id: ping
+                position: right
+                suggestedMin: 0
+                suggestedMax: 25
+              measurements:
+              - yAxisId: speed
+                label: Download
+                measurement: glob-speedtest/results/download
+              - yAxisId: speed
+                label: Upload
+                measurement: glob-speedtest/results/upload
+              - yAxisId: ping
+                label: ping
+                measurement: glob-speedtest/results/ping
+
+
   - id: graphs-big
     title: Außentemperatur und Luftfeuchte
     type: default
@@ -762,40 +834,126 @@ cards:
     title: Keller
     type: default
     items:
+      - type: text
+        label: "Luftentfeuchter (W)"
+        mappings:
+          text: neq0384396/powermeter/power
+      - type: text
+        label: "Luftentfeuchter (Verbrauch in Wh seit 12-02-23)"
+        mappings:
+          text: neq0384396/powermeter/energy-counter
+      - type: text
+        label: "rel. Luffeuchtigkeit Keller (%)"
+        mappings:
+          text: leq0122770/weather/humidity
       - type: graph
-        label: Temperatur und Luftfeuche
+        label: Stromverbrauch Luftentfeuchter
         config:
           hideRangePicker: true
           rangePickerConfig:
             style: 'extended'
             defaultRange: 
-              label: 2week
+              label: 1day
               range: 
-                start: -1w
-              aggregateWindow: 1h
+                start: -1d
+              aggregateWindow: 15m
           size: smaller
-          refreshInterval: 300
+          refreshInterval: 60
+          # rangePickerConfig:
+          #   style: 'simple'
+          #   defaultRange: 3
+          #   ranges:
+          #     - label: 6 months
+          #       range:
+          #         start: -6mo
+          #       aggregateWindow: 4h
+          #       showDate: true
+          #     - label: 1 month
+          #       range:
+          #         start: -1mo
+          #       aggregateWindow: 1h
+          #       showDate: true
+          #     - label: 1 week
+          #       range:
+          #         start: -1w
+          #       aggregateWindow: 15m
+          #       showDate: true
+          #     - label: 1 day
+          #       range:
+          #         start: -1d
+          #       aggregateWindow: 15m
+          #     - label: half day
+          #       range:
+          #         start: -12h
+          #       aggregateWindow: 5m
+          #     - label: 6 hrs
+          #       range:
+          #         start: -6h
+          #       aggregateWindow: 1m
+          #     - label: 1 hr
+          #       range:
+          #         start: -1h
+          #       aggregateWindow: 1m
+          #     - label: 15 min
+          #       range:
+          #         start: -15m
+          #       aggregateWindow: 1m
           graphDefs:
             - yAxis:
-              - id: temp
+              - id: watt
                 position: left
-                suggestedMin: 10
-                suggestedMax: 25
+                suggestedMin: 0
+                suggestedMax: 150
               - id: hum
                 position: right
-                suggestedMin: 52
-                suggestedMax: 62
+                suggestedMin: 35
+                suggestedMax: 75
               hideXAxisLabels: true
               hideYAxisLabels: true
-              hideLegend: true
-
+              hideLegend: false
               measurements:
               - yAxisId: hum
-                label: Luftfeuchtigkeit
+                label: Luftfeuchte Keller
                 measurement: leq0122770/weather/humidity
-              - yAxisId: temp
-                label: Temperatur
-                measurement: leq0122770/weather/temperature
+              - yAxisId: watt
+                label: Luftentfeuchter
+                measurement: neq0384396/powermeter/power
+
+      # - type: graph
+      #   label: Temperatur und Luftfeuche
+      #   config:
+      #     hideRangePicker: true
+      #     rangePickerConfig:
+      #       style: 'extended'
+      #       defaultRange: 
+      #         label: 2week
+      #         range: 
+      #           start: -1w
+      #         aggregateWindow: 1h
+      #     size: smaller
+      #     refreshInterval: 300
+      #     graphDefs:
+      #       - yAxis:
+      #         - id: temp
+      #           position: left
+      #           suggestedMin: 10
+      #           suggestedMax: 25
+      #         - id: hum
+      #           position: right
+      #           suggestedMin: 52
+      #           suggestedMax: 62
+      #         hideXAxisLabels: true
+      #         hideYAxisLabels: true
+      #         hideLegend: true
+
+      #         measurements:
+      #         - yAxisId: hum
+      #           label: Luftfeuchtigkeit
+      #           measurement: leq0122770/weather/humidity
+      #         - yAxisId: temp
+      #           label: Temperatur
+      #           measurement: leq0122770/weather/temperature
+
 
   - id: bbq
     title: BBQ
