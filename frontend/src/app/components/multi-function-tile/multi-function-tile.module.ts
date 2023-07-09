@@ -7,6 +7,8 @@ import { HcMftFlatButtonComponent } from './mft-flat-button/mft-flat-button.comp
 import { HcMftActionBarItemDirective, HcMftOverlayPaneComponent, HcMftSubLabelTextDirective, HcMftValueStatusDirective } from './mft-overlay-pane/mft-overlay-pane.component';
 import { MftSliderComponent } from './mft-slider/mft-slider.component';
 import { HcMftChipButtonComponent, HcMftChipIconDirective } from './mft-chip-button/mft-chip-buttoncomponent';
+import { HcTileComponent } from './tile/tile.component';
+import { HcMftChipsComponent } from './mft-chips/mft-chips.component';
 
 
 
@@ -25,7 +27,10 @@ import { HcMftChipButtonComponent, HcMftChipIconDirective } from './mft-chip-but
     HcMftSubLabelTextDirective,
     HcMftValueStatusDirective,
     HcMftChipButtonComponent,
-    HcMftChipIconDirective
+    HcMftChipIconDirective,
+    HcTileComponent,
+    HcMftChipsComponent
+    
   ],
   exports:[
     HcMftBaseContentDirective,
@@ -41,7 +46,9 @@ import { HcMftChipButtonComponent, HcMftChipIconDirective } from './mft-chip-but
     HcMftSubLabelTextDirective,
     HcMftValueStatusDirective,
     HcMftChipButtonComponent,
-    HcMftChipIconDirective
+    HcMftChipIconDirective,
+    HcTileComponent,
+    HcMftChipsComponent
   ],
   imports: [
     CommonModule,

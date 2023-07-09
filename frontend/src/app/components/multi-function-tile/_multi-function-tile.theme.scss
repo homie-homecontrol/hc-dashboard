@@ -10,6 +10,20 @@
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
 
+    hc-mft-chip-button {
+        .icon {
+            line-height: 28px !important;
+
+            >awac-icon {
+                line-height: 28px !important;
+
+                >mat-icon {
+                    line-height: 28px !important;
+                }
+            }
+        }
+    }
+
 
     .mft-capture-pointer-events {
         pointer-events: all;

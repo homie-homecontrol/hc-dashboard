@@ -11,3 +11,8 @@
     border-radius: $tile-radius;
 
 }
+
+.container:hover {
+    // filter: brightness(85%);
+    cursor: pointer;
+}

@@ -10,6 +10,23 @@ cards:
     type: default
     icon: testicon
     items:
+      - type: verticalStack
+        items:
+          - type: mft-test
+          - type:  container
+            items: 
+            - type: mft-dimmer
+              label: Wohnzimmer
+              device: group-5
+            - type: mft-dimmer
+              label: Wohnzimmer
+              device: group-5
+            - type: mft-contact
+              label: Wohnungstuer
+              device: oeq2132384
+            - type: mft-contact
+              label: Wohnungstuer
+              device: oeq2132384
       - type: template
         valuesList: [
           { groupLabel: "Group 1" },

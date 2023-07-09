@@ -60,10 +60,12 @@ cards:
       - type: group
         label: Raumsteuerung
         items:
-          - type: lightscene
+          - type: mft-lightscene
             label: Szenen Wohnzimmer
             mappings:
               scenes: group-5/scenes/recall
+            config:
+              subLabel: Das richtige Lichtambiente für jede Situation
           - type: verticalStack
             items:
               - type: mft-switch
@@ -345,9 +347,10 @@ cards:
               subLabel: Disable automatic shutters
               onColor: primary
 
-      - type: device-attention
+      - type: mft-device-attention
         label: Devices needing attention
         config:
+          subLabel: Check for empty batteries or connection errors
           lowBattery:
             queries:
               - query:

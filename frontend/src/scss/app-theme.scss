@@ -1,7 +1,79 @@
 @import "variables.scss";
+@import "../app/components/dashboard-page/widgets/widgets.theme";
 @import "../app/components/multi-function-tile/multi-function-tile.theme";
 @import "../app/components/section-card/section-card.theme";
 @import "../app/components/theme-emitter/theme-emitter.theme";
+
+
+/* MATERIAL ICONS */
+/* ============== */
+@mixin app-mat-icon() {
+    @font-face {
+        font-family: "Material Icons";
+        font-style: normal;
+        font-weight: 400;
+        src: local("Material Icons"), local("MaterialIcons-Regular"),
+            url("#{$mat-font-path}/MaterialIcons-Regular.ttf") format("truetype");
+    }
+
+    .fa,
+    .fas,
+    .far,
+    .fal,
+    .fad,
+    .fab {
+        font-size: 24px; /* Preferred icon size */
+        display: inline-block;
+        line-height: 1;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+
+        /* Support for all WebKit browsers. */
+        -webkit-font-smoothing: antialiased;
+        /* Support for Safari and Chrome. */
+        text-rendering: optimizeLegibility;
+
+        /* Support for Firefox. */
+        -moz-osx-font-smoothing: grayscale;
+
+        /* Support for IE. */
+        font-feature-settings: "liga";
+    }
+
+    .material-icons {
+        font-family: "Material Icons";
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px; /* Preferred icon size */
+        display: inline-block;
+        line-height: 1;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+
+        /* Support for all WebKit browsers. */
+        -webkit-font-smoothing: antialiased;
+        /* Support for Safari and Chrome. */
+        text-rendering: optimizeLegibility;
+
+        /* Support for Firefox. */
+        -moz-osx-font-smoothing: grayscale;
+
+        /* Support for IE. */
+        font-feature-settings: "liga";
+    }
+
+    .mat-icon-button {
+        line-height: 1 !important;
+    }
+}
+
+
 
 @mixin make-app-theme($theme, $is-dark-theme) {
     // Extract the palettes you need from the theme definition.
@@ -21,6 +93,7 @@
     @include multi-function-tile-theme-mixin($theme);
     @include section-card-theme-mixin($theme);
     @include theme-emitter($theme);
+    @include widgets-theme-mixin($theme);
 
     .label {
         display: inline;
@@ -105,7 +178,9 @@
     }
 
 
-    
+    .bottom-nav__destination--active {
+        color: mat-color($maccent, default);
+    }
 
 
 

@@ -10,6 +10,8 @@
 @import "variables.scss";
 
 
+
+
 @function depth($map) {
     $level: 1;
   
@@ -57,7 +59,9 @@ $app-theme: define-app-theme($app-primary, $app-accent, $app-warn, $app-pale);
 // @include debug-map($app-theme);
 
 @include angular-material-theme($app-theme);
-@include awac-core($app-theme);
+@include app-mat-icon();
+@include make-base-theme($app-theme);
+@include awac-defaults();
 @include make-app-theme($app-theme,0);
 
 .mat-card-header {

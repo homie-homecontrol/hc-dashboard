@@ -50,14 +50,14 @@ export type ControlWidetType = typeof controlWidgetTypes[number];
 const controlWidgetTypes = ['contact', 'mft-contact', 'dimmer', 'mft-dimmer', 'online', 'mft-online', 'switch', 'mft-switch', 'onoff', 'mft-onoff', 'select',
     'presence', 'mft-presence', 'rollerShutter', 'mft-rollerShutter', 'text', 'status', 'mft-status', 'toggleButton', 'mft-toggleButton', 'pushButton', 'mft-pushButton', 'actionButtons', 'bbqSensor',
     'weather', 'clock', 'bigWeather', 'clockWeather', 'mediaplayer', 'thermostat', 'mft-thermostat', 'dualSensorBig', 'linearGauge', 'simpleSensor',
-    'lightscene', 'tilt', 'mft-tilt', 'tempHumBars', 'timer', 'calendar', 'mft-test',] as const;
+    'lightscene', 'mft-lightscene', 'tilt', 'mft-tilt', 'tempHumBars', 'timer', 'calendar', 'mft-test',] as const;
 
 
 export type LayoutWidgetType = typeof layoutWidgetTypes[number];
 export const layoutWidgetTypes = ['group', 'conditional', 'container', 'lights', 'verticalStack'] as const;
 
 export type MiscWidgetType = typeof miscWidgetTypes[number];
-export const miscWidgetTypes = ['clock', 'graph', 'bbq', 'device-attention'] as const;
+export const miscWidgetTypes = ['clock', 'graph', 'bbq', 'device-attention', 'mft-device-attention'] as const;
 
 
 export type ComplexPropertyMapping<MAPPINGCFG = any> = PropertySelector | PropertySelector[] | ExtendedPropertyMapping<MAPPINGCFG> | ExtendedPropertyMapping<MAPPINGCFG>[];
@@ -213,7 +213,7 @@ export type VerticalStackWidget = ILayoutWidget<'verticalStack'>;
 export type ControlWidget = SwitchWidget | MftSwitchWidget | DimmerWidget | MftDimmerWidget | OnlineWidget | PresenceWidget | ContactWidget | OnOffWidget
     | SelectWidget | TiltWidget | RollerShutterWidget | MftRollerShutterWidget | TextWidget | StatusWidget | MftStatusWidget | ToggleButtonWidget | MftToggleButtonWidget | PushButtonWidget | MftPushButtonWidget | ActionButtonsWidget
     | WeatherWidget | ThermostatWidget | MftThermostatWidget | BBQSensorChannelWidget | MediaPlayerWidget | DualSensorBigWidget | LinearGaugeWidget | SimpleSensorWidget | LightSceneWidget
-    | TempHumBarsWidget | TimerWidget | CalendarWidget | MFTTestWidget | MftOnlineWidget | MftPresenceWidget | MftContactWidget | MftOnOffWidget | MftTiltWidget;
+    | MftLightSceneWidget | TempHumBarsWidget | TimerWidget | CalendarWidget | MFTTestWidget | MftOnlineWidget | MftPresenceWidget | MftContactWidget | MftOnOffWidget | MftTiltWidget;
 
 export function isControlWidget(widget: any): widget is ControlWidget {
     return !!widget && !!widget.type && controlWidgetTypes.includes(widget.type);
@@ -512,6 +512,7 @@ export interface LightSceneMapping extends IMappingBase {
 }
 export type LightSceneWidget = IControlWidget<'lightscene', LightSceneMapping>;
 
+export type MftLightSceneWidget = IControlWidget<'mft-lightscene', LightSceneMapping, MftConfigBase>;
 
 export interface TimerMapping extends IMappingBase {
     creationTime: PropertySelector;
@@ -706,9 +707,10 @@ export interface DeviceAttentionWidgetCfg {
     notReady?: DeviceAttentionWidgetQueries;
 }
 export type DeviceAttentionWidget = IMiscWidget<'device-attention', DeviceAttentionWidgetCfg>;
+export type MftDeviceAttentionWidget = IMiscWidget<'mft-device-attention', DeviceAttentionWidgetCfg & MftConfigBase>;
 
 
-export type MiscWidget = ClockWidget | GraphWidget | BBQWidget | DeviceAttentionWidget;
+export type MiscWidget = ClockWidget | GraphWidget | BBQWidget | DeviceAttentionWidget | MftDeviceAttentionWidget;
 
 export function isMiscWidget(widget: any): widget is MiscWidget {
     return !!widget && !!widget.type && miscWidgetTypes.includes(widget.type);

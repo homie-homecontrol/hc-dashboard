@@ -19,7 +19,7 @@
   </hc-widget-controls>
 </hc-widget-layout> -->
 
-<hc-multi-function-tile bgColor="pale" statusBgColor="primary">
+<hc-multi-function-tile bgColor="pale" [hoverHighlight]="true" statusBgColor="primary">
   <span hc-mft-side-status-container>{{(temperature$ | async | number:'1.1-1')}}°C</span>
 
     <hc-mft-slider hc-mft-base-content [value]="setTemperature$ | async" [step]="1" [min]="5" [max]="30" (liveChange)="liveSetTemp=$event"

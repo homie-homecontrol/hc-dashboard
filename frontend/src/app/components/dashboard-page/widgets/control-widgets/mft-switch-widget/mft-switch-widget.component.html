@@ -1,4 +1,4 @@
-<hc-multi-function-tile *ngLet="(state$ | async) as state" [bgColor]="state ? 'primary' : 'pale'">
+<hc-multi-function-tile *ngLet="(state$ | async) as state" [hoverHighlight]="true" [bgColor]="state ? 'primary' : 'pale'">
   <!-- <hc-mft-status-pane hc-mft-base-content [color]="(state$ | async)? 'accent': 'none'"></hc-mft-status-pane> -->
 
   <hc-mft-slider hc-mft-base-content  [value]="sliderValue$ | async" min="0" max="1" (change)="setState($event.value)"

@@ -63,6 +63,8 @@ import { MftShutterWidgetComponent } from './control-widgets/mft-shutter-widget/
 import { MftThermostatWidgetComponent } from './control-widgets/mft-thermostat-widget/mft-thermostat-widget.component';
 import { MftStatusWidgetComponent } from './control-widgets/mft-status-widget/mft-status-widget.component';
 import { MftToggleButtonWidgetComponent } from './control-widgets/mft-toggle-button-widget/mft-toggle-button-widget.component';
+import { MftLightSceneWidgetComponent } from './control-widgets/mft-light-scene-widget/mft-light-scene-widget.component';
+import { MftDeviceAttentioWidgetComponent } from './misc-widgets/mft-device-attention-widget/mft-device-attention-widgetcomponent';
 
 @NgModule({
   declarations: [
@@ -102,7 +104,9 @@ import { MftToggleButtonWidgetComponent } from './control-widgets/mft-toggle-but
     MftShutterWidgetComponent,
     MftThermostatWidgetComponent,
     MftStatusWidgetComponent,
-    MftToggleButtonWidgetComponent
+    MftToggleButtonWidgetComponent,
+    MftLightSceneWidgetComponent,
+    MftDeviceAttentioWidgetComponent
   ],
   imports: [
     CommonModule,
@@ -186,6 +190,7 @@ export class WidgetsModule {
 
     this.widgets.registerWidget('simpleSensor', SimpleSensorWidgetComponent);
     this.widgets.registerWidget('lightscene', LightSceneWidgetComponent);
+    this.widgets.registerWidget('mft-lightscene', MftLightSceneWidgetComponent);
 
     this.widgets.registerWidget('thermostat', ThermostatWidgetComponent);
     this.widgets.registerWidget('mft-thermostat', MftThermostatWidgetComponent);
@@ -200,7 +205,7 @@ export class WidgetsModule {
     this.widgets.registerWidget('bbq', BBQWidgetComponent);
 
     this.widgets.registerWidget('device-attention', DeviceAttentioWidgetComponent);
-
+    this.widgets.registerWidget('mft-device-attention', MftDeviceAttentioWidgetComponent);
     this.widgets.registerWidget('mft-test', MFTTestWidgetComponent);
 
   }

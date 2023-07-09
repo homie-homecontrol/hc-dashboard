@@ -21,6 +21,12 @@
 
 }
 
+.highlight:hover {
+    filter: brightness(85%);
+}
+
+
+
 
 .container-small {
     min-height: $small-height;
@@ -70,7 +76,7 @@
     bottom: 0px;
     // height: 100%;
     // width: 100%;
-    z-index: 2;
+    z-index: 1;
 
     hc-mft-slider {
         height: 100%;
@@ -115,5 +121,5 @@
     // border-top-right-radius: 8px;
     // border-bottom-right-radius: 8px;
     // border: 1px dotted violet;
-    z-index: 100;
+    z-index: 2;
 }

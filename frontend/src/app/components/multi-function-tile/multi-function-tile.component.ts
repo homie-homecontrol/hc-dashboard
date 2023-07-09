@@ -76,6 +76,16 @@ export class HcMultiFunctionTileComponent implements OnInit {
   private _size: 'small' | 'normal' = 'normal';
 
 
+  @Input()
+  get hoverHighlight():boolean {
+    return this._hoverHighlight;
+  }
+  set hoverHighlight(v: boolean) {
+    this._hoverHighlight = v;
+  }
+  private _hoverHighlight: boolean = false;
+
+
 
 
   constructor() {

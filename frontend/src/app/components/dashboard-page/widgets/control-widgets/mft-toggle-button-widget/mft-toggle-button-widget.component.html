@@ -2,7 +2,7 @@
   <button *ngLet="(state$ | async) as toggleState" mat-raised-button class="toggle-button" [color]="toggleState ? 'primary' : ''" (click)="toggle(!toggleState)">{{widget.label}}</button>
 </hc-widget-layout> -->
 
-<hc-multi-function-tile *ngLet="(colorScheme$ | async) as colorScheme"  [bgColor]="colorScheme.tile" size="small" [statusBgColor]="colorScheme.status">
+<hc-multi-function-tile *ngLet="(colorScheme$ | async) as colorScheme" [hoverHighlight]="true" [bgColor]="colorScheme.tile" size="small" [statusBgColor]="colorScheme.status">
   <span hc-mft-side-status-container>{{state$ | async | valueMapping:textMapping}}</span>
   <!-- <hc-mft-status-pane hc-mft-base-content [color]="stateColor"> -->
     <hc-mft-flat-button  hc-mft-base-content [color]="colorScheme.flatButton" (click)="toggle()"></hc-mft-flat-button>

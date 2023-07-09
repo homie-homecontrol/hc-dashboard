@@ -1,0 +1,19 @@
+@mixin calendar-widget-theme-mixin($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $pale: map-get($theme, pale);
+
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+
+    hc-calendar-widget {
+        .primary-text {
+            color: mat-color($primary);
+        }
+
+    }
+
+
+}

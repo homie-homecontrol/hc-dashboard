@@ -22,11 +22,11 @@ export class HcMftChipButtonComponent implements OnInit {
   set color(v: MatColorName) {
     this._color = v;
     this.colorClass=indicatorColorSchemeCssMapping(this._color);
-    this.bgColorClass = bgColorSchemeCssMapping(this._color);
+    this.bgColorClass = bgColorSchemeCssMapping(this._color,'lighter');
   }
   private _color: MatColorName = 'pale';
   public colorClass = indicatorColorSchemeCssMapping(this._color);
-  public bgColorClass = bgColorSchemeCssMapping(this._color);
+  public bgColorClass = bgColorSchemeCssMapping(this._color, 'lighter');
 
 
   constructor() {  }

@@ -1,16 +1,40 @@
 @import '../multi-function-tile.variables';
 
-.container{
-    margin: 2px;
-    min-height: 40px;
-    max-height: 40px;
+.container {
+    margin: 2px 3px 2px 3px;
+    min-height: 32px;
+    max-height: 32px;
     min-width: 48px;
     border-radius: $tile-radius;
-
+    line-height: 28px;
 }
 
-.chip-button{
+.container:hover {
+    filter: brightness(85%);
+}
+
+.chip-button {
+    border-radius: $tile-radius;
     margin: 2px;
-    width: 100%;
+    // width: 100%;
     height: 100%;
+    cursor: default;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    gap: 2px;
+}
+
+.button-content {
+    margin: 0px 6px 0px 4px;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.icon {
+    line-height: 28px !important;
+    height: 28px;
 }

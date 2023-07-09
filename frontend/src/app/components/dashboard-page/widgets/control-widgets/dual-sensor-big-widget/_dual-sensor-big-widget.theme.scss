@@ -1,0 +1,22 @@
+@mixin dual-sensor-big-widget-theme-mixin($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $pale: map-get($theme, pale);
+
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+
+    hc-dual-sensor-big-widget-widget {
+        .primary-text {
+            color: mat-color($primary);
+        }
+
+        .divider-div {
+            border-left: 2px solid mat-color($primary);;
+        }
+    }
+
+
+}

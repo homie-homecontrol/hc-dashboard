@@ -1,0 +1,67 @@
+.content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+
+.first-text-line {
+    height: 20px;
+    width: 100%;
+    margin-top: 2px;
+    gap: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.second-text-line {
+    height: 20px;
+    width: 100%;
+    gap: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.sub-label-text {
+    pointer-events: none;
+    width: auto;
+    vertical-align: middle;
+}
+
+// .sub-label-text:empty {
+//     display: none;
+// }
+
+.label-text {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.text-strong {
+    font-weight: 700;
+}
+
+.text-light {
+    font-weight: 300;
+}
+
+.chip-list {
+    width: 100%;
+    margin-top: 2px;
+
+    padding-left: 4px;
+    padding-right: 4px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    column-gap: 4px;
+    row-gap: 10px;
+    margin-bottom: 4px;
+}

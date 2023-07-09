@@ -1,7 +1,8 @@
-
+@import "./control-widgets/dual-sensor-big-widget/dual-sensor-big-widget.theme";
+@import "./control-widgets/calendar-widget/calendar-widget.theme";
 
 @mixin widgets-theme-mixin($theme) {
-
+    @include dual-sensor-big-widget-theme-mixin($theme);
+    @include calendar-widget-theme-mixin($theme);
     
-
 }

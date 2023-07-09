@@ -1,5 +1,5 @@
 <!-- <div [ngClass]="{'main-line-container': true, 'main-line-container-vertical': direction === 'vertical'}"> -->
-<div class="hc-mft-main-container flex-row-ltr mft-glow" [ngClass]="{'container-small': size==='small'}">
+<div class="hc-mft-main-container flex-row-ltr mft-glow {{hoverHighlight ? 'highlight' : ''}}" [ngClass]="{'container-small': size==='small'}">
     <div class="side-status-container {{statusBgColorClass}}" [ngClass]="{'side-status-small': size==='small'}">
         <ng-content select="hc-mft-side-status-container"></ng-content>
         <ng-content select="[hc-mft-side-status-container]"></ng-content>

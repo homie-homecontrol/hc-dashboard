@@ -1,12 +1,12 @@
 <!-- <div [ngClass]="{'main-line-container': true, 'main-line-container-vertical': direction === 'vertical'}"> -->
 <div class="container mat-elevation-z3" [ngClass]="bgColorClass" matRipple>
 
-    <div class="chip-button" [ngClass]="colorClass" matRipple>
-        <div class="icon">
+    <div class="chip-button" [ngClass]="colorClass">
+        <div class="icon ">
             <ng-content select="hc-mft-chip-icon"></ng-content>
             <ng-content select="[hc-mft-chip-icon]"></ng-content>
         </div>
-        <div>
+        <div class="button-content">
             <ng-content></ng-content>
         </div>
     </div>

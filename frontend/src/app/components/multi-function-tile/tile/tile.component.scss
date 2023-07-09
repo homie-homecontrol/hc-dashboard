@@ -1,0 +1,23 @@
+@import "../multi-function-tile.variables.scss";
+
+.flex-row-ltr {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+
+.hc-tile-main-container {
+    position: relative;
+    border-radius: $tile-radius;
+    margin: 4px 4px 4px 4px;
+    min-width: 120px;
+    min-height: $normal-height;
+    gap: 0px;
+}
+
+
+.container-small {
+    min-height: $small-height;
+}
