@@ -153,63 +153,131 @@ cards:
     launchOptions:
       cardId: security-details
     items:
-      - type: verticalStack
+      - type: conditional
         showWhen:
           condition: "true"
           property: db-general-config/contacts-hide-closed/state
         items:
-          - type: template
-            valuesList: [
-                { device: "oeq2132384",  label: "Wohnungstür" },
-                { device: "meq0753110",  label: "Kinderzimmer", subLabel: "Fenster" },
-                { device: "meq0753061",  label: "Schlafzimmer", subLabel: "Fenster"  },
-                { device: "oeq0429971",  label: "Küche", subLabel: "Fenster"  },
-                { device: "meq0753071",  label: "Esszimmer", subLabel: "Fenster"  },
-                { device: "sec-contacts-terrassentuer",  label: "Terassentür", subLabel: "Wohnzimmer"  },
-                { device: "meq0753104",  label: "Wohnzimmer", subLabel: "Fenster"  },
-                { device: "oeq0429851",  label: "Bad", subLabel: "Fenster"  },
-                { device: "oeq0431016",  label: "Gästezimmer", subLabel: "Fenster"  },
-                { device: "req0227787",  label: "Gästetoilette", subLabel: "Fenster"  },
-                { device: "oeq0706059",  label: "Werkstatt", subLabel: "Fenster"  },
-                { device: "oeq0706161",  label: "Werkstatt", subLabel: "Tür"  },
-                { device: "oeq0706187",  label: "Büro", subLabel: "Fenster"  },
-            ]
-            template:
-              - type: mft-contact
-                device: "{{device}}"
-                showWhen:
-                  condition: "true"
-                  property: "{{device}}/contact/state"
-                label: "{{label}}"
-                config:
-                  subLabel: "{{subLabel}}"
-      - type: verticalStack
+          - type: verticalStack
+            items:
+                  - type: mft-contact
+                    device: meq0753110
+                    showWhen:
+                      condition: "true"
+                      property: meq0753110/contact/state
+                    label: Kinderzimmer Fenster
+                  - type: mft-contact
+                    device: meq0753061
+                    showWhen:
+                      condition: "true"
+                      property: meq0753061/contact/state
+                    label: Schlafzimmer Fenster
+                  - type: mft-contact
+                    device: oeq0429971
+                    showWhen:
+                      condition: "true"
+                      property: oeq0429971/contact/state
+                    label: Küche Fenster
+                  - type: mft-contact
+                    device: meq0753071
+                    showWhen:
+                      condition: "true"
+                      property: meq0753071/contact/state
+                    label: Esszimmer Fenster
+                  - type: mft-contact
+                    device: sec-contacts-terrassentuer
+                    showWhen:
+                      condition: "true"
+                      property: sec-contacts-terrassentuer/contact/state
+                    label: Terassentür
+                  - type: mft-contact
+                    device: meq0753104
+                    showWhen:
+                      condition: "true"
+                      property: meq0753104/contact/state
+                    label: Wohnzimmer Fenster
+                  - type: mft-contact
+                    device: oeq0429851
+                    showWhen:
+                      condition: "true"
+                      property: oeq0429851/contact/state
+                    label: Bad Fenster
+                  - type: mft-contact
+                    device: oeq0431016
+                    showWhen:
+                      condition: "true"
+                      property: oeq0431016/contact/state
+                    label: Gästezimmer Fenster
+                  - type: mft-contact
+                    device: req0227787
+                    showWhen:
+                      condition: "true"
+                      property: req0227787/contact/state
+                    label: Gästetoilette Fenster
+                  - type: mft-contact
+                    device: oeq0706059
+                    showWhen:
+                      condition: "true"
+                      property: oeq0706059/contact/state
+                    label: Werkstatt Fenster
+                  - type: mft-contact
+                    device: oeq0706161
+                    showWhen:
+                      condition: "true"
+                      property: oeq0706161/contact/state
+                    label: Werkstatt Tür
+                  - type: mft-contact
+                    device: oeq0706187
+                    showWhen:
+                      condition: "true"
+                      property: oeq0706187/contact/state
+                    label: Büro Fenster
+      - type: conditional
         showWhen:
           condition: "false"
           property: db-general-config/contacts-hide-closed/state
         items:
-          - type: template
-            valuesList: [
-              { device: "oeq2132384",  label: "Wohnungstür" },
-              { device: "meq0753110",  label: "Kinderzimmer", subLabel: "Fenster" },
-              { device: "meq0753061",  label: "Schlafzimmer", subLabel: "Fenster"  },
-              { device: "oeq0429971",  label: "Küche", subLabel: "Fenster"  },
-              { device: "meq0753071",  label: "Esszimmer", subLabel: "Fenster"  },
-              { device: "sec-contacts-terrassentuer",  label: "Terassentür", subLabel: "Wohnzimmer"  },
-              { device: "meq0753104",  label: "Wohnzimmer", subLabel: "Fenster"  },
-              { device: "oeq0429851",  label: "Bad", subLabel: "Fenster"  },
-              { device: "oeq0431016",  label: "Gästezimmer", subLabel: "Fenster"  },
-              { device: "req0227787",  label: "Gästetoilette", subLabel: "Fenster"  },
-              { device: "oeq0706059",  label: "Werkstatt", subLabel: "Fenster"  },
-              { device: "oeq0706161",  label: "Werkstatt", subLabel: "Tür"  },
-              { device: "oeq0706187",  label: "Büro", subLabel: "Fenster"  },
-            ]
-            template:
+          - type: verticalStack
+            items:
               - type: mft-contact
-                device: "{{device}}"
-                label: "{{label}}"
-                config:
-                  subLabel: "{{subLabel}}"
+                device: oeq2132384
+                label: Wohnungstür
+              - type: mft-contact
+                device: meq0753110
+                label: Kinderzimmer Fenster
+              - type: mft-contact
+                device: meq0753061
+                label: Schlafzimmer Fenster
+              - type: mft-contact
+                device: oeq0429971
+                label: Küche Fenster
+              - type: mft-contact
+                device: meq0753071
+                label: Esszimmer Fenster
+              - type: mft-contact
+                device: sec-contacts-terrassentuer
+                label: Terassentür
+              - type: mft-contact
+                device: meq0753104
+                label: Wohnzimmer Fenster
+              - type: mft-contact
+                device: oeq0429851
+                label: Bad Fenster
+              - type: mft-contact
+                device: oeq0431016
+                label: Gästezimmer Fenster
+              - type: mft-contact
+                device: req0227787
+                label: Gästetoilette Fenster
+              - type: mft-contact
+                device: oeq0706059
+                label: Werkstatt Fenster
+              - type: mft-contact
+                device: oeq0706161
+                label: Werkstatt Tür
+              - type: mft-contact
+                device: oeq0706187
+                label: Büro Fenster
 
   - id: clima
     title: Temperatur & Luftfeuchtigkeit
@@ -229,31 +297,125 @@ cards:
           hideReading: true
           hideLabel: true
 
-      - type: template
-        valuesList: [
-          { device: "meq0180941",  label: "Wohnz." },
-          { device: "sensor-50",  label: "Sofa Ecke" },
-          { device: "meq0478846",  label: "Kinderz." },
-          { device: "leq1257637",  label: "Gästez." },
-          { device: "neq0937510",  label: "Schlafz." },
-          { device: "sensor-4",  label: "Hausgang" },
-          { device: "oeq0300066",  label: "Bad" },
-          { device: "leq1258226",  label: "Büro" },
-          { device: "leq0868067",  label: "Werkstatt" },
-          { device: "leq0122770",  label: "Keller" }
-        ]
-        template:
-          - type: verticalStack
-            items:
-              - type: simpleSensor
-                label: "{{label}}"
-                device: "{{device}}"
-                config:
-                  hideReading: false
-              - type: tempHumBars
-                device: "{{device}}"
-                config:
-                  hideLabel: true
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Wohnz.
+            device: meq0180941
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: meq0180941
+            config:
+              hideLabel: true
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Sofa Ecke
+            device: sensor-50
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: sensor-50
+            config:
+              hideLabel: true
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Kinderz.
+            device: meq0478846
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: meq0478846
+            config:
+              hideLabel: true
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Gästez.
+            device: leq1257637
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: leq1257637
+            config:
+              hideLabel: true
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Schlafz.
+            device: neq0937510
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: neq0937510
+            config:
+              hideLabel: true
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Hausgang
+            device: sensor-4
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: sensor-4
+            config:
+              hideLabel: true
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Bad
+            device: oeq0300066
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: oeq0300066
+            config:
+              hideLabel: true
+
+      - type: verticalStack
+        items:            
+          - type: simpleSensor
+            label: Buero
+            device: leq1258226
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: leq1258226
+            config:
+              hideLabel: true
+
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Werkstatt
+            device: leq0868067
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: leq0868067
+            config:
+              hideLabel: true
+
+
+      - type: verticalStack
+        items:
+          - type: simpleSensor
+            label: Keller
+            device: leq0122770
+            config:
+              hideReading: false
+          - type: tempHumBars
+            device: leq0122770
+            config:
+              hideLabel: true
 
 
   - id: shutters
@@ -559,7 +721,6 @@ cards:
               - yAxisId: temp
                 label: Temperatur
                 measurement: meq1601978/weather/temperature
-
 
 
   - id: speedtest

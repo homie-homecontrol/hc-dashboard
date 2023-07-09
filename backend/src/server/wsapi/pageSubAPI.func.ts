@@ -4,7 +4,7 @@ import { DashConfig } from '../../dashconfig/DashConfig';
 import { IRestProperty, PageDefMessage, PropertyValueChangeMessage, SubscribePageMessage } from '../../model/api.model';
 import { makeAPIFunc } from './wsapi.model';
 
-export const makePageSubAPI: makeAPIFunc<{dashConfig: DashConfig}> = (messages$, opts, onDestroy$) => {
+export const makePageSubAPI: makeAPIFunc<{ dashConfig: DashConfig }> = (messages$, opts, onDestroy$) => {
     const pageSubscription$ = messages$.pipe(
         filter(msg => msg.type === 'subscribePage' && !!msg.payload?.pageId),
         map(msg => <SubscribePageMessage>msg),
@@ -46,12 +46,12 @@ export const makePageSubAPI: makeAPIFunc<{dashConfig: DashConfig}> = (messages$,
         isNotNullish(),
         switchMap(properties =>
             merge(...properties
-                .map(property => property.value$.pipe(pairwise(),
-                    filter(
-                        values => (values[0] !== values[1])
-                    ),
-                    map(values => ({ oldValue: values[0], newValue: values[1], property }))
-                ))
+                .map(property =>
+                    property.value$.pipe(
+                        pairwise(),
+                        filter(values => (values[0] !== values[1])),
+                        map(values => ({ oldValue: values[0], newValue: values[1], property }))
+                    ))
             )
         )
     )

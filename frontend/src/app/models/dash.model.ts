@@ -1,4 +1,13 @@
-import { DeviceSelector, HomieID, HomieValuesTypes, isPropertySelector, PropertyCondition, PropertyQuery, PropertySelector, Query, ValueCondition, ValueMappingDefintion, ValueMappingList } from "node-homie/model";
+import {
+    DeviceDesignator, DeviceSelector, HomieID, HomieValuesTypes,
+    isPropertySelector, PropertyCondition, PropertyDesignator, PropertyQuery,
+    PropertySelector,
+    Query, ValueCondition,
+    ValueMappingDefintion, ValueMappingList
+} from "node-homie/model";
+
+// export type PropertySelector = string | PropertyDesignator;
+// export type DeviceSelector = string | DeviceDesignator;
 
 export type PageMenu = PageMenuEntry[];
 
@@ -33,6 +42,9 @@ export interface PageDef {
     layout: PageLayout,
     cards: Card[]
 }
+
+export type TemplatWidgeteType = typeof templateWidgetTypes[number];
+const templateWidgetTypes = ['template'] as const;
 
 export type ControlWidetType = typeof controlWidgetTypes[number];
 const controlWidgetTypes = ['contact', 'mft-contact', 'dimmer', 'mft-dimmer', 'online', 'mft-online', 'switch', 'mft-switch', 'onoff', 'mft-onoff', 'select',
@@ -82,10 +94,18 @@ export interface MftConfigBase {
 export interface IMappingBase<MAPPINGCFG = any> {
     [attribute: string]: ComplexPropertyMapping<MAPPINGCFG> | undefined;
 }
+
+
+export interface ITemplateWidget<TYPE extends TemplatWidgeteType> {
+    type: TYPE;
+    valuesList: any[];
+    template: any[]; 
+}
+
 export interface IControlWidget<TYPE extends ControlWidetType, MAPPINGS extends IMappingBase, CONFIG = any> {
     type: TYPE;
     label?: string;
-    device?: DeviceSelector;
+    device?: string | DeviceDesignator;
     mappings?: MAPPINGS;
     config?: CONFIG;
     showWhen?: PropertyConditional;
@@ -106,7 +126,7 @@ export interface IMiscWidget<TYPE extends MiscWidgetType, CONFIG = any> {
     config?: CONFIG;
 }
 
-export type Widget = LayoutWidget | ControlWidget | MiscWidget;
+export type Widget = TemplateWidget | LayoutWidget | ControlWidget | MiscWidget;
 
 
 export interface PropertyConditional {
@@ -144,6 +164,21 @@ export type ConditionalCard = ICard<'conditional', PropertyConditional>;
 
 export type Card = DefaultCard | ConditionalCard;
 
+
+
+// =======================
+//  Tenplate Widgets
+// =======================
+
+export type TemplateWidget = StandardTemplateWidget;
+
+export function isTemplateWidget(widget: any): widget is TemplateWidget {
+    return !!widget && !!widget.type && templateWidgetTypes.includes(widget.type);
+}
+
+export type StandardTemplateWidget = ITemplateWidget<'template'>;
+
+
 // =======================
 //  Layout Widgets
 // =======================
@@ -176,8 +211,8 @@ export type VerticalStackWidget = ILayoutWidget<'verticalStack'>;
 // =======================
 
 export type ControlWidget = SwitchWidget | MftSwitchWidget | DimmerWidget | MftDimmerWidget | OnlineWidget | PresenceWidget | ContactWidget | OnOffWidget
-    | SelectWidget | TiltWidget | RollerShutterWidget | MftRollerShutterWidget | TextWidget | StatusWidget | MftStatusWidget | ToggleButtonWidget | MftToggleButtonWidget | PushButtonWidget | MftPushButtonWidget | ActionButtonsWidget 
-    | WeatherWidget | ThermostatWidget | MftThermostatWidget | BBQSensorChannelWidget | MediaPlayerWidget | DualSensorBigWidget | LinearGaugeWidget | SimpleSensorWidget | LightSceneWidget 
+    | SelectWidget | TiltWidget | RollerShutterWidget | MftRollerShutterWidget | TextWidget | StatusWidget | MftStatusWidget | ToggleButtonWidget | MftToggleButtonWidget | PushButtonWidget | MftPushButtonWidget | ActionButtonsWidget
+    | WeatherWidget | ThermostatWidget | MftThermostatWidget | BBQSensorChannelWidget | MediaPlayerWidget | DualSensorBigWidget | LinearGaugeWidget | SimpleSensorWidget | LightSceneWidget
     | TempHumBarsWidget | TimerWidget | CalendarWidget | MFTTestWidget | MftOnlineWidget | MftPresenceWidget | MftContactWidget | MftOnOffWidget | MftTiltWidget;
 
 export function isControlWidget(widget: any): widget is ControlWidget {
@@ -282,7 +317,7 @@ export type ContactWidget = IControlWidget<'contact', GenericStateMapping, Widge
 export type OnOffWidget = IControlWidget<'onoff', GenericStateMapping, WidgetSizeConfig>;
 export type TiltWidget = IControlWidget<'tilt', GenericStateMapping, WidgetSizeConfig>;
 
-export interface MftBinaryStateConfig extends MftConfigBase{
+export interface MftBinaryStateConfig extends MftConfigBase {
     stateToTextMapping?: ValueMappingList;
     stateToColorMapping?: ValueMappingList<HomieValuesTypes, MatColorName>;
 }

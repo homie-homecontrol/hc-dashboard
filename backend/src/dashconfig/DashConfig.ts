@@ -2,17 +2,18 @@ import { Validator } from "jsonschema";
 import { HomieDeviceManager, HomieProperty, } from "node-homie";
 import { join, parse } from "path";
 import { asyncScheduler, merge, Observable, of, pipe, Subject } from "rxjs";
-import { takeUntil, mergeMap, map, tap, throttleTime, withLatestFrom, distinctUntilChanged, delay, filter } from "rxjs/operators";
+import { takeUntil, mergeMap, map, tap, throttleTime, withLatestFrom, delay, filter } from "rxjs/operators";
 import winston from "winston";
 import * as yaml from 'js-yaml';
 import { DictionaryStore, OnDestroy, OnInit } from "node-homie/misc";
-import { mergeWatchList, watchList } from "node-homie/rx";
 import { normalizeLayout } from "./layout.func";
 import { Card, PageDef, PageMenu } from "../model/dash.model";
 import { collectCardProperties, normalizeCards } from "./cards.func";
 import { Settings } from "../core/Settings";
 import { ConfigFileChange, ConfigFileWatcher, ConfigMapWatcher, ConfigObservableWatcher, ConfigWatcher } from "cfg-watcher";
 import { MQTTConfigInput } from "../model/controller.model";
+import { resolveTemplatesInCards } from "./templates.func";
+import { writeFile } from "fs";
 
 const pageDefSchema = require?.main?.require('./PageDef.Schema.json');
 const menuSchema = require?.main?.require('./PageMenu.Schema.json');
@@ -77,10 +78,10 @@ export class DashConfig implements OnInit, OnDestroy {
         } else if (this.settings.config_backend === 'kubernetes') {
             this.pageDefWatcher = new ConfigMapWatcher(this.settings.config_kubernetes_pagedef_configmap);
             this.menuWatcher = new ConfigMapWatcher(this.settings.config_kubernetes_pagedef_configmap);
-        }else if (this.settings.config_backend === 'mqtt' && this.menuCfg$ && this.pagesCfg$) {
+        } else if (this.settings.config_backend === 'mqtt' && this.menuCfg$ && this.pagesCfg$) {
             this.pageDefWatcher = new ConfigObservableWatcher(this.pagesCfg$);
             this.menuWatcher = new ConfigObservableWatcher(this.menuCfg$)
-        }else{
+        } else {
             this.pageDefWatcher = new ConfigObservableWatcher(of({}));
             this.menuWatcher = new ConfigObservableWatcher(of({}));
         }
@@ -148,13 +149,21 @@ export class DashConfig implements OnInit, OnDestroy {
     }
 
 
+
     private normalizePageDef(pageDef?: PageDef): PageDef {
         if (!pageDef) {
             return { layout: {}, cards: [] }
         }
+        const r = resolveTemplatesInCards(pageDef.cards);
+        if (pageDef.cards[0].id === 'test3-template') {
+            writeFile(`/tmp/pagedef-test3-template`, JSON.stringify(r), () => {
+                console.log('File written');
+            });
+        }
+        // JSON.stringify(r)
         return {
             layout: normalizeLayout(pageDef.layout),
-            cards: normalizeCards(this.deviceManager, pageDef.cards),
+            cards: normalizeCards(this.deviceManager, r),
         };
     }
 
@@ -199,6 +208,7 @@ export class DashConfig implements OnInit, OnDestroy {
                         }
                     }
                 }
+
 
                 const pageDef = this.normalizePageDef(pageDefInput.data);
 

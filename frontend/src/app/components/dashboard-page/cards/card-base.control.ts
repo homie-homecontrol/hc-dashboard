@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy } from "@angular/core";
 import { Observable, map, of } from "rxjs";
-import { Card, Widget } from "src/app/models/dash.model";
+import { Card, Widget, isTemplateWidget } from "src/app/models/dash.model";
 import { StateService } from "src/app/services/state.service";
 import { DashboardStateService } from "../state/dashboard-state.service";
 import { LifecycleBaseComponent } from "../../lifecycle-base.component";
@@ -15,7 +15,7 @@ import { evaluateValueCondition } from "node-homie/util";
 export class CardBaseComponent<T extends Card = Card> extends LifecycleBaseComponent {
 
     public makeCondition$(item: Widget): Observable<boolean> {
-        if (!item.showWhen) { return of(true); }
+        if (isTemplateWidget(item) || !item.showWhen) { return of(true); }
         console.log("makeCondition: ", item);
         return this.state.properties.makePropertValueStream(item.showWhen?.property).pipe(
             map(value => evaluateValueCondition(value, item.showWhen?.condition))

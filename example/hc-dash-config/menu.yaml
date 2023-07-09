@@ -29,7 +29,7 @@
   material_icon: fas/fa-tint
 
 
-- id: test2.dashcfg
+- id: test3.dashcfg
   title: Test
   description: Test
   material_icon: info

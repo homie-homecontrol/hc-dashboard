@@ -25,7 +25,7 @@ export class DashConfigRouter {
 
     protected getPageDef(req: Request, res: Response, next: NextFunction) {
         const pageId = req.params['pageId'];
-        console.log('getting pageId: ', pageId);
+        // console.log('getting pageId: ', pageId);
 
         const pageState = this.dashConfig.pageStore.getItem(pageId);
         if (!pageState || !!pageState?.error) {

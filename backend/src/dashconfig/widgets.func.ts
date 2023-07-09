@@ -1,20 +1,23 @@
 import { HomieDevice, HomieDeviceManager, HomieNode, HomieProperty } from "node-homie";
 import {
     H_SMARTHOME_TYPE_CONTACT, H_SMARTHOME_TYPE_SWITCH,
-    H_SMARTHOME_TYPE_DIMMER, H_SMARTHOME_TYPE_WEATHER, H_SMARTHOME_TYPE_THERMOSTAT, H_SMARTHOME_TYPE_SHUTTER, H_SMARTHOME_TYPE_TILT_SENSOR, H_SMARTHOME_TYPE_MEDIAPLAYER, H_SMARTHOME_TYPE_MAINTENANCE, H_SMARTHOME_TYPE_EXTENSTION
+    H_SMARTHOME_TYPE_DIMMER, H_SMARTHOME_TYPE_WEATHER, 
+    H_SMARTHOME_TYPE_THERMOSTAT, H_SMARTHOME_TYPE_SHUTTER, 
+    H_SMARTHOME_TYPE_TILT_SENSOR, H_SMARTHOME_TYPE_MEDIAPLAYER, 
+    H_SMARTHOME_TYPE_MAINTENANCE, H_SMARTHOME_TYPE_EXTENSTION
 } from "hc-node-homie-smarthome/model";
 import { isPropertySelector, notNullish, PropertySelector } from "node-homie/model";
 import { parsePropertySelector } from "node-homie/util";
 import {
     Widget, isControlWidget, ControlWidget, isLayoutWidget, LayoutWidget, ControlWidetType,
-    IMappingBase, GenericStateMapping, SwitchMapping, DimmerMapping, WeatherMapping, ThermostatMapping, layoutWidgetTypes, LayoutWidgetType, ConditionalWidget, SimpleSensorMapping, RollerShutterMapping, MiscWidgetType, GraphWidget, ComplexPropertyMapping, isExtendedPropertyMapping, ExtendedPropertyMapping, TempHumBarsMapping, BBQWidget, BBQChannelMapping, BBQChannelMappingProps, isMiscWidget, TimeRange, GraphWidgetConfig, GraphWidgetYAxis, GraphConfigGraphDef, RangePickerConfig, TimeRangeConfig, isDuration, BBQConfig, MediaPlayerMapping, toExtendedPropertyMapping
+    IMappingBase, GenericStateMapping, SwitchMapping, DimmerMapping, WeatherMapping, ThermostatMapping, layoutWidgetTypes, LayoutWidgetType, ConditionalWidget, SimpleSensorMapping, RollerShutterMapping, MiscWidgetType, GraphWidget, ComplexPropertyMapping, isExtendedPropertyMapping, ExtendedPropertyMapping, TempHumBarsMapping, BBQWidget, BBQChannelMapping, BBQChannelMappingProps, isMiscWidget, TimeRange, GraphWidgetConfig, GraphWidgetYAxis, GraphConfigGraphDef, RangePickerConfig, TimeRangeConfig, isDuration, BBQConfig, MediaPlayerMapping, toExtendedPropertyMapping, isTemplateWidget, TemplatWidgeteType
 } from "../model/dash.model";
 
 
 type widgetNormalizer = (deviceManager: HomieDeviceManager, item: Widget) => Widget | undefined;
 
 
-export const widgetNormalizers: { [index in LayoutWidgetType | ControlWidetType | MiscWidgetType]?: widgetNormalizer } = {
+export const widgetNormalizers: { [index in TemplatWidgeteType | LayoutWidgetType | ControlWidetType | MiscWidgetType]?: widgetNormalizer } = {
     bbq: normalizeBBQWidget,
     graph: normalizeGraphWidget
 };
@@ -24,7 +27,7 @@ type propertyCollector = (deviceManager: HomieDeviceManager, item: Widget) => Ho
 
 
 
-export const propertyCollectors: { [index in LayoutWidgetType | ControlWidetType | MiscWidgetType]?: propertyCollector } = {
+export const propertyCollectors: { [index in TemplatWidgeteType | LayoutWidgetType | ControlWidetType | MiscWidgetType]?: propertyCollector } = {
     conditional: conditionalPropertyCollector,
     graph: graphPropertyCollector,
     bbq: bbqPropertyCollector
@@ -156,7 +159,7 @@ function mappingToExtendedPropertyMapping<T = any>(mapping: ComplexPropertyMappi
 
 function genericWidgetPropertyCollector(deviceManager: HomieDeviceManager, item: Widget): HomieProperty[] {
     let props: HomieProperty[] = [];
-    if (item.showWhen){
+    if (!isTemplateWidget(item) && item.showWhen){
         const prop = deviceManager.getProperty(item.showWhen.property);
         if (prop?.parent?.parent?.attributes?.state === "ready") {
             props.push(prop);
@@ -223,7 +226,7 @@ export function normalizeWidgets(deviceManager: HomieDeviceManager, items: Widge
 
                         const propertyMappings = mappingToExtendedPropertyMapping(item.mappings[mapping]!);
                         if (item.type === 'timer') {
-                            console.log('Mappings: ', propertyMappings);
+                            // console.log('Mappings: ', propertyMappings);
                         }
 
                         for (const propInfo of propertyMappings) {
@@ -236,7 +239,7 @@ export function normalizeWidgets(deviceManager: HomieDeviceManager, items: Widge
                     for (const deviceId in devicesInMapping) {
                         const device = deviceManager.getDevice(deviceId);
                         if (item.type === 'timer') {
-                            console.log(`Device: [${deviceId}]`, device?.pointer, device?.attributes.state)
+                            // console.log(`Device: [${deviceId}]`, device?.pointer, device?.attributes.state)
                         }
                         if (!device || device.attributes.state !== 'ready') { return undefined; }
                     }
@@ -402,22 +405,22 @@ export function mediaplayerMappingFromDevice(device: HomieDevice): MediaPlayerMa
 
 
     if (!playState || !playAction || !title || !subText1 || !subText2 || !shuffle || !volume || !imageUrl || !position || !duration || !mute || !repeat) {
-        console.log('MEDIAPLAYER some mappig not found...')
-        console.log('MEDIAPLAYER: ', node.attributes.properties);
-        console.log({
-            playState,
-            playAction,
-            title,
-            subText1: subText1,
-            subText2: subText2,
-            shuffle,
-            volume,
-            imageUrl,
-            position,
-            duration,
-            mute,
-            repeat
-        })
+        // console.log('MEDIAPLAYER some mappig not found...')
+        // console.log('MEDIAPLAYER: ', node.attributes.properties);
+        // console.log({
+        //     playState,
+        //     playAction,
+        //     title,
+        //     subText1: subText1,
+        //     subText2: subText2,
+        //     shuffle,
+        //     volume,
+        //     imageUrl,
+        //     position,
+        //     duration,
+        //     mute,
+        //     repeat
+        // })
 
         return undefined;
     }

@@ -1,0 +1,33 @@
+layout:
+  large:
+    columns:
+      - - test3-template
+
+cards:
+
+  - id: test3-template
+    title: Testcard 6c
+    type: default
+    icon: testicon
+    items:
+      - type: template
+        valuesList: [
+          { groupLabel: "Group 1" },
+          { groupLabel: "Group 2" }
+        ]
+        template:
+          - type: group
+            label: "{{groupLabel}}"
+            items:
+              - type: template
+                valuesList: [
+                  { device: "meq0753110",  label: "Kinderzimmer Fenster" },
+                  { device: "meq0753110",  label: "Kinderzimmer Fenster1234" }
+                ]
+                template:
+                  - type: mft-contact
+                    device: "{{device}}"
+                    # showWhen:
+                    #   condition: "true"
+                    #   property: "{{device}}/contact/state"
+                    label: "{{groupLabel}}: {{label}}"
