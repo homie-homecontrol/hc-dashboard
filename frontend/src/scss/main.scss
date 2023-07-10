@@ -42,15 +42,15 @@
 
 
 $app-primary: mat-palette($steelblueprimary, 600, 100, 900);
-$app-accent: mat-palette($smartteal2, 400, 100, 900);
+$app-accent: mat-palette($smartteal2, 400, 200, 900);
 $app-warn: mat-palette($leather);
 $app-pale: mat-palette($palesteel, 300, 50, 700);
 
 
-$app-dark-primary: mat-palette($steelblueprimary, 600, 200, 200);
+$app-dark-primary: mat-palette($steelblueprimary, 600, 400, 200);
 $app-dark-accent: mat-palette($smartteal2, 500, 200, 900);
 $app-dark-warn: mat-palette($leather);
-$app-dark-pale: mat-palette($palesteel, 300, 500);
+$app-dark-pale: mat-palette($palesteel, 300, 900, 500);
 
 // Create light theme
 $app-theme: define-app-theme($app-primary, $app-accent, $app-warn, $app-pale);

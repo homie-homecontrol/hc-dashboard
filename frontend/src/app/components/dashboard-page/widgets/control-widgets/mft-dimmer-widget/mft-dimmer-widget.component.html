@@ -8,7 +8,7 @@
       <awac-icon hc-mft-action-bar-item name="fas/fa-power-off"></awac-icon>
     </button>
     <span hc-mft-label-text>{{widget.label}}</span>
-    <span hc-mft-value-status class="mft-pale-lighter-text">{{brightnessValue}}%</span>
+    <span hc-mft-value-status class="mft-{{state ? 'primary' :  'pale'}}-lighter-text">{{brightnessValue}}%</span>
     <span hc-mft-sub-label-text *ngIf="widget.config?.subLabel">{{widget.config?.subLabel}}</span>
   </hc-mft-overlay-pane>
 

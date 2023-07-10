@@ -19,7 +19,7 @@ export class HcMftBaseContentDirective { }
 
 @Directive({
   selector: 'hc-mft-type-icon, [hc-mft-type-icon], [hcMftTypeIcon]',
-  host: { 'class': 'hc-mft-type-icon mft-primary-color' }
+  host: { 'class': 'hc-mft-type-icon mft-pale-color' }
 })
 export class HcMftTypeIconDirective { }
 
