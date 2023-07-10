@@ -86,7 +86,7 @@ export class MftSliderComponent implements ControlValueAccessor, OnDestroy, CanD
   }
   set sliderColor(v: MatColorName) {
     this._sliderColor = v;
-    this.sliderColorClass=bgColorSchemeCssMapping(this._sliderColor, 'lighter');
+    this.sliderColorClass = bgColorSchemeCssMapping(this._sliderColor, 'lighter');
 
   }
   private _sliderColor: MatColorName = 'accent';
@@ -317,6 +317,9 @@ export class MftSliderComponent implements ControlValueAccessor, OnDestroy, CanD
       this._isActive = !!origin && origin !== 'keyboard';
       this._changeDetectorRef.detectChanges();
     });
+
+    // Update the slider dimensions after view init otherwise it cannot be used on mobile devices directly in _pointerDown    
+    this._sliderDimensions = this._getSliderDimensions();
     // if (this._dir) {
     //   this._dirChangeSubscription = this._dir.change.subscribe(() => {
     //     this._changeDetectorRef.markForCheck();
@@ -456,26 +459,51 @@ export class MftSliderComponent implements ControlValueAccessor, OnDestroy, CanD
         : undefined;
       const pointerPosition = getPointerPositionOnPage(event, this._touchId);
       const startPointerPosition = getPointerPositionOnPage(this._startPointerEvent!, this._touchId);
+
+      // ==================== Improve accidental sliding protection on scroll ====================
+      // = Check if the mouse movement is indicating a horizontal sliding motion, otherwise return
+      // = This assumes that if there is more y movement then x the users intends to scroll the page and 
+      // = not slide the slider.
       if (pointerPosition && startPointerPosition) {
-        this._startPointerEvent=event;
+        this._startPointerEvent = event;
         const deltaY = Math.abs(pointerPosition.y - startPointerPosition.y);
         const deltaX = Math.abs(pointerPosition.x - startPointerPosition.x);
-        
-        if (deltaY > 8 || deltaX < 6) {
 
-          console.log(`distance [X:${deltaX}|Y:${deltaY}]`);
-          console.log('DISABLE sliding');
+        if (deltaY > 8 || deltaX < 5) {
           this._isSliding = null;
           return;
-        }else{
-          console.log(`distance [X:${deltaX}|Y:${deltaY}]`);
-          console.log('ENABLE sliding');
         }
       }
+      // ====================
 
       if (pointerPosition) {
+        // ==================== Improve accidental sliding protection on scroll ====================
+        // = Check if the mouse event happens with the proximity of the slider position, otherwise ignore the event.
+        this._sliderDimensions = this._getSliderDimensions();
+        if (!this._sliderDimensions) {
+          window.prompt("NO SLider dimensions");
+          return;
+        }
+
+        let offset = this._sliderDimensions.left;
+        let size = this._sliderDimensions.width;
+        let sliderPosition = offset + (size * this.percent);
+        let posComponent = pointerPosition.x;
+        
+        // we define 15% of the component size before and after the sliderposition as detection area for sliding
+        let fuzzyFactor = 0.15;
+        // in case we are near the beginning or the end of the component we increase the detection area by 5% to 20%.
+        if (this.percent >= 0.90 || this.percent <= 0.1) {
+          fuzzyFactor = 0.2;
+        }
+
+        // if the event did not happen within the detection area: exit
+        if (Math.abs(posComponent - (sliderPosition)) > (size * fuzzyFactor)) {
+          return;
+        }
+        // ====================
+
         const oldValue = this.value;
-        console.log("Slider - start sliding!");
         this._isSliding = 'pointer';
         this._lastPointerEvent = event;
         this._focusHostElement();
