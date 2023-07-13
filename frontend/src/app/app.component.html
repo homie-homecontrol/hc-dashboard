@@ -3,11 +3,6 @@
   <awac-main-nav [pages]="pages$|async" [activePage]="activePage$ | async" (activePageChange)="navigate($event)"
     [showSidebarOnDesktop]="false" title="homecontrol">
 
-    <awac-side-menu-profile awac-nav-header [avatarUrl]="avatarUrl$|async" [name]="name$|async"
-      [darkMode]="darkMode$ | async" (darkModeChanged)="setDarkMode($event)">
-    </awac-side-menu-profile>
-
-
     <mat-accordion awac-nav-header>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -16,6 +11,13 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="local-options">
+          <hc-widget-layout>
+            <span hc-widget-label>Dark mode:</span>
+            <hc-widget-controls>
+              <mat-slide-toggle [checked]="darkMode$ | async" (change)="setDarkMode($event.checked)">
+              </mat-slide-toggle>
+            </hc-widget-controls>
+          </hc-widget-layout>
           <hc-widget-layout>
             <span hc-widget-label>Force XLarge layout:</span>
             <hc-widget-controls>

@@ -65,17 +65,6 @@ export class AppComponent implements OnInit, OnDestroy {
     // console.log(`app wsapi no ${wsapi.objectNo}`);
     // this.auth.loadAuthInfo();
 
-    // Setting fake authinfo for starters
-    this.state.authInfo = {
-      uid: 'test',
-      exp: Date.now() + 100000000,
-      email: '',
-      groups: ['admin'],
-      name: 'Admin Test',
-      user: 'admin',
-      avatarUrl: 'https://www.gravatar.com/avatar/1df1eee44e52c22c4e1b157b3a7e02aa?s=100'
-    }
-
     // Listening for DarkMode Changes
     this.darkMode$.pipe( // Applying dark theme extras (e.g. Overlaycontainer -- for dialogs and such, theme color...)
       takeUntil(this.onDestroy$)

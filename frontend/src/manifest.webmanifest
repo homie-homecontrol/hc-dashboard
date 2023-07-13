@@ -2,7 +2,7 @@
   "name": "hc-dashboard",
   "short_name": "hc-dashboard",
   "theme_color": "#fafafa",
-  "background_color": "#fafafa",
+  "background_color": "#171a29",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
