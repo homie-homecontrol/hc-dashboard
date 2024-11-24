@@ -59,7 +59,7 @@
 }
 
 .text-line-small {
-    height: $small-height / 2 - 2;
+    //height: calc(calc($small-height / 2) - 2);
     margin-top: 1px;
 }
 
@@ -71,8 +71,6 @@
     padding-left: 4px;
     padding-right: 4px;
 }
-
-
 
 .value-text {
     pointer-events: none;
@@ -86,7 +84,6 @@
     display: none;
 }
 
-
 .sub-label-text {
     pointer-events: none;
     flex-grow: 1;
@@ -98,8 +95,6 @@
 .sub-label-text:empty {
     display: none;
 }
-
-
 
 .label-text {
     text-overflow: ellipsis;

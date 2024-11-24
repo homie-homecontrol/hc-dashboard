@@ -1,16 +1,33 @@
-<hc-multi-function-tile *ngLet="(switchState$ | async) as state" [hoverHighlight]="true" [bgColor]="state ? 'primary' :  'pale'" >
-  <hc-mft-slider hc-mft-base-content  [value]="dimmerBrightnessValue$ | async" (liveChange)="brightnessValue=$event"
-    (change)="setBrightness($event.value)" step="5"  sliderColor="accent"></hc-mft-slider>
-  <awac-icon name="brightness_medium" hc-mft-type-icon></awac-icon>
+<hc-multi-function-tile
+    *ngLet="switchState$ | async as state"
+    [hoverHighlight]="true"
+    [bgColor]="state ? 'primary' : 'pale'"
+>
+    <hc-mft-slider
+        (onclick)="toggle()"
+        hc-mft-base-content
+        [value]="dimmerBrightnessValue$ | async"
+        (liveChange)="brightnessValue = $event"
+        (change)="setBrightness($event.value)"
+        step="5"
+        sliderColor="accent"
+    ></hc-mft-slider>
+    <awac-icon name="brightness_medium" hc-mft-type-icon></awac-icon>
 
-  <hc-mft-overlay-pane>
-    <button mat-icon-button [color]="state ? 'accent' : 'none'" class="toggle-button mft-small-icon-button" hc-mft-action-bar-item (click)="toggle()">
-      <awac-icon hc-mft-action-bar-item name="fas/fa-power-off"></awac-icon>
-    </button>
-    <span hc-mft-label-text>{{widget.label}}</span>
-    <span hc-mft-value-status class="mft-{{state ? 'primary' :  'pale'}}-lighter-text">{{brightnessValue}}%</span>
-    <span hc-mft-sub-label-text *ngIf="widget.config?.subLabel">{{widget.config?.subLabel}}</span>
-  </hc-mft-overlay-pane>
-
-
+    <hc-mft-overlay-pane>
+        <button
+            mat-icon-button
+            [color]="state ? 'accent' : 'none'"
+            class="toggle-button mft-small-icon-button"
+            hc-mft-action-bar-item
+            (click)="toggle()"
+        >
+            <awac-icon hc-mft-action-bar-item name="fas/fa-power-off"></awac-icon>
+        </button>
+        <span hc-mft-label-text>{{ widget.label }}</span>
+        <span hc-mft-value-status class="mft-{{ state ? 'primary' : 'pale' }}-lighter-text"
+            >{{ brightnessValue }}%</span
+        >
+        <span hc-mft-sub-label-text *ngIf="widget.config?.subLabel">{{ widget.config?.subLabel }}</span>
+    </hc-mft-overlay-pane>
 </hc-multi-function-tile>
