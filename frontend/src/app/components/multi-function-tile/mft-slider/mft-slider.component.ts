@@ -602,6 +602,7 @@ export class MftSliderComponent implements ControlValueAccessor, OnDestroy, CanD
             console.log('_pointerUp Clicked', this._isSliding, event);
             event.preventDefault();
             this.onclick.emit(true);
+            this._isClickOnly = false;
             this._removeGlobalEvents();
             this._isSliding = null;
             this._touchId = undefined;
