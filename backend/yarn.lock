@@ -2055,7 +2055,7 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
-hc-node-homie-smarthome@^0.6.3:
+hc-node-homie-smarthome@~0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/hc-node-homie-smarthome/-/hc-node-homie-smarthome-0.6.3.tgz#3a7ef6b7ccd63717882a27f9d29c648d3f0f4421"
   integrity sha512-na3DKes4vqbrSfymVvrNMkZPtiTd/bFnCA5dgadiRk5MaSNYt7U3mKpahkgN419cahmLhssP6vU7BDfES2l6Rg==
@@ -2985,7 +2985,7 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-node-homie@^0.9.25, node-homie@~0.9.25:
+node-homie@~0.9.25:
   version "0.9.25"
   resolved "https://registry.yarnpkg.com/node-homie/-/node-homie-0.9.25.tgz#4abe7369d3c8b47a2c1a9fc233ade225cfa4f1c2"
   integrity sha512-3z7jNORFWxp1nXQWUNy+K6tlmlBxWzHE77CxS60qFZepWzvMsxXcaL9NI4aBN/K258VoiFYXanzTXyFBuN3TmQ==

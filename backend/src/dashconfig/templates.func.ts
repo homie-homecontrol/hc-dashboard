@@ -90,4 +90,3 @@ export function resolveTemplatesInCards(cards: Card[]): Card[] {
         return { ...card, items: resolveTemplates(card.items) };
     });
 }
-
